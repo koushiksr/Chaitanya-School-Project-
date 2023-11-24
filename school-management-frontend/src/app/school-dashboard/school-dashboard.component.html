@@ -3,7 +3,7 @@
      <div class="profile">
           <div class="profile-open">
                <button (click)="SchoolDetails()" (click)="drawer.toggle()"></button>
-               <img class="profile-image" src="../../assets/james-person-1.jpg" alt="Profile Image">
+               <img class="profile-image" src="../../assets/school-logo2.jpg" alt="Profile Image">
           </div>
           <div class="search-bar">
                <input type="text" class="search-input" placeholder="Search...">
@@ -19,7 +19,7 @@
           <div class="profile-container">
                <div class="profile-sidenav">
                     <div class="profile-image">
-                         <img class="profile-img" src="../../assets//james-person-1.jpg" alt="">
+                         <img class="profile-img" src="../../assets/school-logo2.jpg" alt="">
                     </div>
                     <div class="profile-info">
                          <h2>Name: {{name}}</h2>
@@ -36,7 +36,7 @@
 
      </mat-drawer>
 
-     <div *ngIf="isActivity" class="example-sidenav-content">
+     <div *ngIf="!isActivity" class="example-sidenav-content">
           <div class="body">
                <ng-template class="school-template" #formContent let-dialogRef let-closeDialog="closeDialog">
                     <div class="school-form">
@@ -109,8 +109,10 @@
                                    <input type="text" id="residenceCity" formControlName="residenceCity" required>
                               </div>
 
-                              <button type="submit" class="btn btn-primary">{{ editMode ? 'Edit' : 'Submit' }}</button>
-                              <button type="button" mat-dialog-close class="btn btn-primary">Cancel</button>
+                              <button mat-raised-button type="submit" class="btn btn-primary">{{ editMode ? 'Edit' :
+                                   'Submit' }}</button>
+                              <button mat-raised-button type="button" mat-dialog-close
+                                   class="btn btn-primary">Cancel</button>
                          </form>
 
                     </div>
@@ -118,7 +120,8 @@
 
                <div class="school-list">
                     <h2>Student List</h2>
-                    <button class='create-button-openform' (click)="openDialog()">Open Student Form</button>
+                    <button mat-raised-button class='create-button-openform' (click)="openDialog()">Open Student
+                         Form</button>
                     <table>
                          <thead>
                               <tr>
@@ -154,9 +157,19 @@
                                    <td>{{ candidate.residenceArea }}</td>
                                    <td>{{ candidate.residenceCity }}</td>
                                    <td class="table-buttons">
-                                        <button class="edit" (click)="editCandidate(candidate)">Edit</button>
+                                        <!-- <button class="edit" (click)="editCandidate(candidate)">Edit</button>
                                         <button class="delete"
-                                             (click)="deleteCandidate(candidate.email)">Delete</button>
+                                             (click)="deleteCandidate(candidate.email)">Delete</button> -->
+                                        <div class="example-button-container">
+                                             <button (click)="editCandidate(candidate)" mat-mini-fab color="accent"
+                                                  aria-label="Example icon button with a plus one icon">
+                                                  <mat-icon>create</mat-icon> </button>
+                                        </div>
+                                        <div class="example-button-container">
+                                             <button (click)="deleteCandidate(candidate.email)" mat-mini-fab
+                                                  color="warn" aria-label="Example icon button with a filter list icon">
+                                                  <mat-icon>delete</mat-icon> </button>
+                                        </div>
                                    </td>
                               </tr>
                          </tbody>
@@ -165,7 +178,7 @@
           </div>
      </div>
 
-     <div *ngIf="!isActivity" class="example-sidenav-content">
+     <div *ngIf="isActivity" class="example-sidenav-content">
           <div class="body">
                <div class="school-list">
                     <div class="chart-filter-bar-list">
@@ -191,17 +204,17 @@
                                         <option value="3">Rating 3</option>
                                    </select>
                               </div>
-                              <button mat-raised-button color="accent" class='create-button' type="button"
-                                   (click)="onFilterClick()">
-                                   <div class=filter-bar>&#x2758;</div>
-                                   <div class=filter-triangle>&#x25BC;</div>
-                              </button>
+                              <button mat-raised-button class='create-button' type="button"
+                                   (click)="onFilterClick()"><mat-icon>filter_list</mat-icon>Filter</button>
 
                               <button mat-raised-button color="warn" class='create-button clear-filter' type="button"
-                                   (click)="fetchStudentsActivity()">Clear Filter</button>
-                              <button mat-raised-button color="accent" class='create-button' type="button"
-                                   (click)="generateExcel()" style="font-size: 32px;">⇩</button>
-                                   <mat-icon>get_app</mat-icon>
+                                   (click)="fetchStudentsActivity()"><mat-icon>restore</mat-icon>Filter</button>
+
+                              <button mat-raised-button class='create-button' type="button"
+                                   (click)="generateExcel()"><mat-icon>get_app</mat-icon></button>
+
+
+
                          </div>
                     </div>
 
@@ -268,7 +281,7 @@
                                                   required>
                                              <h5>{{dateFormData}}</h5>
                                              <h5>{{candidateActivity.AssessmentDate}}</h5>
-                                             <button mat-raised-button type="submit">Save Data</button>
+                                             <button mat-flat-button type="submit">Save Date</button>
                                         </form>
 
                                    </td>

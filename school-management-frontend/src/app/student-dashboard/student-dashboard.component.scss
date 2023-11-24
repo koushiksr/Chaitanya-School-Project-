@@ -179,16 +179,23 @@
         td {
           padding: 8px;
           border: 1px solid #ddd;
-
-          button {
-            padding: 7px 20px;
+          .icon-button-container{
+            // padding: 7px 20px;
+            // margin: 5px;
+            button{
+              padding: 20px 8px;
             margin: 5px;
-            border: none;
-            color: white;
-            cursor: pointer;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background-color 0.3s;
+            }
+          }
+          button {
+            // padding: 7px 20px;
+            // margin: 5px;
+            // border: none;
+            // color: white;
+            // cursor: pointer;
+            // border-radius: 5px;
+            // font-weight: bold;
+            // transition: background-color 0.3s;
           }
 
           .edit {
@@ -266,7 +273,7 @@
   .side-nav-button {
     display: flex;
     flex-direction: column;
-    magin-left: 10px;
+    // magin-left: 10px;
     align-items: center;
   }
 

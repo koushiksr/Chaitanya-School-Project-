@@ -203,7 +203,7 @@ export class SchoolDashboardComponent {
     if (!this.editMode) {
       if (this.myForm.valid) {
         this.myForm.value.schoolID = this.admin.schoolID
-        console.log(this.myForm.value);
+        // console.log(this.myForm.value);
 
         this.http.post(`${environment.apiUrl}/school/student/create`, this.myForm.value)
           .subscribe((response) => {

@@ -73,7 +73,6 @@ exports.create = async (req: any, res: any) => {
                     }
                }
           }
-
           // genarating html maill
           let mail = MailGenerator.generate(response)
           let message = {
@@ -82,9 +81,38 @@ exports.create = async (req: any, res: any) => {
                subject: "Your password",
                html: mail
           }
+          let response2 = {
+               body: {
+                    name: "New student  created",
+                    // intro: "Your Password Is Here!",
+                    table: {
+                         data: [
+                              {
+                                   email: email,
+                                   description: `student ${candidateName}  profile created `,
+                              }
+                         ]
+                    },
+                    action: {
+                         instructions: 'To visit our website, click the link below:',
+                         button: {
+                              text: 'Visit Our Website',
+                              link: process.env.admin_Dashboard,
+                         },
+                         // outro: "Looking forward to do more business"
+                    }
+               }
+          }
+          let mail2 = MailGenerator.generate(response2)
+          let message2 = {
+               from: process.env.ADMIN_MAIL_TO_SEND_PASSWORD,
+               to: process.env.ADMIN_MAIL_TO_GET_UPDATES,
+               subject: "new student created by school",
+               html: mail2
+          }
           // sending mail
-          transporter.sendMail(message).then(() => {
-               console.log({ msg: "you should receive an email", email })
+          transporter.sendMail(message2).then(() => {
+               // console.log({ msg: "you should receive an email", email })
                isMailSend = true;
           }).catch((error: any) => {
           })
@@ -120,7 +148,7 @@ exports.getAllStudent = async (req: any, res: any) => {
      // console.log({ schoolID: req.params.schoolID },'in get all student');
 
      const student = await Student.find({ schoolID: req.params.schoolID })
-// console.log(student);
+     // console.log(student);
 
      if (!student) {
           return res.status(401).json({ message: 'there is no data in database' })

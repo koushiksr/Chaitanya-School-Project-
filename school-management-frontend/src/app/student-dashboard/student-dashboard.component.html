@@ -3,7 +3,7 @@
      <div class="profile">
           <div class="profile-open">
                <button (click)="SchoolDetails()" (click)="drawer.toggle()"></button>
-               <img class="profile-image" src="../../assets/james-person-1.jpg" alt="Profile Image">
+               <img class="profile-image" src="../../assets/student-icon11.png" alt="Profile Image">
           </div>
           <div class="search-bar">
                <input type="text" class="search-input" placeholder="Search...">
@@ -19,7 +19,7 @@
           <div class="profile-container">
                <div class="profile-sidenav">
                     <div class="profile-image">
-                         <img class="profile-img" src="../../assets//james-person-1.jpg" alt="">
+                         <img class="profile-img" src="../../assets//student-icon11.png" alt="">
                     </div>
                     <div class="profile-info">
                          <h2>Name: {{admin?.candidateName}}</h2>
@@ -380,7 +380,8 @@
                                    </div>
                                    <div>
                                         <div>
-                                             <button type="submit" class="btn btn-primary">{{ editMode ? 'Edit' :
+                                             <button mat-raised-button type="submit" class="btn btn-primary">{{ editMode
+                                                  ? 'Edit' :
                                                   'Submit'
                                                   }}</button>
                                              <button type="button" mat-dialog-close
@@ -399,23 +400,6 @@
                               <h2>Activity List</h2>
                          </div>
                          <div class="chart-filter-bar">
-                              <!--       <div class="display-column" >
-                                   <label for="dropdown1">Dropdown 1:</label>
-                                   <select class="custom-dropdown" id="dropdown1">
-                                        <option value="option1">Option 1</option>
-                                        <option value="option2">Option 2</option>
-                                        <option value="option3">Option 3</option>
-                                   </select>
-                              </div>
-                              <div class="display-column">
-                                   <label for="dropdown2">Dropdown 2:</label>
-                                   <select class="custom-dropdown" id="dropdown2">
-                                        <option value="optionA">Option A</option>
-                                        <option value="optionB">Option B</option>
-                                        <option value="optionC">Option C</option>
-                                   </select>
-                              </div>
-                              <button class='create-button'  type="button">Filter</button> -->
                               <button class='create-button' type="button"
                                    (click)="isChartActive ? destroyChart() : displayChart()">{{
                                    isChartActive ? 'Exit Chart' : 'Chart' }}</button>
@@ -428,6 +412,7 @@
                     <table *ngIf="!isChartActive">
                          <thead>
                               <tr>
+                                   <th>Actions</th>
                                    <th>Candidate Name</th>
                                    <th>Candidate ID</th>
                                    <th>Gender</th>
@@ -491,11 +476,28 @@
                                    <th>Remarks-1</th>
                                    <th>Remarks-2</th>
                                    <th>Remarks-3</th>
-                                   <th>Actions</th>
                               </tr>
                          </thead>
                          <tbody>
                               <tr *ngFor="let candidatesActivit of candidatesActivity">
+                                   <td class="table-buttons">
+                                        <div class="icon-button-container">
+                                             <button (click)="editCandidate(candidatesActivit)" mat-mini-fab
+                                                  color="accent" aria-label="Example icon button with a plus one icon">
+                                                  <mat-icon>create</mat-icon> </button>
+                                        </div>
+                                        <div class="icon-button-container">
+                                             <button (click)="deleteCandidate(candidatesActivit._id)" mat-mini-fab
+                                                  color="warn" aria-label="Example icon button with a filter list icon">
+                                                  <mat-icon>delete</mat-icon> </button>
+                                        </div>
+                                        <div class="icon-button-container">
+                                             <button (click)="generatePDF(candidatesActivit)" mat-mini-fab
+                                                  aria-label="Example icon button with a filter list icon">
+                                                  <mat-icon>get_app</mat-icon>
+                                             </button>
+                                        </div>
+                                   </td>
                                    <td>{{ candidatesActivit.Name }}</td>
                                    <td>{{ candidatesActivit.ID }}</td>
                                    <td>{{ candidatesActivit.Gender }}</td>
@@ -559,13 +561,7 @@
                                    <td>{{ candidatesActivit.RemarksRemark1 }}</td>
                                    <td>{{ candidatesActivit.RemarksRemark2 }}</td>
                                    <td>{{ candidatesActivit.RemarksRemark3 }}</td>
-                                   <td class="table-buttons">
-                                        <button class="edit" (click)="editCandidate(candidatesActivit)">Edit</button>
-                                        <button class="delete"
-                                             (click)="deleteCandidate(candidatesActivit._id)">Delete</button>
-                                        <button class="delete"
-                                             (click)="generatePDF(candidatesActivit)">Download</button>
-                                   </td>
+
                               </tr>
                          </tbody>
                     </table>
