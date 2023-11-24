@@ -38,6 +38,7 @@ export class AdminDashboardComponent {
   constructor(private http: HttpClient, private router: Router,
     private _snackBar: MatSnackBar, private formBuilder: FormBuilder,
     private cdr: ChangeDetectorRef, private dialog: MatDialog) {
+      this.dialogRef = {} as MatDialogRef<any>;
     this.fetchSchools();
     this.adminDetails();
     this.myForm = this.formBuilder.group({
@@ -68,9 +69,14 @@ export class AdminDashboardComponent {
       duration: 4000,
     });
   }
-  closeDialog(dialogRef: any): void {
-    dialogRef.close();
-  }
+  dialogRef!: MatDialogRef<any>;
+
+  // closeDialog(dialogRef: MatDialogRef<any>): void {
+  //   dialogRef.afterClosed().subscribe(() => {
+  //     this.myForm.reset();
+  //     this.editMode = false;
+  //   });
+  // }
   openPopup(): void {
     this.isPopupOpen = true;
   }
@@ -80,9 +86,12 @@ export class AdminDashboardComponent {
   }
 
   openDialog() {
-    const dialogRef = this.dialog.open(this.formContent, {
+    // this.myForm.reset();
+    this.dialogRef = this.dialog.open(this.formContent, {
     });
-    dialogRef.afterClosed().subscribe(result => {
+    this.dialogRef.afterClosed().subscribe(result => {
+      this.myForm.reset();
+      this.editMode = false
     });
   }
   editSchool(school: any): void {

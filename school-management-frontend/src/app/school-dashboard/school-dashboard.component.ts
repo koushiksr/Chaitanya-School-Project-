@@ -192,6 +192,7 @@ export class SchoolDashboardComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       this.myForm.reset();
+      this.editMode = false
     });
   }
   onSubmit() {
@@ -379,62 +380,62 @@ export class SchoolDashboardComponent {
   //   return { table: { body: tableData }, layout: 'lightHorizontalLines' } as Content;
   // }
 
-//   generatePDF() {
-//     const data = this.candidateActivities;
-//     const excludedFields: string[] = ['createdAt', 'updatedAt', '_id', '__v'];
+  //   generatePDF() {
+  //     const data = this.candidateActivities;
+  //     const excludedFields: string[] = ['createdAt', 'updatedAt', '_id', '__v'];
 
-//     const content: Content[] = [
-//         { text: 'Activity Report', style: 'header' },
-//         { text: new Date().toLocaleString(), alignment: 'right' },
-//         this.createTable(data, excludedFields),
-//     ];
+  //     const content: Content[] = [
+  //         { text: 'Activity Report', style: 'header' },
+  //         { text: new Date().toLocaleString(), alignment: 'right' },
+  //         this.createTable(data, excludedFields),
+  //     ];
 
-//     const documentDefinition: TDocumentDefinitions = {
-//         content: content,
-//         styles: {
-//             header: {
-//                 fontSize: 18,
-//                 bold: true,
-//                 margin: [0, 0, 0, 10],
-//             },
-//         },
-//         pageOrientation: 'landscape',  // Set page orientation to landscape
-//     };
+  //     const documentDefinition: TDocumentDefinitions = {
+  //         content: content,
+  //         styles: {
+  //             header: {
+  //                 fontSize: 18,
+  //                 bold: true,
+  //                 margin: [0, 0, 0, 10],
+  //             },
+  //         },
+  //         pageOrientation: 'landscape',  // Set page orientation to landscape
+  //     };
 
-//     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
-//     pdfDocGenerator.download(`Activity Report.pdf`);
-// }
+  //     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
+  //     pdfDocGenerator.download(`Activity Report.pdf`);
+  // }
 
-// private createTable(data: any[], excludedFields: string[]): Content {
-//     const tableData: any[][] = [];
+  // private createTable(data: any[], excludedFields: string[]): Content {
+  //     const tableData: any[][] = [];
 
-//     // Assuming all objects in the array have the same structure
-//     const firstObject = data[0];
-//     const newObject = this.excludeFields(firstObject, excludedFields);
+  //     // Assuming all objects in the array have the same structure
+  //     const firstObject = data[0];
+  //     const newObject = this.excludeFields(firstObject, excludedFields);
 
-//     // Table header
-//     tableData.push(Object.keys(newObject));
+  //     // Table header
+  //     tableData.push(Object.keys(newObject));
 
-//     // Table body
-//     data.forEach(item => {
-//         const row = Object.values(this.excludeFields(item, excludedFields));
-//         tableData.push(row);
-//     });
+  //     // Table body
+  //     data.forEach(item => {
+  //         const row = Object.values(this.excludeFields(item, excludedFields));
+  //         tableData.push(row);
+  //     });
 
-//     return { table: { body: tableData, widths: 'auto' }, layout: 'lightHorizontalLines' } as Content;
-// }
+  //     return { table: { body: tableData, widths: 'auto' }, layout: 'lightHorizontalLines' } as Content;
+  // }
 
-// private excludeFields(obj: any, excludedFields: string[]): any {
-//     const newObj: any = {};
-//     for (const key in obj) {
-//         if (obj.hasOwnProperty(key) && !excludedFields.includes(key)) {
-//             newObj[key] = obj[key];
-//         }
-//     }
-//     return newObj;
-// }
+  // private excludeFields(obj: any, excludedFields: string[]): any {
+  //     const newObj: any = {};
+  //     for (const key in obj) {
+  //         if (obj.hasOwnProperty(key) && !excludedFields.includes(key)) {
+  //             newObj[key] = obj[key];
+  //         }
+  //     }
+  //     return newObj;
+  // }
 
-generateExcel() {
+  generateExcel() {
     const data = this.candidateActivities;
     const excludedFields: string[] = ['createdAt', 'updatedAt', '_id', '__v'];
 
@@ -444,16 +445,16 @@ generateExcel() {
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Activity Report');
     XLSX.writeFile(wb, 'Activity Report.xlsx');
-}
+  }
 
-private excludeFields(obj: any, excludedFields: string[]): any {
+  private excludeFields(obj: any, excludedFields: string[]): any {
     const newObj: any = {};
     for (const key in obj) {
-        if (obj.hasOwnProperty(key) && !excludedFields.includes(key)) {
-            newObj[key] = obj[key];
-        }
+      if (obj.hasOwnProperty(key) && !excludedFields.includes(key)) {
+        newObj[key] = obj[key];
+      }
     }
     return newObj;
-}
+  }
 
 }

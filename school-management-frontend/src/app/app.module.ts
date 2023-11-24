@@ -21,6 +21,8 @@ import { NgIf } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     NgIf,
     MatPaginatorModule,
     MatDialogModule,
+    MatIconModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

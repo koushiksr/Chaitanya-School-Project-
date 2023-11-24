@@ -16,7 +16,7 @@
   form {
     display: flex;
     flex-wrap: nowrap;
-    padding: 3% 5% 10% 5%;
+    padding: 0% 0% 4% 4%;
     flex-direction: column;
 
     h3 {
@@ -54,16 +54,27 @@
     }
 
     button {
-      position: absolute;
+      // position: absolute;
+      // background-color: #007BFF;
+      // color: #fff;
+      // border: none;
+      // border-radius: 5px;
+      // padding: 10px 71px;
+      // font-size: 16px;
+      // cursor: pointer;
+      // text-align: center;
+      // bottom: -58px;
+      // text-decoration: none;
+      // transition: background-color 0.3s;
       background-color: #007BFF;
       color: #fff;
       border: none;
-      border-radius: 5px;
-      padding: 10px 71px;
+      border-radius: 7px;
+      padding: 8px 28px;
+      margin: 22px 27px 16px 3px;
       font-size: 16px;
       cursor: pointer;
       text-align: center;
-      bottom: -58px;
       text-decoration: none;
       transition: background-color 0.3s;
     }
@@ -119,23 +130,23 @@
           display: flex;
           align-items: center;
 
-        //   .display-column {
-        //     display: flex;
-        //     flex-direction: column;
-        //     align-items: center;
+          //   .display-column {
+          //     display: flex;
+          //     flex-direction: column;
+          //     align-items: center;
 
-        //     .custom-dropdown {
-        //       padding: 8px 29px;
-        //       /* margin: -7px; */
-        //       border: 1px solid #ccc;
-        //       border-radius: 4px;
-        //       font-size: 14px;
-        //       color: #333;
-        //       width: 100%;
-        //       box-sizing: border-box;
-        //       // margin-top: 8px;
-        //     }
-        //   }
+          //     .custom-dropdown {
+          //       padding: 8px 29px;
+          //       /* margin: -7px; */
+          //       border: 1px solid #ccc;
+          //       border-radius: 4px;
+          //       font-size: 14px;
+          //       color: #333;
+          //       width: 100%;
+          //       box-sizing: border-box;
+          //       // margin-top: 8px;
+          //     }
+          //   }
 
 
           .create-button {

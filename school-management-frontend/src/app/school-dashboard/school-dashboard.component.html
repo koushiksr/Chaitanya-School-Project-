@@ -110,6 +110,7 @@
                               </div>
 
                               <button type="submit" class="btn btn-primary">{{ editMode ? 'Edit' : 'Submit' }}</button>
+                              <button type="button" mat-dialog-close class="btn btn-primary">Cancel</button>
                          </form>
 
                     </div>
@@ -190,11 +191,17 @@
                                         <option value="3">Rating 3</option>
                                    </select>
                               </div>
-                              <button class='create-button' type="button" (click)="onFilterClick()">Filter</button>
-                              <button class='create-button clear-filter' type="button"
+                              <button mat-raised-button color="accent" class='create-button' type="button"
+                                   (click)="onFilterClick()">
+                                   <div class=filter-bar>&#x2758;</div>
+                                   <div class=filter-triangle>&#x25BC;</div>
+                              </button>
+
+                              <button mat-raised-button color="warn" class='create-button clear-filter' type="button"
                                    (click)="fetchStudentsActivity()">Clear Filter</button>
-                              <button class='create-button' type="button"
-                                   (click)="generateExcel()">Download</button>
+                              <button mat-raised-button color="accent" class='create-button' type="button"
+                                   (click)="generateExcel()" style="font-size: 32px;">⇩</button>
+                                   <mat-icon>get_app</mat-icon>
                          </div>
                     </div>
 
@@ -261,7 +268,7 @@
                                                   required>
                                              <h5>{{dateFormData}}</h5>
                                              <h5>{{candidateActivity.AssessmentDate}}</h5>
-                                             <button type="submit">Save Data</button>
+                                             <button mat-raised-button type="submit">Save Data</button>
                                         </form>
 
                                    </td>

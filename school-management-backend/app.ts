@@ -20,6 +20,7 @@ app.use(cors({
 
 
 app.use('/login', loginRouter)
+// app.use('/forgotpassword', loginRouter)
 app.use('/admin', adminRouter)
 app.use('/school', schoolRouter)
 app.use('/student', studentRouter)

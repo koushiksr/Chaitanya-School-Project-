@@ -38,7 +38,7 @@ export class StudentDashboardComponent implements AfterViewInit {
   initialFormValues: any;
   isActivity: boolean = false;
   isChartActive: boolean = false;
-  myChart:any
+  myChart: any
   @ViewChild('myChart') private chartRef!: ElementRef;
 
   // ngOnInit() {
@@ -134,7 +134,7 @@ export class StudentDashboardComponent implements AfterViewInit {
   }
 
   displayChart() {
-    this.isChartActive=true
+    this.isChartActive = true
     // Sample data, you can replace it with your actual data
     const data: ChartDataset[] = [
       { data: [65, 59, 80, 81], label: 'Dataset 1' },
@@ -149,7 +149,7 @@ export class StudentDashboardComponent implements AfterViewInit {
 
     // Create the chart
     const ctx = this.chartRef.nativeElement.getContext('2d');
-     this.myChart = new Chart(ctx, {
+    this.myChart = new Chart(ctx, {
       type: 'bar',
       data: {
         labels: ['Category 1', 'Category 2', 'Category 3', 'Category 4'],
@@ -159,7 +159,7 @@ export class StudentDashboardComponent implements AfterViewInit {
     });
   }
   destroyChart() {
-    this.isChartActive=false
+    this.isChartActive = false
     if (this.myChart) {
       this.myChart.destroy();
     }
@@ -216,6 +216,7 @@ export class StudentDashboardComponent implements AfterViewInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       this.myForm.reset();
+      this.editMode = false
     });
   }
   onSubmit() {
