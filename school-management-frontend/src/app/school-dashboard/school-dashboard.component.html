@@ -1,0 +1,282 @@
+<div class="top-bar">
+     <div class="dashboard-heading">{{ !isActivity ? 'School Dashboard' : 'Activity Dashboard' }}</div>
+     <div class="profile">
+          <div class="profile-open">
+               <button (click)="SchoolDetails()" (click)="drawer.toggle()"></button>
+               <img class="profile-image" src="../../assets/james-person-1.jpg" alt="Profile Image">
+          </div>
+          <div class="search-bar">
+               <input type="text" class="search-input" placeholder="Search...">
+          </div>
+
+          <!-- <span>Welcome, School Name</span> -->
+     </div>
+</div>
+<mat-drawer-container class="example-container" autosize>
+
+
+     <mat-drawer #drawer class="example-sidenav" mode="side">
+          <div class="profile-container">
+               <div class="profile-sidenav">
+                    <div class="profile-image">
+                         <img class="profile-img" src="../../assets//james-person-1.jpg" alt="">
+                    </div>
+                    <div class="profile-info">
+                         <h2>Name: {{name}}</h2>
+                         <p>Email: {{email}}</p>
+                         <!-- <p>Ph: {{phoneNumber}}</p> -->
+                    </div>
+                    <div class="side-nav-button">
+                         <button mat-button (click)="activity(true)">Dashboard</button>
+                         <button mat-button (click)="activity(false)">Activity</button>
+                         <button mat-button class="logout-button" (click)="logout()">Logout</button>
+                    </div>
+               </div>
+          </div>
+
+     </mat-drawer>
+
+     <div *ngIf="isActivity" class="example-sidenav-content">
+          <div class="body">
+               <ng-template class="school-template" #formContent let-dialogRef let-closeDialog="closeDialog">
+                    <div class="school-form">
+                         <h2>{{ editMode ? 'Edit a Student' : 'Add a Student' }}</h2>
+                         <form [formGroup]="myForm" (ngSubmit)="onSubmit();">
+                              <div class="form-group">
+                                   <label for="candidateName">Candidate Name:</label>
+                                   <input type="text" id="candidateName" formControlName="candidateName" required>
+                              </div>
+                              <!-- <div class="form-group">
+                                   <label for="candidateID">Candidate ID:</label>
+                                   <input type="text" id="candidateID" formControlName="candidateID" required>
+                              </div> -->
+
+                              <div class="form-group">
+                                   <label for="gender">Gender:</label>
+                                   <select id="gender" formControlName="gender" required>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                   </select>
+                              </div>
+
+                              <div class="form-group">
+                                   <label for="dob">DOB:</label>
+                                   <input type="date" id="dob" formControlName="dob" required>
+                              </div>
+
+                              <div class="form-group">
+                                   <label for="age">Age:</label>
+                                   <input type="number" id="age" formControlName="age" required>
+                              </div>
+
+                              <div class="form-group">
+                                   <label for="candidateClass">Class:</label>
+                                   <input type="text" id="candidateClass" formControlName="candidateClass" required>
+                              </div>
+
+                              <div class="form-group">
+                                   <label for="dominantSide">Dominant Side:</label>
+                                   <input type="text" id="dominantSide" formControlName="dominantSide" required>
+                              </div>
+
+                              <div class="form-group">
+                                   <label for="parentName">Name of Parent:</label>
+                                   <input type="text" id="parentName" formControlName="parentName" required>
+                              </div>
+
+                              <div class="form-group">
+                                   <label for="parentMobileNo">Parent's Mobile No:</label>
+                                   <input type="text" id="parentMobileNo" formControlName="parentMobileNo" required>
+                              </div>
+
+                              <div class="form-group">
+                                   <label for="alternateNo">Alternate No:</label>
+                                   <input type="text" id="alternateNo" formControlName="alternateNo" required>
+                              </div>
+
+                              <div class="form-group">
+                                   <label for="email">Email ID:</label>
+                                   <input type="email" id="email" formControlName="email" required>
+                              </div>
+
+                              <div class="form-group">
+                                   <label for="residenceArea">Residence Area/Colony:</label>
+                                   <input type="text" id="residenceArea" formControlName="residenceArea" required>
+                              </div>
+
+                              <div class="form-group last-form-grou">
+                                   <label for="residenceCity">Residence City:</label>
+                                   <input type="text" id="residenceCity" formControlName="residenceCity" required>
+                              </div>
+
+                              <button type="submit" class="btn btn-primary">{{ editMode ? 'Edit' : 'Submit' }}</button>
+                         </form>
+
+                    </div>
+               </ng-template>
+
+               <div class="school-list">
+                    <h2>Student List</h2>
+                    <button class='create-button-openform' (click)="openDialog()">Open Student Form</button>
+                    <table>
+                         <thead>
+                              <tr>
+                                   <th>Candidate Name</th>
+                                   <th>Candidate ID</th>
+                                   <th>Gender</th>
+                                   <th>Date of Birth</th>
+                                   <th>Age</th>
+                                   <th>Class</th>
+                                   <th>Dominant Side</th>
+                                   <th>Name of Parent</th>
+                                   <th>Parent's Mobile No</th>
+                                   <th>Alternate No</th>
+                                   <th>Email ID</th>
+                                   <th>Residence Area/Colony</th>
+                                   <th>Residence City</th>
+                                   <th>Actions</th>
+                              </tr>
+                         </thead>
+                         <tbody>
+                              <tr *ngFor="let candidate of candidates">
+                                   <td>{{ candidate.candidateName }}</td>
+                                   <td>{{ candidate.candidateID }}</td>
+                                   <td>{{ candidate.gender }}</td>
+                                   <td>{{ candidate.dob | date:'shortDate' }}</td>
+                                   <td>{{ candidate.age }}</td>
+                                   <td>{{ candidate.candidateClass }}</td>
+                                   <td>{{ candidate.dominantSide }}</td>
+                                   <td>{{ candidate.parentName }}</td>
+                                   <td>{{ candidate.parentMobileNo }}</td>
+                                   <td>{{ candidate.alternateNo }}</td>
+                                   <td>{{ candidate.email }}</td>
+                                   <td>{{ candidate.residenceArea }}</td>
+                                   <td>{{ candidate.residenceCity }}</td>
+                                   <td class="table-buttons">
+                                        <button class="edit" (click)="editCandidate(candidate)">Edit</button>
+                                        <button class="delete"
+                                             (click)="deleteCandidate(candidate.email)">Delete</button>
+                                   </td>
+                              </tr>
+                         </tbody>
+                    </table>
+               </div>
+          </div>
+     </div>
+
+     <div *ngIf="!isActivity" class="example-sidenav-content">
+          <div class="body">
+               <div class="school-list">
+                    <div class="chart-filter-bar-list">
+                         <div>
+                              <h2>Activities list</h2>
+                         </div>
+                         <div class="chart-filter-bar">
+                              <div class="display-column">
+                                   <label for="dropdown1">Activity</label>
+                                   <select class="custom-dropdown left-dropdown-filter" id="dropdown1"
+                                        [(ngModel)]="selectedActivity">
+                                        <option disabled selected value="">Select Activity</option>
+                                        <option *ngFor="let activity of allTaskFeilds" [value]="activity">{{activity}}
+                                        </option>
+                                   </select>
+                              </div>
+                              <div class="display-column">
+                                   <label for="dropdown2">Rating</label>
+                                   <select class="custom-dropdown" id="dropdown2" [(ngModel)]="selectedRating">
+                                        <option disabled selected value="">Select Rating</option>
+                                        <option value="1">Rating 1</option>
+                                        <option value="2">Rating 2</option>
+                                        <option value="3">Rating 3</option>
+                                   </select>
+                              </div>
+                              <button class='create-button' type="button" (click)="onFilterClick()">Filter</button>
+                              <button class='create-button clear-filter' type="button"
+                                   (click)="fetchStudentsActivity()">Clear Filter</button>
+                              <button class='create-button' type="button"
+                                   (click)="generateExcel()">Download</button>
+                         </div>
+                    </div>
+
+
+                    <!-- <button class='create-button' (click)="openDialog()">Open Student Form</button> -->
+                    <table>
+                         <thead>
+                              <tr>
+                                   <th>Candidate Name</th>
+                                   <th>Candidate ID</th>
+                                   <!-- <th>Gender</th> -->
+                                   <!-- <th>Date of Birth</th>
+                                   <th>Age</th>
+                                   <th>Class</th>
+                                   <th>Dominant Side</th>
+                                   <th>Name of Parent</th>
+                                   <th>Parent's Mobile No</th>
+                                   <th>Alternate No</th> -->
+                                   <!-- <th>Email ID</th> -->
+                                   <!-- <th>Residence Area/Colony</th>
+                                   <th>Residence City</th>
+                                   <th>School Name</th> -->
+                                   <th>School ID</th>
+                                   <!-- <th>School Contact Name</th>
+                                   <th>School Contact Number</th>
+                                   <th>School Email ID</th> -->
+                                   <th>Assessment Team</th>
+                                   <th>Assessment Date</th>
+                                   <th>Assessment ID</th>
+                                   <!-- <th>Height (CMs)</th>
+                                   <th>Height Rating</th> -->
+                                   <!-- <th>Actions</th> -->
+                              </tr>
+                         </thead>
+                         <tbody>
+                              <tr *ngFor="let candidateActivity of candidateActivities">
+                                   <td>{{ candidateActivity.Name }}</td>
+                                   <td>{{ candidateActivity.ID }}</td>
+                                   <!-- <td>{{ candidateActivity.Gender }}</td>
+                                   <td>{{ candidateActivity.DOB }}</td>
+                                   <td>{{ candidateActivity.Age }}</td>
+                                   <td>{{ candidateActivity.Class }}</td>
+                                   <td>{{ candidateActivity.DominantSide }}</td>
+                                   <td>{{ candidateActivity.ParentName }}</td>
+                                   <td>{{ candidateActivity.ParentMobileNo }}</td>
+                                   <td>{{ candidateActivity.AlternateNo }}</td> -->
+                                   <!-- <td>{{ candidateActivity.EmailID }}</td> -->
+                                   <!-- <td>{{ candidateActivity.ResidenceArea }}</td>
+                                   <td>{{ candidateActivity.ResidenceCity }}</td>
+                                   <td>{{ candidateActivity.SchoolName }}</td> -->
+                                   <td>{{ candidateActivity.SchoolID }}</td>
+                                   <!-- <td>{{ candidateActivity.SchoolContactName }}</td>
+                                   <td>{{ candidateActivity.SchoolContactNumber }}</td>
+                                   <td>{{ candidateActivity.SchoolContactEmailID }}</td> -->
+                                   <td>{{ candidateActivity.AssessmentTeam }}</td>
+                                   <!-- <td>{{ candidateActivity.AssessmentDate }}</td> -->
+                                   <td>
+
+                                        <!-- app.component.html -->
+
+                                        <form (submit)="saveCandidateAssinmentData(candidateActivity)">
+                                             <!-- <label for="data">Data:</label> -->
+                                             <input type='date' name="data" id="data" [(ngModel)]="dateFormData"
+                                                  required>
+                                             <h5>{{dateFormData}}</h5>
+                                             <h5>{{candidateActivity.AssessmentDate}}</h5>
+                                             <button type="submit">Save Data</button>
+                                        </form>
+
+                                   </td>
+                                   <td>{{ candidateActivity.AssessmentID }}</td>
+                                   <!-- <td>{{ candidateActivity.HeightCMs }}</td>
+                                   <td>{{ candidateActivity.HeightRating }}</td> -->
+                                   <!-- <td class="table-buttons">
+                                        <button class="edit" (click)="editCandidate(candidate)">Edit</button>
+                                        <button class="delete"
+                                             (click)="deleteCandidate(candidate.candidateID)">Delete</button>
+                                   </td> -->
+                              </tr>
+                         </tbody>
+                    </table>
+               </div>
+          </div>
+     </div>
+</mat-drawer-container>

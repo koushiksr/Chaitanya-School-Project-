@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { box-sizing: border-box; 
+     margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Set background color to white for Angular Material components */
+.mat-card,
+.mat-dialog-container,
+.mat-drawer-container,
+.mat-sidenav,
+.mat-menu-panel,
+.mat-autocomplete-panel,
+.mat-select-panel,
+.mat-tab-group,
+.mat-tooltip {
+  background-color: white;
+}
+
+/* You can add more Angular Material components as needed */

@@ -1,0 +1,175 @@
+<div class="top-bar">
+     <div class="dashboard-heading">Admin Dashboard</div>
+     <div class="profile">
+          <div class="profile-open">
+               <button (click)="adminDetails()" (click)="drawer.toggle()"></button>
+               <img class="profile-image" src="../../assets/james-person-1.jpg" alt="Profile Image">
+          </div>
+          <div class="search-bar">
+               <input type="text" class="search-input" placeholder="Search...">
+          </div>
+
+          <span>Welcome, Admin</span>
+     </div>
+</div>
+
+<mat-drawer-container class="example-container" autosize>
+     <mat-drawer #drawer class="example-sidenav" mode="side">
+          <div class="profile-container">
+               <div class="profile-sidenav">
+                    <div class="profile-image">
+                         <img class="profile-img" src="../../assets//james-person-1.jpg" alt="">
+                    </div>
+                    <div class="profile-info">
+                         <h2>Name: {{firstName}} {{lastName}}</h2>
+                         <p>Email: {{email}}</p>
+                         <p>Ph: {{phoneNumber}}</p>
+                    </div>
+                    <button mat-button class="logout-button" (click)="logout()">Logout</button>
+               </div>
+          </div>
+     </mat-drawer>
+
+     <div class="example-sidenav-content">
+          <div class="body">
+               <ng-template class="school-template" #formContent let-dialogRef let-closeDialog="closeDialog">
+                    <div class="school-form">
+                         <h2>{{ editMode ? 'Edit a school' : 'Add a School' }}</h2>
+                         <form [formGroup]="myForm" (ngSubmit)="onSubmit(); ">
+                              <div class="form-group">
+                                   <label for="schoolName">Name of the School:</label>
+                                   <input type="text" id="schoolName" formControlName="schoolName" required>
+                              </div>
+
+                              <div class="form-group">
+                                   <label for="schoolCity">schoolCity:</label>
+                                   <input type="text" id="schoolCity" formControlName="schoolCity" required
+                                        minlength="4">
+                              </div>
+
+                              <div class="form-group">
+                                   <label for="contactName">School Contact Name:</label>
+                                   <input type="text" id="contactName" formControlName="contactName" required>
+                              </div>
+
+                              <div class="form-group">
+                                   <label for="contactNo">School Contact No:</label>
+                                   <input type="text" id="contactNo" formControlName="contactNo" required>
+                              </div>
+
+                              <div class="form-group">
+                                   <label for="schoolEmail">School E-mail ID:</label>
+                                   <input type="email" id="schoolEmail" formControlName="schoolEmail" required>
+                              </div>
+
+                              <div class="form-group">
+                                   <label for="schoolType">School Type:</label>
+                                   <select id="schoolType" formControlName="schoolType" required>
+                                        <option value="CBSE">CBSE</option>
+                                        <option value="SSC">SSC</option>
+                                        <option value="ISCE">ISCE</option>
+                                   </select>
+                              </div>
+
+
+                              <div class="form-group">
+                                   <label for="principalName">Name of Principal:</label>
+                                   <input type="text" id="principalName" formControlName="principalName" required>
+                              </div>
+
+                              <div class="form-group">
+                                   <label for="principalContact">Principal Contact No:</label>
+                                   <input type="text" id="principalContact" formControlName="principalContact" required>
+                              </div>
+
+                              <div class="form-group">
+                                   <label for="principalEmail">Principal E-mail ID:</label>
+                                   <input type="email" id="principalEmail" formControlName="principalEmail" required>
+                              </div>
+
+                              <div class="form-group">
+                                   <label for="classesFrom">Classes From:</label>
+                                   <input type="number" id="classesFrom" formControlName="classesFrom" required>
+                              </div>
+
+                              <div class="form-group">
+                                   <label for="classesTo">Classes To:</label>
+                                   <input type="number" id="classesTo" formControlName="classesTo" required>
+                              </div>
+
+                              <div class="form-group">
+                                   <label for="totalStudents">Total No of Students:</label>
+                                   <input type="number" id="totalStudents" formControlName="totalStudents" required>
+                              </div>
+
+                              <div class="form-group">
+                                   <label for="noOfBoys">No of Boys:</label>
+                                   <input type="number" id="noOfBoys" formControlName="noOfBoys" required>
+                              </div>
+
+                              <div class="form-group">
+                                   <label for="noOfGirls">No of Girls:</label>
+                                   <input type="number" id="noOfGirls" formControlName="noOfGirls" required>
+                              </div>
+
+                              <button type="submit" class="btn btn-primary">{{ editMode ? 'Edit' : 'Submit' }}</button>
+                              <!-- <button type="button" (click)="cancel(dialogRef)" class="btn btn-primary">Cancel</button> -->
+                         </form>
+                    </div>
+               </ng-template>
+
+               <div class="school-list">
+                    <h2>School List</h2>
+                    <button class='create-button' (click)="openDialog()">Open School Form</button>
+
+                    <table>
+                         <thead>
+                              <tr>
+                                   <th>School Name</th>
+                                   <th>ID</th>
+                                   <th>Contact Name</th>
+                                   <th>Contact No</th>
+                                   <th>E-mail ID</th>
+                                   <th>Type</th>
+                                   <th>City</th>
+                                   <th>Principal Name</th>
+                                   <th>Principal Contact No</th>
+                                   <th>Principal E-mail</th>
+                                   <th>Classes From</th>
+                                   <th>Classes To</th>
+                                   <th>Total Students</th>
+                                   <th>Total Boys</th>
+                                   <th>Total Girls</th>
+                                   <th>Actions</th>
+                              </tr>
+                         </thead>
+                         <tbody>
+                              <tr *ngFor="let school of schools">
+                                   <td>{{ school.schoolName }}</td>
+                                   <td>{{ school.schoolID }}</td>
+                                   <td>{{ school.contactName }}</td>
+                                   <td>{{ school.contactNo }}</td>
+                                   <td>{{ school.schoolEmail }}</td>
+                                   <td>{{ school.schoolType }}</td>
+                                   <td>{{ school.schoolCity }}</td>
+                                   <td>{{ school.principalName }}</td>
+                                   <td>{{ school.principalContact }}</td>
+                                   <td>{{ school.principalEmail }}</td>
+                                   <td>{{ school.classesFrom }}</td>
+                                   <td>{{ school.classesTo }}</td>
+                                   <td>{{ school.totalStudents }}</td>
+                                   <td>{{ school.noOfBoys }}</td>
+                                   <td>{{ school.noOfGirls }}</td>
+                                   <td class="table-buttons">
+                                        <button class="edit" (click)="editSchool(school)">Edit</button>
+                                        <button class="delete" (click)="deleteSchool(school._id)">Delete</button>
+                                   </td>
+                              </tr>
+                         </tbody>
+                    </table>
+               </div>
+
+          </div>
+     </div>
+
+</mat-drawer-container>

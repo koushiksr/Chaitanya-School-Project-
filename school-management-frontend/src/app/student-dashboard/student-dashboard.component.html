@@ -1,0 +1,608 @@
+<div class="top-bar">
+     <div class="dashboard-heading">Activity Dashboard</div>
+     <div class="profile">
+          <div class="profile-open">
+               <button (click)="SchoolDetails()" (click)="drawer.toggle()"></button>
+               <img class="profile-image" src="../../assets/james-person-1.jpg" alt="Profile Image">
+          </div>
+          <div class="search-bar">
+               <input type="text" class="search-input" placeholder="Search...">
+          </div>
+
+          <!-- <span>Welcome, School Name</span> -->
+     </div>
+</div>
+<mat-drawer-container class="example-container" autosize>
+
+
+     <mat-drawer #drawer class="example-sidenav" mode="side">
+          <div class="profile-container">
+               <div class="profile-sidenav">
+                    <div class="profile-image">
+                         <img class="profile-img" src="../../assets//james-person-1.jpg" alt="">
+                    </div>
+                    <div class="profile-info">
+                         <h2>Name: {{admin?.candidateName}}</h2>
+                         <p>Email: {{ admin?.email }}</p>
+                         <p>School ID: {{admin?.schoolID}}</p>
+                         <p>Student ID: {{admin?.candidateID}}</p>
+                    </div>
+                    <div class="side-nav-button">
+                         <button mat-button (click)="activity(true)">Dashboard</button>
+                         <!-- <button mat-button (click)="activity(false)">Activity</button> -->
+                         <button mat-button class="logout-button" (click)="logout()">Logout</button>
+                    </div>
+               </div>
+          </div>
+
+     </mat-drawer>
+
+
+
+
+
+
+
+     <div *ngIf="!isActivity" class="example-sidenav-content">
+          <div class="body">
+               <ng-template class="school-template" #formContent let-dialogRef let-closeDialog="closeDialog">
+                    <div class="school-form">
+                         <h2>{{ editMode ? 'Edit a school' : 'Add Activity' }}</h2>
+                         <form [formGroup]="myForm" (ngSubmit)="onSubmit();">
+                              <!-- Candidate Information -->
+                              <h3>Personal Details</h3>
+                              <div class="form-section">
+                                   <div class="form-group">
+                                        <label for="Name">Name:</label>
+                                        <input type="text" id="Name" formControlName="Name" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="ID">ID:</label>
+                                        <input type="text" id="ID" formControlName="ID" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="Gender">Gender:</label>
+                                        <input type="text" id="Gender" formControlName="Gender" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="DOB">DOB:</label>
+                                        <input type="date" id="DOB" formControlName="DOB" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="Age">Age:</label>
+                                        <input type="number" id="Age" formControlName="Age" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="Class">Class:</label>
+                                        <input type="text" id="Class" formControlName="Class" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="DominantSide">DominantSide:</label>
+                                        <input type="text" id="DominantSide" formControlName="DominantSide" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="ParentName">Parent Name:</label>
+                                        <input type="text" id="ParentName" formControlName="ParentName" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="ParentMobileNo">Parent Mobile No:</label>
+                                        <input type="text" id="ParentMobileNo" formControlName="ParentMobileNo"
+                                             required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="AlternateNo">Alternate No:</label>
+                                        <input type="text" id="AlternateNo" formControlName="AlternateNo" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="Email">Email ID:</label>
+                                        <input type="email" id="Email" formControlName="Email" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="ResidenceArea">Residence Area:</label>
+                                        <input type="text" id="ResidenceArea" formControlName="ResidenceArea" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="ResidenceCity">Residence City:</label>
+                                        <input type="text" id="ResidenceCity" formControlName="ResidenceCity" required>
+                                   </div>
+                              </div>
+                              <!-- School Information -->
+                              <h3>School Details</h3>
+                              <div class="form-section">
+                                   <div class="form-group">
+                                        <label for="SchoolName">School Name:</label>
+                                        <input type="text" id="SchoolName" formControlName="SchoolName" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="SchoolID">School ID:</label>
+                                        <input type="text" id="SchoolID" formControlName="SchoolID" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="SchoolContactName">School Contact Name:</label>
+                                        <input type="text" id="SchoolContactName" formControlName="SchoolContactName"
+                                             required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="SchoolContactNumber">School Contact Number:</label>
+                                        <input type="text" id="SchoolContactNumber"
+                                             formControlName="SchoolContactNumber" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="SchoolContactEmailID">School Contact Email ID:</label>
+                                        <input type="email" id="SchoolContactEmailID"
+                                             formControlName="SchoolContactEmailID" required>
+                                   </div>
+                              </div>
+                              <!-- Assessment Information -->
+                              <h3>Assignment Details</h3>
+                              <div class="form-section">
+                                   <div class="form-group">
+                                        <div class="form-group">
+                                             <label for="AssessmentTeam">Assessment Team:</label>
+                                             <input type="text" id="AssessmentTeam" formControlName="AssessmentTeam"
+                                                  required>
+                                        </div>
+                                        <!-- <div class="form-group">
+                                             <label for="AssessmentDate">Assessment Date:</label>
+                                             <input type="date" id="AssessmentDate" formControlName="AssessmentDate"
+                                                  required>
+                                        </div> -->
+                                        <div class="form-group">
+                                             <label for="AssessmentID">Assessment ID:</label>
+                                             <input type="text" id="AssessmentID" formControlName="AssessmentID"
+                                                  required>
+                                        </div>
+                                   </div>
+                              </div>
+                              <!-- Physical Attributes -->
+                              <!-- <div class="form-group">
+                                   <label for="heightCMs">Height (CMs):</label>
+                                   <input type="number" id="heightCMs" formControlName="PhysicalAttributes.HeightCMs"
+                                        required>
+                              </div> -->
+                              <!-- Physical Attributes Information -->
+                              <h3>Physical Details</h3>
+                              <div class="form-section last-form-section">
+                                   <div class="form-group">
+                                        <label for="HeightCMs">Height in CMs:</label>
+                                        <input type="number" id="HeightCMs" formControlName="HeightCMs" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="HeightRating">Height Rating:</label>
+                                        <input type="number" id="HeightRating" formControlName="HeightRating" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="WeightKG">Weight in KG:</label>
+                                        <input type="number" id="WeightKG" formControlName="WeightKG" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="WeightRating">Weight Rating:</label>
+                                        <input type="number" id="WeightRating" formControlName="WeightRating" required>
+                                   </div>
+
+
+                                   <div class="form-group">
+                                        <label for="BMI">BMI:</label>
+                                        <input type="number" id="BMI" formControlName="BMI" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="BmiRating">BMI Rating:</label>
+                                        <input type="number" id="BmiRating" formControlName="BmiRating" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="BodyFatPercentage">Body Fat Percentage:</label>
+                                        <input type="number" id="BodyFatPercentage" formControlName="BodyFatPercentage"
+                                             required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="BodyFatRating">Body Fat Rating:</label>
+                                        <input type="number" id="BodyFatRating" formControlName="BodyFatRating"
+                                             required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="ArmLengthCMs">Arm Length in CMs:</label>
+                                        <input type="number" id="ArmLengthCMs" formControlName="ArmLengthCMs" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="ArmLengthRating">Arm Length Rating:</label>
+                                        <input type="number" id="ArmLengthRating" formControlName="ArmLengthRating"
+                                             required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="LegLengthCMs">Leg Length in CMs:</label>
+                                        <input type="number" id="LegLengthCMs" formControlName="LegLengthCMs" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="LegLengthRating">Leg Length Rating:</label>
+                                        <input type="number" id="LegLengthRating" formControlName="LegLengthRating"
+                                             required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="SitAndReachCMs">Sit and Reach in CMs:</label>
+                                        <input type="number" id="SitAndReachCMs" formControlName="SitAndReachCMs"
+                                             required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="SitAndReachRating">Sit and Reach Rating:</label>
+                                        <input type="number" id="SitAndReachRating" formControlName="SitAndReachRating"
+                                             required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="SingleLegBalance">Single Leg Balance:</label>
+                                        <input type="number" id="SingleLegBalance" formControlName="SingleLegBalance"
+                                             required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="SingleLegBalanceRating">Single Leg Balance Rating:</label>
+                                        <input type="number" id="SingleLegBalanceRating"
+                                             formControlName="SingleLegBalanceRating" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="PushUps">Push-Ups:</label>
+                                        <input type="number" id="PushUps" formControlName="PushUps" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="PushUpsRating">Push-Ups Rating:</label>
+                                        <input type="number" id="PushUpsRating" formControlName="PushUpsRating"
+                                             required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="GripStrengthKGs">Grip Strength in KGs:</label>
+                                        <input type="number" id="GripStrengthKGs" formControlName="GripStrengthKGs"
+                                             required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="GripStrengthRating">Grip Strength Rating:</label>
+                                        <input type="number" id="GripStrengthRating"
+                                             formControlName="GripStrengthRating" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="SquatTest30Secs">Squat Test (30 Seconds):</label>
+                                        <input type="number" id="SquatTest30Secs" formControlName="SquatTest30Secs"
+                                             required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="SquatTestRating">Squat Test Rating:</label>
+                                        <input type="number" id="SquatTestRating" formControlName="SquatTestRating"
+                                             required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="PlankSecs">Plank (Seconds):</label>
+                                        <input type="number" id="PlankSecs" formControlName="PlankSecs" required>
+                                   </div>
+                                   <!-- Add similar form elements for the remaining fields -->
+                                   <div class="form-group">
+                                        <label for="PlankRating">Plank Rating:</label>
+                                        <input type="number" id="PlankRating" formControlName="PlankRating" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="StandingLongJumpCMs">Standing Long Jump (CMs):</label>
+                                        <input type="number" id="StandingLongJumpCMs"
+                                             formControlName="StandingLongJumpCMs" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="StandingLongJumpRating">Standing Long Jump Rating:</label>
+                                        <input type="number" id="StandingLongJumpRating"
+                                             formControlName="StandingLongJumpRating" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="StandingVerticalJumpInches">Standing Vertical Jump
+                                             (Inches):</label>
+                                        <input type="number" id="StandingVerticalJumpInches"
+                                             formControlName="StandingVerticalJumpInches" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="StandingVerticalJumpRating">Standing Vertical Jump
+                                             Rating:</label>
+                                        <input type="number" id="StandingVerticalJumpRating"
+                                             formControlName="StandingVerticalJumpRating" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="FiveZeroFiveSecs">Five Zero Five (Secs):</label>
+                                        <input type="number" id="FiveZeroFiveSecs" formControlName="FiveZeroFiveSecs"
+                                             required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="FiveZeroFiveRating">Five Zero Five Rating:</label>
+                                        <input type="number" id="FiveZeroFiveRating"
+                                             formControlName="FiveZeroFiveRating" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="Speed30MtrsSecs">Speed (30 Meters - Secs):</label>
+                                        <input type="number" id="Speed30MtrsSecs" formControlName="Speed30MtrsSecs"
+                                             required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="Speed30MtrsRating">Speed (30 Meters) Rating:</label>
+                                        <input type="number" id="Speed30MtrsRating" formControlName="Speed30MtrsRating"
+                                             required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="SixHundredMtrsMins">Six Hundred Meters (Mins):</label>
+                                        <input type="number" id="SixHundredMtrsMins"
+                                             formControlName="SixHundredMtrsMins" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="SixHundredMtrsRating">Six Hundred Meters Rating:</label>
+                                        <input type="number" id="SixHundredMtrsRating"
+                                             formControlName="SixHundredMtrsRating" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="OneMileTest">One Mile Test:</label>
+                                        <input type="number" id="OneMileTest" formControlName="OneMileTest" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="OneMileTestRating">One Mile Test Rating:</label>
+                                        <input type="number" id="OneMileTestRating" formControlName="OneMileTestRating"
+                                             required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="BearPositionHoldRating">Bear Position Hold Rating:</label>
+                                        <input type="number" id="BearPositionHoldRating"
+                                             formControlName="BearPositionHoldRating" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="OverheadSquatsRating">Overhead Squats Rating:</label>
+                                        <input type="number" id="OverheadSquatsRating"
+                                             formControlName="OverheadSquatsRating" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="LungesRating">Lunges Rating:</label>
+                                        <input type="number" id="LungesRating" formControlName="LungesRating" required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="RemarksRemark1">Remarks 1:</label>
+                                        <input type="text" id="RemarksRemark1" formControlName="RemarksRemark1"
+                                             required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="RemarksRemark2">Remarks 2:</label>
+                                        <input type="text" id="RemarksRemark2" formControlName="RemarksRemark2"
+                                             required>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="RemarksRemark3">Remarks 3:</label>
+                                        <input type="text" id="RemarksRemark3" formControlName="RemarksRemark3"
+                                             required>
+                                   </div>
+
+                                   <button type="submit" class="btn btn-primary">{{ editMode ? 'Edit' : 'Submit'
+                                        }}</button>
+                              </div>
+                              <!-- </div> -->
+                         </form>
+                    </div>
+               </ng-template>
+
+               <div class="school-list">
+                    <div class="chart-filter-bar-list">
+                         <div>
+                              <h2>Activity List</h2>
+                         </div>
+                        <div class="chart-filter-bar">
+                         <!--       <div class="display-column" >
+                                   <label for="dropdown1">Dropdown 1:</label>
+                                   <select class="custom-dropdown" id="dropdown1">
+                                        <option value="option1">Option 1</option>
+                                        <option value="option2">Option 2</option>
+                                        <option value="option3">Option 3</option>
+                                   </select>
+                              </div>
+                              <div class="display-column">
+                                   <label for="dropdown2">Dropdown 2:</label>
+                                   <select class="custom-dropdown" id="dropdown2">
+                                        <option value="optionA">Option A</option>
+                                        <option value="optionB">Option B</option>
+                                        <option value="optionC">Option C</option>
+                                   </select>
+                              </div>
+                              <button class='create-button'  type="button">Filter</button> -->
+                              <button class='create-button' type="button"
+                                   (click)="isChartActive ? destroyChart() : displayChart()">{{
+                                   isChartActive ? 'Exit Chart' : 'Chart' }}</button>
+                              <button class='create-button' (click)="openDialog()">Activity Form</button>
+
+                         </div>
+                    </div>
+                    <canvas #myChart width="10px" height="10px"></canvas>
+
+                    <table *ngIf="!isChartActive">
+                         <thead>
+                              <tr>
+                                   <th>Candidate Name</th>
+                                   <th>Candidate ID</th>
+                                   <th>Gender</th>
+                                   <th>Date of Birth</th>
+                                   <th>Age</th>
+                                   <th>Class</th>
+                                   <th>Dominant Side</th>
+                                   <th>Name of Parent</th>
+                                   <th>Parent's Mobile No</th>
+                                   <th>Alternate No</th>
+                                   <!-- <th>Email ID</th> -->
+                                   <th>Residence Area/Colony</th>
+                                   <th>Residence City</th>
+                                   <th>School Name</th>
+                                   <th>School ID</th>
+                                   <th>School Contact Name</th>
+                                   <th>School Contact Number</th>
+                                   <th>School Email ID</th>
+                                   <th>Assessment Team</th>
+                                   <th>Assessment Date</th>
+                                   <th>Assessment ID</th>
+                                   <th>Height (CMs)</th>
+                                   <th>Height Rating</th>
+                                   <th>Weight (KG)</th>
+                                   <th>Weight Rating</th>
+                                   <th>BMI</th>
+                                   <th>BMI Rating</th>
+                                   <th>Body Fat Percentage</th>
+                                   <th>Body Fat Rating</th>
+                                   <th>Arm Length (CMs)</th>
+                                   <th>Arm Length Rating</th>
+                                   <th>Leg Length (CMs)</th>
+                                   <th>Leg Length Rating</th>
+                                   <th>Sit & Reach (CMs)</th>
+                                   <th>Sit & Reach Rating</th>
+                                   <th>Single Leg Balance (Falls/Secs)</th>
+                                   <th>Single Leg Balance Rating</th>
+                                   <th>Push Ups</th>
+                                   <th>Push Ups Rating</th>
+                                   <th>Grip Strength (KGs)</th>
+                                   <th>Grip Strength Rating</th>
+                                   <th>Squat Test (30 Secs)</th>
+                                   <th>Squat Test Rating</th>
+                                   <th>Plank (Secs)</th>
+                                   <th>Plank Rating</th>
+                                   <th>Standing Long Jump (CMs)</th>
+                                   <th>Standing Long Jump Rating</th>
+                                   <th>Standing Vertical Jump (Inches)</th>
+                                   <th>Standing Vertical Jump Rating</th>
+                                   <th>5-0-5 (Secs)</th>
+                                   <th>5-0-5 Rating</th>
+                                   <th>Speed (30 Mtrs) (Secs)</th>
+                                   <th>Speed (30 Mtrs) Rating</th>
+                                   <th>600 Mtrs (Mins)</th>
+                                   <th>600 Mtrs Rating</th>
+                                   <th>1 Mile Test</th>
+                                   <th>1 Mile Test Rating</th>
+                                   <th>Bear Position Hold Rating</th>
+                                   <th>Overhead Squats Rating</th>
+                                   <th>Lunges Rating</th>
+                                   <th>Remarks-1</th>
+                                   <th>Remarks-2</th>
+                                   <th>Remarks-3</th>
+                                   <th>Actions</th>
+                              </tr>
+                         </thead>
+                         <tbody>
+                              <tr *ngFor="let candidatesActivit of candidatesActivity">
+                                   <td>{{ candidatesActivit.Name }}</td>
+                                   <td>{{ candidatesActivit.ID }}</td>
+                                   <td>{{ candidatesActivit.Gender }}</td>
+                                   <td>{{ candidatesActivit.DOB }}</td>
+                                   <td>{{ candidatesActivit.Age }}</td>
+                                   <td>{{ candidatesActivit.Class }}</td>
+                                   <td>{{ candidatesActivit.DominantSide }}</td>
+                                   <td>{{ candidatesActivit.ParentName }}</td>
+                                   <td>{{ candidatesActivit.ParentMobileNo }}</td>
+                                   <td>{{ candidatesActivit.AlternateNo }}</td>
+                                   <!-- <td>{{ candidatesActivit.EmailID }}</td> -->
+                                   <td>{{ candidatesActivit.ResidenceArea }}</td>
+                                   <td>{{ candidatesActivit.ResidenceCity }}</td>
+                                   <td>{{ candidatesActivit.SchoolName }}</td>
+                                   <td>{{ candidatesActivit.SchoolID }}</td>
+                                   <td>{{ candidatesActivit.SchoolContactName }}</td>
+                                   <td>{{ candidatesActivit.SchoolContactNumber }}</td>
+                                   <td>{{ candidatesActivit.SchoolContactEmailID }}</td>
+                                   <td>{{ candidatesActivit.AssessmentTeam }}</td>
+                                   <td>{{ candidatesActivit.AssessmentDate }}</td>
+                                   <td>{{ candidatesActivit.AssessmentID }}</td>
+                                   <td>{{ candidatesActivit.HeightCMs }}</td>
+                                   <td>{{ candidatesActivit.HeightRating }}</td>
+                                   <td>{{ candidatesActivit.WeightKG }}</td>
+                                   <td>{{ candidatesActivit.WeightRating }}</td>
+                                   <td>{{ candidatesActivit.BMI }}</td>
+                                   <td>{{ candidatesActivit.BmiRating }}</td>
+                                   <td>{{ candidatesActivit.BodyFatPercentage }}</td>
+                                   <td>{{ candidatesActivit.BodyFatRating }}</td>
+                                   <td>{{ candidatesActivit.ArmLengthCMs }}</td>
+                                   <td>{{ candidatesActivit.ArmLengthRating }}</td>
+                                   <td>{{ candidatesActivit.LegLengthCMs }}</td>
+                                   <td>{{ candidatesActivit.LegLengthRating }}</td>
+                                   <td>{{ candidatesActivit.SitAndReachCMs }}</td>
+                                   <td>{{ candidatesActivit.SitAndReachRating }}</td>
+                                   <td>{{ candidatesActivit.SingleLegBalance }}</td>
+                                   <td>{{ candidatesActivit.SingleLegBalanceRating }}</td>
+                                   <td>{{ candidatesActivit.PushUps }}</td>
+                                   <td>{{ candidatesActivit.PushUpsRating }}</td>
+                                   <td>{{ candidatesActivit.GripStrengthKGs }}</td>
+                                   <td>{{ candidatesActivit.GripStrengthRating }}</td>
+                                   <td>{{ candidatesActivit.SquatTest30Secs }}</td>
+                                   <td>{{ candidatesActivit.SquatTestRating }}</td>
+                                   <td>{{ candidatesActivit.PlankSecs }}</td>
+                                   <td>{{ candidatesActivit.PlankRating }}</td>
+                                   <td>{{ candidatesActivit.StandingLongJumpCMs }}</td>
+                                   <td>{{ candidatesActivit.StandingLongJumpRating }}</td>
+                                   <td>{{ candidatesActivit.StandingVerticalJumpInches }}</td>
+                                   <td>{{ candidatesActivit.StandingVerticalJumpRating }}</td>
+                                   <td>{{ candidatesActivit.FiveZeroFiveSecs }}</td>
+                                   <td>{{ candidatesActivit.FiveZeroFiveRating }}</td>
+                                   <td>{{ candidatesActivit.Speed30MtrsSecs }}</td>
+                                   <td>{{ candidatesActivit.Speed30MtrsRating }}</td>
+                                   <td>{{ candidatesActivit.SixHundredMtrsMins }}</td>
+                                   <td>{{ candidatesActivit.SixHundredMtrsRating }}</td>
+                                   <td>{{ candidatesActivit.OneMileTest }}</td>
+                                   <td>{{ candidatesActivit.OneMileTestRating }}</td>
+                                   <td>{{ candidatesActivit.BearPositionHoldRating }}</td>
+                                   <td>{{ candidatesActivit.OverheadSquatsRating }}</td>
+                                   <td>{{ candidatesActivit.LungesRating }}</td>
+                                   <td>{{ candidatesActivit.RemarksRemark1 }}</td>
+                                   <td>{{ candidatesActivit.RemarksRemark2 }}</td>
+                                   <td>{{ candidatesActivit.RemarksRemark3 }}</td>
+                                   <td class="table-buttons">
+                                        <button class="edit" (click)="editCandidate(candidatesActivit)">Edit</button>
+                                        <button class="delete"
+                                             (click)="deleteCandidate(candidatesActivit._id)">Delete</button>
+                                        <button class="delete"
+                                             (click)="generatePDF(candidatesActivit)">Download</button>
+                                   </td>
+                              </tr>
+                         </tbody>
+                    </table>
+
+               </div>
+          </div>
+     </div>
+
+     <div *ngIf="isActivity" class="example-sidenav-content">
+          <div class="body">
+               <div class="school-list">
+                    <h2>Student Activity List</h2>
+                    <!-- <button class='create-button' (click)="openDialog()">Open Student Form</button> -->
+                    <table>
+                         <thead>
+                              <tr>
+                                   <th>Candidate Name</th>
+                                   <th>Candidate ID</th>
+                                   <th>Gender</th>
+                                   <th>Date of Birth</th>
+                                   <th>Age</th>
+                                   <th>Class</th>
+                                   <th>Dominant Side</th>
+                                   <th>Name of Parent</th>
+                                   <th>Parent's Mobile No</th>
+                                   <th>Alternate No</th>
+                                   <th>Email ID</th>
+                                   <th>Residence Area/Colony</th>
+                                   <th>Residence City</th>
+                                   <!-- <th>Actions</th> -->
+                              </tr>
+                         </thead>
+                         <tbody>
+                              <tr *ngFor="let candidate of candidates">
+                                   <td>{{ candidate.candidateName }}</td>
+                                   <td>{{ candidate.candidateID }}</td>
+                                   <td>{{ candidate.gender }}</td>
+                                   <td>{{ candidate.dob | date:'shortDate' }}</td>
+                                   <td>{{ candidate.age }}</td>
+                                   <td>{{ candidate.candidateClass }}</td>
+                                   <td>{{ candidate.dominantSide }}</td>
+                                   <td>{{ candidate.parentName }}</td>
+                                   <td>{{ candidate.parentMobileNo }}</td>
+                                   <td>{{ candidate.alternateNo }}</td>
+                                   <td>{{ candidate.email }}</td>
+                                   <td>{{ candidate.residenceArea }}</td>
+                                   <td>{{ candidate.residenceCity }}</td>
+                                   <!-- <td class="table-buttons">
+                                        <button class="edit" (click)="editCandidate(candidate)">Edit</button>
+                                        <button class="delete"
+                                             (click)="deleteCandidate(candidate.candidateID)">Delete</button>
+                                   </td> -->
+                              </tr>
+                         </tbody>
+                    </table>
+               </div>
+          </div>
+     </div>
+</mat-drawer-container>
