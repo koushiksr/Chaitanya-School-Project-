@@ -67,10 +67,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "school-management-frontend:build:production"
+              "buildTarget": "school-management-frontend:build:production"
             },
             "development": {
-              "browserTarget": "school-management-frontend:build:development"
+              "buildTarget": "school-management-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -78,8 +78,11 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "allowedCommonJsDependencies": ["pdfmake/build/pdfmake", "pdfmake/build/vfs_fonts"],
-            "browserTarget": "school-management-frontend:build"
+            "allowedCommonJsDependencies": [
+              "pdfmake/build/pdfmake",
+              "pdfmake/build/vfs_fonts"
+            ],
+            "buildTarget": "school-management-frontend:build"
           }
         },
         "test": {
