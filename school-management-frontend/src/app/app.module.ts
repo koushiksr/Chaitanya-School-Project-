@@ -22,6 +22,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgxSpinnerModule } from 'ngx-spinner';
+
+
 
 
 @NgModule({
@@ -50,7 +54,9 @@ import { MatIconModule } from '@angular/material/icon';
     NgIf,
     MatPaginatorModule,
     MatDialogModule,
-    MatIconModule
+    MatIconModule,
+    MatProgressSpinnerModule,
+    NgxSpinnerModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

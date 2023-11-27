@@ -16,8 +16,14 @@
   form {
     display: flex;
     flex-wrap: wrap;
-    padding: 3% 5% 10% 5%;
+    padding: 0% 5% 2% 4%;
     width: 89%;
+
+    .spinner-custom {
+      position: absolute;
+      top: 38%;
+      left: 39%;
+    }
 
     .form-group {
       flex-basis: calc(50% - 10px);
@@ -30,11 +36,19 @@
 
       input,
       select {
-        width: 91%;
+        // width: 91%;
         padding: 5px;
         border: 1px solid #ccc;
         border-radius: 5px;
         margin-top: 5px;
+      }
+
+      select {
+        width: 94%;
+      }
+
+      input {
+        width: 91%;
       }
     }
 
@@ -43,29 +57,16 @@
     }
 
     button {
-      // position: absolute;
       // background-color: #007BFF;
       // color: #fff;
       // border: none;
-      // border-radius: 5px;
-      // padding: 10px 20px;
-      // font-size: 16px;
+      // border-radius: 7px;
+      // padding: 8px 28px;
+      margin: 16px 17px 16px 3px; // font-size: 16px;
       // cursor: pointer;
       // text-align: center;
-      // bottom: 14px;
       // text-decoration: none;
       // transition: background-color 0.3s;
-      background-color: #007BFF;
-      color: #fff;
-      border: none;
-      border-radius: 7px;
-      padding: 8px 28px;
-      margin: 9px 27px 16px 3px;
-      font-size: 16px;
-      cursor: pointer;
-      text-align: center;
-      text-decoration: none;
-      transition: background-color 0.3s;
     }
   }
 
@@ -76,6 +77,39 @@
   height: 100%;
   background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.5);
+  .spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999; /* Set a high z-index value to ensure it's on top */
+  }
+  
+  .spinner {
+    position: fixed;
+    top: 50%; /* Adjust this value based on your design */
+    left: 50%; /* Adjust this value based on your design */
+    transform: translate(-50%, -50%); /* Center the spinner */
+    z-index: 10000; /* Set a higher z-index value than the overlay */
+    border: 52px solid rgba(0, 0, 0, 0.1);
+    border-top: 52px solid #3498db;
+    border-radius: 50%;
+    width: 309px;
+    height: 309px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+
 }
 
 .example-sidenav-content {
@@ -97,8 +131,12 @@
       margin: 20px;
       max-height: 859px;
       overflow: auto;
-      // overflow-x: auto;
       position: relative;
+
+      h2 {
+        font-size: 27px;
+        margin: 2px 0px 12px 6px;
+      }
 
       .chart-filter-bar-list {
         display: flex;
@@ -110,7 +148,6 @@
         div {
           h2 {
             font-size: 27px;
-            // margin-bottom: 10px;
             margin: 12px 16px 0px 16px;
           }
 
@@ -153,14 +190,6 @@
           .create-button {
             margin: 20px 7px 1px 7px;
 
-            // background-color: #007bff;
-            // color: #fff;
-            // border: none;
-            // border-radius: 4px;
-            // cursor: pointer;
-            // transition: background-color 0.3s;
-            // height: 33px;
-            // width: 109px;
             .filter-triangle,
             .filter-bar {
               position: absolute;
@@ -179,34 +208,14 @@
             background-color: #af0000;
 
           }
-
-          // .create-button:hover {
-          //   background-color: #0056b3;
-          // }
         }
       }
-
-      // h2 {
-      //   font-size: 27px;
-      //   margin-bottom: 10px;
-      // }
 
       .create-button-openform {
         right: 3px;
         position: absolute;
-        // background-color: #007bff;
-        // color: #fff;
         top: 0px;
-        // border: none;
-        // padding: 10px 20px;
-        // border-radius: 4px;
-        // cursor: pointer;
-        // transition: background-color 0.3s;
       }
-
-      // .create-button:hover {
-      //   background-color: #0056b3;
-      // }
 
       table {
         width: 100%;
@@ -221,17 +230,17 @@
           padding: 8px;
           border: 1px solid #ddd;
 
-          button {
-            // padding: 7px 20px;
-            // margin: 5px;
-            // border: none;
-            // background: #008500;
-            // color: white;
-            // cursor: pointer;
-            // border-radius: 5px;
-            // font-weight: bold;
-            // transition: background-color 0.3s;
-          }
+          // button {
+          // padding: 7px 20px;
+          // margin: 5px;
+          // border: none;
+          // background: #008500;
+          // color: white;
+          // cursor: pointer;
+          // border-radius: 5px;
+          // font-weight: bold;
+          // transition: background-color 0.3s;
+          // }
 
           .edit {
             background-color: #fca938;
@@ -289,6 +298,17 @@
     width: 300px;
     display: grid;
     place-items: center;
+
+    hr {
+      /* border: 0; */
+      height: -14px;
+      /* border: red; */
+      border-radius: 50%;
+      border-color: #2fff00;
+      width: 101%;
+      background-color: rgb(255 255 255 / 87%);
+      margin: 23px 0;
+    }
   }
 
   .profile-image {

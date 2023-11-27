@@ -12,6 +12,7 @@
           <!-- <span>Welcome, School Name</span> -->
      </div>
 </div>
+
 <mat-drawer-container class="example-container" autosize>
 
 
@@ -24,11 +25,16 @@
                     <div class="profile-info">
                          <h2>Name: {{name}}</h2>
                          <p>Email: {{email}}</p>
+                         <p>School ID: {{admin?.schoolID}}</p>
+                         <p>Boys: {{admin?.noOfBoys}}</p>
+                         <p>Girls: {{admin?.noOfGirls}}</p>
+                         <p>Total: {{admin?.totalStudents}}</p>
                          <!-- <p>Ph: {{phoneNumber}}</p> -->
                     </div>
+                    <hr>
                     <div class="side-nav-button">
-                         <button mat-button (click)="activity(true)">Dashboard</button>
-                         <button mat-button (click)="activity(false)">Activity</button>
+                         <button mat-button (click)="activity(true)" (click)="drawer.toggle()">Dashboard</button>
+                         <button mat-button (click)="activity(false)" (click)="drawer.toggle()">Activity</button>
                          <button mat-button class="logout-button" (click)="logout()">Logout</button>
                     </div>
                </div>
@@ -37,10 +43,14 @@
      </mat-drawer>
 
      <div *ngIf="!isActivity" class="example-sidenav-content">
+          <div *ngIf="isLoading" class="spinner-overlay">
+               <div class="spinner"></div>
+          </div>
           <div class="body">
+
                <ng-template class="school-template" #formContent let-dialogRef let-closeDialog="closeDialog">
                     <div class="school-form">
-                         <h2>{{ editMode ? 'Edit a Student' : 'Add a Student' }}</h2>
+                         <h2>{{ editMode ? 'Edit Student' : 'Add Student' }}</h2>
                          <form [formGroup]="myForm" (ngSubmit)="onSubmit();">
                               <div class="form-group">
                                    <label for="candidateName">Candidate Name:</label>
@@ -50,7 +60,6 @@
                                    <label for="candidateID">Candidate ID:</label>
                                    <input type="text" id="candidateID" formControlName="candidateID" required>
                               </div> -->
-
                               <div class="form-group">
                                    <label for="gender">Gender:</label>
                                    <select id="gender" formControlName="gender" required>
@@ -109,8 +118,10 @@
                                    <input type="text" id="residenceCity" formControlName="residenceCity" required>
                               </div>
 
-                              <button mat-raised-button type="submit" class="btn btn-primary">{{ editMode ? 'Edit' :
-                                   'Submit' }}</button>
+                              <button mat-raised-button mat-dialog-close type="submit" class="btn btn-primary">{{
+                                   editMode ? 'Edit' :
+                                   'Submit' }}
+                              </button>
                               <button mat-raised-button type="button" mat-dialog-close
                                    class="btn btn-primary">Cancel</button>
                          </form>
@@ -141,21 +152,21 @@
                                    <th>Actions</th>
                               </tr>
                          </thead>
-                         <tbody>
-                              <tr *ngFor="let candidate of candidates">
-                                   <td>{{ candidate.candidateName }}</td>
-                                   <td>{{ candidate.candidateID }}</td>
-                                   <td>{{ candidate.gender }}</td>
-                                   <td>{{ candidate.dob | date:'shortDate' }}</td>
-                                   <td>{{ candidate.age }}</td>
-                                   <td>{{ candidate.candidateClass }}</td>
-                                   <td>{{ candidate.dominantSide }}</td>
-                                   <td>{{ candidate.parentName }}</td>
-                                   <td>{{ candidate.parentMobileNo }}</td>
-                                   <td>{{ candidate.alternateNo }}</td>
-                                   <td>{{ candidate.email }}</td>
-                                   <td>{{ candidate.residenceArea }}</td>
-                                   <td>{{ candidate.residenceCity }}</td>
+                         <tbody *ngIf="candidates">
+                              <tr *ngFor="let candidate of candidates ">
+                                   <td>{{ candidate?.candidateName }}</td>
+                                   <td>{{ candidate?.candidateID }}</td>
+                                   <td>{{ candidate?.gender }}</td>
+                                   <td>{{ candidate?.dob | date:'shortDate' }}</td>
+                                   <td>{{ candidate?.age }}</td>
+                                   <td>{{ candidate?.candidateClass }}</td>
+                                   <td>{{ candidate?.dominantSide }}</td>
+                                   <td>{{ candidate?.parentName }}</td>
+                                   <td>{{ candidate?.parentMobileNo }}</td>
+                                   <td>{{ candidate?.alternateNo }}</td>
+                                   <td>{{ candidate?.email }}</td>
+                                   <td>{{ candidate?.residenceArea }}</td>
+                                   <td>{{ candidate?.residenceCity }}</td>
                                    <td class="table-buttons">
                                         <!-- <button class="edit" (click)="editCandidate(candidate)">Edit</button>
                                         <button class="delete"
@@ -226,18 +237,18 @@
                                    <th>Candidate Name</th>
                                    <th>Candidate ID</th>
                                    <!-- <th>Gender</th> -->
-                                   <!-- <th>Date of Birth</th>
-                                   <th>Age</th>
+                                   <!-- <th>Date of Birth</th> -->
+                                   <!-- <th>Age</th> -->
                                    <th>Class</th>
-                                   <th>Dominant Side</th>
+                                   <!-- <th>Dominant Side</th> -->
                                    <th>Name of Parent</th>
                                    <th>Parent's Mobile No</th>
-                                   <th>Alternate No</th> -->
+                                   <th>Alternate No</th>
                                    <!-- <th>Email ID</th> -->
-                                   <!-- <th>Residence Area/Colony</th>
+                                   <th>Residence Area/Colony</th>
                                    <th>Residence City</th>
-                                   <th>School Name</th> -->
-                                   <th>School ID</th>
+                                   <!-- <th>School Name</th> -->
+                                   <!-- <th>School ID</th> -->
                                    <!-- <th>School Contact Name</th>
                                    <th>School Contact Number</th>
                                    <th>School Email ID</th> -->
@@ -253,30 +264,27 @@
                               <tr *ngFor="let candidateActivity of candidateActivities">
                                    <td>{{ candidateActivity.Name }}</td>
                                    <td>{{ candidateActivity.ID }}</td>
-                                   <!-- <td>{{ candidateActivity.Gender }}</td>
-                                   <td>{{ candidateActivity.DOB }}</td>
-                                   <td>{{ candidateActivity.Age }}</td>
+                                   <!-- <td>{{ candidateActivity.Gender }}</td> -->
+                                   <!-- <td>{{ candidateActivity.DOB }}</td> -->
+                                   <!-- <td>{{ candidateActivity.Age }}</td> -->
                                    <td>{{ candidateActivity.Class }}</td>
-                                   <td>{{ candidateActivity.DominantSide }}</td>
+                                   <!-- <td>{{ candidateActivity.DominantSide }}</td> -->
                                    <td>{{ candidateActivity.ParentName }}</td>
                                    <td>{{ candidateActivity.ParentMobileNo }}</td>
-                                   <td>{{ candidateActivity.AlternateNo }}</td> -->
+                                   <td>{{ candidateActivity.AlternateNo }}</td>
                                    <!-- <td>{{ candidateActivity.EmailID }}</td> -->
-                                   <!-- <td>{{ candidateActivity.ResidenceArea }}</td>
+                                   <td>{{ candidateActivity.ResidenceArea }}</td>
                                    <td>{{ candidateActivity.ResidenceCity }}</td>
-                                   <td>{{ candidateActivity.SchoolName }}</td> -->
-                                   <td>{{ candidateActivity.SchoolID }}</td>
+                                   <!-- <td>{{ candidateActivity.SchoolName }}</td> -->
+                                   <!-- <td>{{ candidateActivity.SchoolID }}</td> -->
                                    <!-- <td>{{ candidateActivity.SchoolContactName }}</td>
                                    <td>{{ candidateActivity.SchoolContactNumber }}</td>
                                    <td>{{ candidateActivity.SchoolContactEmailID }}</td> -->
                                    <td>{{ candidateActivity.AssessmentTeam }}</td>
                                    <!-- <td>{{ candidateActivity.AssessmentDate }}</td> -->
+                                   <td>{{ candidateActivity.AssessmentID }}</td>
                                    <td>
-
-                                        <!-- app.component.html -->
-
                                         <form (submit)="saveCandidateAssinmentData(candidateActivity)">
-                                             <!-- <label for="data">Data:</label> -->
                                              <input type='date' name="data" id="data" [(ngModel)]="dateFormData"
                                                   required>
                                              <h5>{{dateFormData}}</h5>
@@ -285,7 +293,6 @@
                                         </form>
 
                                    </td>
-                                   <td>{{ candidateActivity.AssessmentID }}</td>
                                    <!-- <td>{{ candidateActivity.HeightCMs }}</td>
                                    <td>{{ candidateActivity.HeightRating }}</td> -->
                                    <!-- <td class="table-buttons">

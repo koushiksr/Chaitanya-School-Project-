@@ -4,15 +4,15 @@ html, body { height: 100%; }
 body { box-sizing: border-box; 
      margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 /* Set background color to white for Angular Material components */
-.mat-card,
-.mat-dialog-container,
-.mat-drawer-container,
-.mat-sidenav,
-.mat-menu-panel,
-.mat-autocomplete-panel,
-.mat-select-panel,
+.mat-tooltip,
 .mat-tab-group,
-.mat-tooltip {
+.mat-select-panel,
+.mat-autocomplete-panel,
+.mat-menu-panel,
+.mat-sidenav,
+.mat-drawer-container,
+.mat-dialog-container,
+.mat-card {
   background-color: white;
 }
 

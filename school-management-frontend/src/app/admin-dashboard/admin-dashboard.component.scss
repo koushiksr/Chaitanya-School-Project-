@@ -11,7 +11,7 @@
   form {
     display: flex;
     flex-wrap: wrap;
-    padding: 5%;
+    padding: 1% 5% 5% 5%;
     width: 89%;
 
     .form-group {
@@ -24,26 +24,30 @@
       }
 
       input ,select{
-        width: 91%;
         padding: 5px;
         border: 1px solid #ccc;
         border-radius: 5px;
         margin-top: 5px;
       }
+      input{
+        width: 91%;
+      }
+      select{
+        width: 94%;
+      }
     }
 
     button {
-      background-color: #007BFF;
-      color: #fff;
-      border: none;
-      border-radius: 7px;
-      padding: 8px 28px;
-      margin: 9px 27px 16px 3px;
-      font-size: 16px;
-      cursor: pointer;
-      text-align: center;
-      text-decoration: none;
-      transition: background-color 0.3s;
+      // background-color: #007BFF;
+      // color: #fff;
+      // border: none;
+      // border-radius: 7px;
+      // padding: 8px 28px;
+      margin: 15px 15px -13px 3px;      // font-size: 16px;
+      // cursor: pointer;
+      // text-align: center;
+      // text-decoration: none;
+      // transition: background-color 0.3s;
     }
   }
 
@@ -85,14 +89,14 @@
       .create-button {
         right: 3px;
         position: absolute;
-        background-color: #007bff;
-        color: #fff;
+        // background-color: #007bff;
+        // color: #fff;
         top: 0px;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s;
+        // border: none;
+        // padding: 10px 20px;
+        // border-radius: 4px;
+        // cursor: pointer;
+        // transition: background-color 0.3s;
       }
 
       .create-button:hover {
@@ -113,25 +117,25 @@
           border: 1px solid #ddd;
 
           button {
-            padding: 7px 20px;
+            // padding: 7px 20px;
             margin: 5px;
-            border: none;
-            color: white;
-            cursor: pointer;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background-color 0.3s;
+            // border: none;
+            // color: white;
+            // cursor: pointer;
+            // border-radius: 5px;
+            // font-weight: bold;
+            // transition: background-color 0.3s;
           }
 
-          .edit {
-            background-color: #fca938;
-            min-width: 80px;
-          }
+          // .edit {
+          //   background-color: #fca938;
+          //   min-width: 80px;
+          // }
 
-          .delete {
-            background-color: red;
-            min-width: 80px;
-          }
+          // .delete {
+          //   background-color: red;
+          //   min-width: 80px;
+          // }
         }
 
         .table-buttons {
@@ -179,6 +183,17 @@
     width: 300px;
     display: grid;
     place-items: center;
+
+    hr {
+      /* border: 0; */
+      height: -14px;
+      /* border: red; */
+      border-radius: 50%;
+      border-color: #2fff00;
+      width: 101%;
+      background-color: rgb(255 255 255 / 87%);
+      margin: 23px 0;
+    }
   }
 
   .profile-image {

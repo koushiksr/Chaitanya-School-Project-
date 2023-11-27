@@ -25,6 +25,7 @@ export class StudentDashboardComponent implements AfterViewInit {
 
   @ViewChild('schoolForm')
   admin: any;
+  @ViewChild('myChart') private chartRef!: ElementRef;
   candidates: any[] = [];
   candidatesActivity: any[] = [];
   isPopupOpen = false;
@@ -39,7 +40,75 @@ export class StudentDashboardComponent implements AfterViewInit {
   isActivity: boolean = false;
   isChartActive: boolean = false;
   myChart: any
-  @ViewChild('myChart') private chartRef!: ElementRef;
+  progressData: any;
+  allTaskFeilds: any[] = [
+    // "Name",
+    // "ID",
+    // "Gender",
+    // "DOB",
+    // "Age",
+    // "Class",
+    // "DominantSide",
+    // "ParentName",
+    // "ParentMobileNo",
+    // "AlternateNo",
+    // "ResidenceArea",
+    // "ResidenceCity",
+    // "SchoolName",
+    // "SchoolID",
+    // "SchoolContactName",
+    // "SchoolContactNumber",
+    // "SchoolContactEmailID",
+    // "AssessmentTeam",
+    // "AssessmentID",
+    // "HeightCMs",
+    "HeightRating",
+    // "WeightKG",
+    "WeightRating",
+    // "BMI",
+    "BmiRating",
+    // "BodyFatPercentage",
+    "BodyFatRating",
+    // "ArmLengthCMs",
+    "ArmLengthRating",
+    // "LegLengthCMs",
+    "LegLengthRating",
+    // "SitAndReachCMs",
+    "SitAndReachRating",
+    // "SingleLegBalance",
+    "SingleLegBalanceRating",
+    // "PushUps",
+    "PushUpsRating",
+    // "GripStrengthKGs",
+    "GripStrengthRating",
+    // "SquatTest30Secs",
+    "SquatTestRating",
+    // "PlankSecs",
+    "PlankRating",
+    // "StandingLongJumpCMs",
+    "StandingLongJumpRating",
+    // "StandingVerticalJumpInches",
+    "StandingVerticalJumpRating",
+    // "FiveZeroFiveSecs",
+    "FiveZeroFiveRating",
+    // "Speed30MtrsSecs",
+    "Speed30MtrsRating",
+    // "SixHundredMtrsMins",
+    "SixHundredMtrsRating",
+    // "OneMileTest",
+    "OneMileTestRating",
+    "BearPositionHoldRating",
+    "OverheadSquatsRating",
+    "LungesRating",
+    // "RemarksRemark1",
+    // "RemarksRemark2",
+    // "RemarksRemark3",
+    // "createdAt",
+    // "updatedAt",
+    // "__v",
+    // "AssessmentDate"
+  ];
+  selectedActivity: string = '';
 
   // ngOnInit() {
   //   this.displayChart();
@@ -123,6 +192,10 @@ export class StudentDashboardComponent implements AfterViewInit {
     const email = localStorage.getItem('username')
     this.http.get(`${environment.apiUrl}/student/admin/${email}`)
       .subscribe((response: any) => {
+        localStorage.setItem('candidateID', response[0].candidateID)
+        localStorage.setItem('schoolID', response[0].schoolID)
+        console.log(response[0]);
+
         this.admin = response[0]
         this.email = response[0].email
         this.name = response[0].name
@@ -132,15 +205,60 @@ export class StudentDashboardComponent implements AfterViewInit {
         console.log(error.error, 'error in creating admin')
       })
   }
+  onFilterClick() {
+    if (this.myChart) {
+      this.myChart.destroy();
+    }
+    // this.displayChart()
+    const candidateID = localStorage.getItem('candidateID')
+    this.http.get(`${environment.apiUrl}/student/activity/progress/${candidateID}/${this.selectedActivity}`)
+      .subscribe((response: any) => {
+        this.progressData = response.map((obj: ArrayLike<unknown> | { [s: string]: unknown; }) => Object.values(obj)[0]);
+        // this.progressData=[1,2,3,4]
+        const data: ChartDataset[] = [
+          { data: this.progressData.reverse(), label: this.selectedActivity || 'Dataset 1' },
+          // { data: [28, 48, 40, 19], label: 'Dataset 2' },
+          // { data: [45, 25, 16, 36], label: 'Dataset 3' },
+          // { data: [12, 30, 50, 65], label: 'Dataset 4' }
+        ];
+        // console.log(this.progressData);
 
-  displayChart() {
+        const options: ChartOptions = {
+          // Your chart options go here
+        };
+
+        // Create the chart
+        const ctx = this.chartRef.nativeElement.getContext('2d');
+        this.myChart = new Chart(ctx, {
+          type: 'bar',
+          // type: 'line',
+          //
+          // type: 'polarArea',
+          // type: 'pie',
+          // type: 'doughnut',
+          // type: 'radar',
+
+          data: {
+            labels: ['Oldest', '', '', 'Latest'],
+            datasets: data,
+          },
+          options: options,
+        });
+      }, (error) => {
+        console.log(error.error, 'error in creating student')
+      })
+  }
+  isChartActiveFun() {
     this.isChartActive = true
-    // Sample data, you can replace it with your actual data
+  }
+  displayChart() {
+    console.log(this.progressData);
+
     const data: ChartDataset[] = [
-      { data: [65, 59, 80, 81], label: 'Dataset 1' },
-      { data: [28, 48, 40, 19], label: 'Dataset 2' },
-      { data: [45, 25, 16, 36], label: 'Dataset 3' },
-      { data: [12, 30, 50, 65], label: 'Dataset 4' }
+      { data: this.progressData, label: this.selectedActivity || 'Dataset 1' },
+      // { data: [28, 48, 40, 19], label: 'Dataset 2' },
+      // { data: [45, 25, 16, 36], label: 'Dataset 3' },
+      // { data: [12, 30, 50, 65], label: 'Dataset 4' }
     ];
 
     const options: ChartOptions = {
@@ -150,7 +268,14 @@ export class StudentDashboardComponent implements AfterViewInit {
     // Create the chart
     const ctx = this.chartRef.nativeElement.getContext('2d');
     this.myChart = new Chart(ctx, {
-      type: 'bar',
+      // type: 'bar',
+      type: 'line',
+      //
+      // type: 'polarArea',
+      // type: 'pie',
+      // type: 'doughnut',
+      // type: 'radar',
+
       data: {
         labels: ['Category 1', 'Category 2', 'Category 3', 'Category 4'],
         datasets: data,
@@ -282,7 +407,9 @@ export class StudentDashboardComponent implements AfterViewInit {
     if (!token || role !== 'student') {
       this.router.navigate(['/login']);
     }
-    this.http.get(`${environment.apiUrl}/student/activity/${this.admin.schoolID}/${this.admin.candidateID}`)
+    const schoolID = localStorage.getItem('schoolID')
+    const candidateID = localStorage.getItem('candidateID')
+    this.http.get(`${environment.apiUrl}/student/activity/${schoolID}/${candidateID}`)
       .subscribe((response: any) => {
         this.candidatesActivity = response;
         // this.generatePDF(response);
@@ -380,4 +507,8 @@ export class StudentDashboardComponent implements AfterViewInit {
 }
 
 
+
+function displayChart() {
+  throw new Error('Function not implemented.');
+}
 

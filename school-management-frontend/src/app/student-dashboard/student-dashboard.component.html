@@ -27,21 +27,15 @@
                          <p>School ID: {{admin?.schoolID}}</p>
                          <p>Student ID: {{admin?.candidateID}}</p>
                     </div>
+                    <hr>
                     <div class="side-nav-button">
-                         <button mat-button (click)="activity(true)">Dashboard</button>
+                         <button mat-button (click)="activity(true)" (click)="drawer.toggle()">Dashboard</button>
                          <!-- <button mat-button (click)="activity(false)">Activity</button> -->
                          <button mat-button class="logout-button" (click)="logout()">Logout</button>
                     </div>
                </div>
           </div>
-
      </mat-drawer>
-
-
-
-
-
-
 
      <div *ngIf="!isActivity" class="example-sidenav-content">
           <div class="body">
@@ -397,13 +391,39 @@
                <div class="school-list">
                     <div class="chart-filter-bar-list">
                          <div>
-                              <h2>Activity List</h2>
+                              <h2>{{!isChartActive?' Activity List':'Progress'}}</h2>
                          </div>
                          <div class="chart-filter-bar">
-                              <button class='create-button' type="button"
-                                   (click)="isChartActive ? destroyChart() : displayChart()">{{
-                                   isChartActive ? 'Exit Chart' : 'Chart' }}</button>
-                              <button class='create-button' (click)="openDialog()">Activity Form</button>
+                              <!-- <div *ngIf="isChartActive" class="display-column">
+                                   <label for="dropdown1">Activity</label>
+                                   <select class="custom-dropdown left-dropdown-filter" id="dropdown1"
+                                        [(ngModel)]="selectedActivity">
+                                        <option disabled selected value="">Select Activity</option>
+                                        <option *ngFor="let activity of allTaskFeilds" [value]="activity">{{activity}}
+                                        </option>
+                                   </select>
+                              </div> -->
+                              <mat-form-field class="dropdown-chart" *ngIf="isChartActive">
+                                   <mat-label>Favorite food</mat-label>
+                                   <mat-select [(ngModel)]="selectedActivity">
+                                        <!-- @for (food of foods; track food) { -->
+                                        <mat-option *ngFor="let activity of allTaskFeilds"
+                                             [value]="activity">{{activity}}</mat-option>
+                                        <!-- } -->
+                                   </mat-select>
+                              </mat-form-field>
+
+
+                              <button class="button-chart" mat-raised-button *ngIf="isChartActive" type="button"
+                                   (click)="onFilterClick()">Submit</button>
+                              <button *ngIf="!isChartActive" class='create-button' type="button"
+                                   (click)="isChartActiveFun()">Chart
+                              </button>
+                              <button class="button-Cancel" *ngIf="isChartActive" type="button"
+                                   (click)="destroyChart()"><mat-icon *ngIf="isChartActive">close</mat-icon>
+                              </button>
+                              <button *ngIf="!isChartActive" class='create-button' (click)="openDialog()">Activity
+                                   Form</button>
 
                          </div>
                     </div>

@@ -157,7 +157,7 @@ export const verifySchool = (req: { headers: { [x: string]: any; }; decoded: any
         if (decoded && decoded.role === 'school') {
           next();
         } else {
-          res.status(403).json({ result: 'Unauthorized: User is not an admin' });
+          res.status(403).json({ result: 'Unauthorized: User is not an School' });
         }
       }
     });
@@ -179,7 +179,7 @@ export const verifySchoolOrStudent = (req: { headers: { [x: string]: any; }; dec
         if (decoded && decoded.role === 'school' || decoded.role === 'student') {
           next();
         } else {
-          res.status(403).json({ result: 'Unauthorized: User is not an admin' });
+          res.status(403).json({ result: 'Unauthorized: User is not an School Or student' });
         }
       }
     });

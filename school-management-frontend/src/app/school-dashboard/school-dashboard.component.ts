@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, NgZone, ChangeDetectorRef, Component, TemplateRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -12,12 +12,15 @@ import { Content, TDocumentDefinitions, Table } from 'pdfmake/interfaces';
 import * as XLSX from 'xlsx';
 
 
+
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-school-dashboard',
   templateUrl: './school-dashboard.component.html',
-  styleUrls: ['./school-dashboard.component.scss']
+  styleUrls: ['./school-dashboard.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class SchoolDashboardComponent {
   @ViewChild('formContent', { read: TemplateRef }) formContent!: TemplateRef<any>;
@@ -28,7 +31,6 @@ export class SchoolDashboardComponent {
   candidateActivities: any[] = [];
   isPopupOpen = false;
   myForm: FormGroup;
-  // filterForm: FormGroup;
   editMode!: boolean;
   currentSchool: any;
   email: any;
@@ -39,6 +41,8 @@ export class SchoolDashboardComponent {
   selectedDate: any;
   isActivity: boolean = false;
   dateFormData: string = '';
+  isLoading: boolean = false;
+  schoolID: string = '';
   allTaskFeilds: any[] = [
     // "Name",
     // "ID",
@@ -108,21 +112,20 @@ export class SchoolDashboardComponent {
   ];
   selectedActivity: string = '';
   selectedRating: string = '';
+  // count = 1
   ngOnInit() {
+    // this.someAsyncOperation()
     this.SchoolDetails()
-    // this.generatePDF()
-    // this.generateExcel()
+    // this.loadData()
+    // this.fetchStudents();
+    // this.fetchStudentsActivity()
+    // this.openSpinner()
   }
 
-  constructor(private http: HttpClient, public dialog: MatDialog, private router: Router, private _snackBar: MatSnackBar, private formBuilder: FormBuilder, private cdr: ChangeDetectorRef) {
-
-    // this.filterForm = this.formBuilder.group({
-    //   activity: ['', Validators.required],
-    //   rating: ['', Validators.required]
-    // });
+  constructor(private zone: NgZone, private http: HttpClient, public dialog: MatDialog, private router: Router, private _snackBar: MatSnackBar, private formBuilder: FormBuilder, private cdr: ChangeDetectorRef) {
     this.myForm = this.formBuilder.group({
       candidateName: ['', Validators.required],
-      schoolID: ['',],
+      schoolID: this.admin.schoolID,
       gender: ['', Validators.required],
       dob: ['', Validators.required],
       age: ['', Validators.required],
@@ -136,20 +139,29 @@ export class SchoolDashboardComponent {
       residenceCity: ['', Validators.required],
     });
   }
+  // someAsyncOperation() {
+  //   this.zone.run(() => {
+  // this.SchoolDetails();
+  //   });
+  // }
   SchoolDetails = () => {
-    const email = localStorage.getItem('username')
+    const email = localStorage.getItem('username');
     this.http.get(`${environment.apiUrl}/school/admin/${email}`)
       .subscribe((response: any) => {
-        this.email = response.admin_login.email
-        this.name = response.admin_login.name
-        this.phoneNumber = response.admin_login.phoneNumber
-        this.admin = response.admin_details
+        this.email = response.admin_login.email;
+        this.name = response.admin_login.name;
+        // this.phoneNumber = response.admin_login.phoneNumber
+        // this.admin = response.admin_details
+        // localStorage.setItem('schoolID', response.admin_details.schoolID)
+        // this.admin = response.admin_details;
+        localStorage.setItem('adminDetails', JSON.stringify(response.admin_details));
         this.fetchStudents();
         this.fetchStudentsActivity();
       }, (error) => {
-        console.log(error.error, 'error in creating admin')
-      })
-  }
+        console.log(error.error, 'error in creating admin');
+      });
+  };
+
   customEmailValidator(control: AbstractControl): { [key: string]: any } | null {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     const valid = emailPattern.test(control.value);
@@ -163,7 +175,8 @@ export class SchoolDashboardComponent {
   activity(clickdata: any) {
     if (clickdata) {
       this.isActivity = false;
-      this.fetchStudentsActivity()
+      // this.fetchStudentsActivity()
+      // this.SchoolDetails()
     } else {
       this.isActivity = true;
     }
@@ -188,12 +201,24 @@ export class SchoolDashboardComponent {
   }
 
   openDialog() {
+    // this.openSpinner()
     const dialogRef = this.dialog.open(this.formContent, {
     });
     dialogRef.afterClosed().subscribe(result => {
+      // this.closeSpinner()
       this.myForm.reset();
       this.editMode = false
     });
+  }
+  openSpinner() {
+    this.isLoading = true;
+    // console.log('open spinner');
+
+  }
+  closeSpinner() {
+    this.isLoading = false;
+    // console.log('close spinner');
+
   }
   onSubmit() {
     if (!this.myForm.valid) {
@@ -203,23 +228,17 @@ export class SchoolDashboardComponent {
     if (!this.editMode) {
       if (this.myForm.valid) {
         this.myForm.value.schoolID = this.admin.schoolID
-        // console.log(this.myForm.value);
-
+        this.openSpinner()
         this.http.post(`${environment.apiUrl}/school/student/create`, this.myForm.value)
-          .subscribe((response) => {
-            // console.log(response, 'inn')
-            if (response) {
+          .subscribe((response: any) => {
+            this.closeSpinner()
+            if (response.studentCreated) {
               this.openSnackBar('student created', 'Close')
               this.fetchStudents();
               this.myForm.reset();
             }
-            if (!response) {
-              this.openSnackBar('email exist', 'Close')
-            }
-            if (response == null) {
-              this.openSnackBar('student not created', 'Close')
-              this.myForm.reset();
-              this.fetchStudents();
+            if (!response.studentCreated) {
+              this.openSnackBar(response.message, 'Close')
             }
           }, (error) => {
             console.log(error.error, 'error in creating student')
@@ -234,8 +253,10 @@ export class SchoolDashboardComponent {
         if (JSON.stringify(this.myForm.value) === JSON.stringify(this.initialFormValues)) {
           this.openSnackBar('Edit any one feild at least', 'Close')
         } else {
+          this.openSpinner()
           this.http.put(`${environment.apiUrl}/school/student/edit/${this.currentSchool._id}`, this.myForm.value)
             .subscribe((response: any) => {
+              this.closeSpinner()
               if (response.modifiedCount == 1) {
                 this.openSnackBar('student edited successfully', 'Close')
                 this.myForm.reset();
@@ -244,7 +265,6 @@ export class SchoolDashboardComponent {
               }
               if (response.matchedCount == 1 && response.modifiedCount == 0) {
                 this.openSnackBar('Edit any one feild at least', 'Close')
-                // this.myForm.reset();
               }
             }, (error) => {
               console.log(error.error, 'error in creating student')
@@ -257,16 +277,17 @@ export class SchoolDashboardComponent {
   }
 
   fetchStudents() {
-    // this.SchoolDetails()
-
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
     if (!token || role !== 'school') {
       this.router.navigate(['/login']);
     }
+    this.admin = JSON.parse(localStorage.getItem('adminDetails') ?? '{}');
     this.http.get(`${environment.apiUrl}/school/student/${this.admin.schoolID}`)
       .subscribe((response: any) => {
         this.candidates = response;
+        console.log(this.candidates);
+        this.cdr.detectChanges();
       }, (error) => {
         console.log(error.error, 'error in creating student')
       })
@@ -278,10 +299,11 @@ export class SchoolDashboardComponent {
     if (!token || role !== 'school') {
       this.router.navigate(['/login']);
     }
+    this.admin = JSON.parse(localStorage.getItem('adminDetails') ?? '{}');
     this.http.get(`${environment.apiUrl}/student/activity/${this.admin.schoolID}`)
       .subscribe((response: any) => {
-        // console.log(response);
         this.candidateActivities = response;
+        this.cdr.detectChanges();
 
       }, (error) => {
         console.log(error.error, 'error in creating student')
@@ -323,10 +345,11 @@ export class SchoolDashboardComponent {
       })
   }
   onFilterClick() {
+    this.admin = JSON.parse(localStorage.getItem('adminDetails') ?? '{}');
     this.http.get(`${environment.apiUrl}/student/activity/${this.admin.schoolID}/${this.selectedActivity}/${this.selectedRating}`)
       .subscribe((response: any) => {
-        // console.log(response[0],response[1]);
         this.candidateActivities = response;
+        this.cdr.detectChanges();
       }, (error) => {
         console.log(error.error, 'error in creating student')
       })

@@ -115,7 +115,7 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        align-items: center;
+        // align-items: center;
 
         div {
           h2 {
@@ -147,7 +147,26 @@
           //       // margin-top: 8px;
           //     }
           //   }
+          .button-chart {
+            margin: 1px 26px 24px 15px;
+            padding: 20px 29px;
+            // background-color: white;
+          }
 
+          .button-Cancel {
+            border-radius: 6px;
+            margin: 3px 21px 24px -12px;
+            padding: 6px 42px;
+            background-color: rgb(67 65 65);
+            color: red;
+            border: none;
+          }
+
+          .dropdown-chart {
+            padding: 0px;
+            margin-left: 220px;
+            background-color: white;
+          }
 
           .create-button {
             margin: 20px 7px 1px 7px;
@@ -179,14 +198,17 @@
         td {
           padding: 8px;
           border: 1px solid #ddd;
-          .icon-button-container{
+
+          .icon-button-container {
+
             // padding: 7px 20px;
             // margin: 5px;
-            button{
+            button {
               padding: 20px 8px;
-            margin: 5px;
+              margin: 5px;
             }
           }
+
           button {
             // padding: 7px 20px;
             // margin: 5px;
@@ -254,6 +276,17 @@
     width: 300px;
     display: grid;
     place-items: center;
+
+    hr {
+      /* border: 0; */
+      height: -14px;
+      /* border: red; */
+      border-radius: 50%;
+      border-color: #2fff00;
+      width: 101%;
+      background-color: rgb(255 255 255 / 87%);
+      margin: 23px 0;
+    }
   }
 
   .profile-image {
@@ -338,7 +371,7 @@
       .search-input {
         padding: 5px;
         border: 1px solid #ccc;
-        border-radius: 4px;
+        border-radius: 4px; 
       }
     }
 

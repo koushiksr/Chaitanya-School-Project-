@@ -25,6 +25,7 @@
                          <p>Email: {{email}}</p>
                          <p>Ph: {{phoneNumber}}</p>
                     </div>
+                    <hr>
                     <button mat-button class="logout-button" (click)="logout()">Logout</button>
                </div>
           </div>
@@ -34,7 +35,7 @@
           <div class="body">
                <ng-template class="school-template" #formContent let-dialogRef let-closeDialog="closeDialog">
                     <div class="school-form">
-                         <h2>{{ editMode ? 'Edit a school' : 'Add a School' }}</h2>
+                         <h2>{{ editMode ? 'Edit School' : 'Add School' }}</h2>
                          <form [formGroup]="myForm" (ngSubmit)="onSubmit(); ">
                               <div class="form-group">
                                    <label for="schoolName">Name of the School:</label>
@@ -112,16 +113,15 @@
                                    <input type="number" id="noOfGirls" formControlName="noOfGirls" required>
                               </div>
 
-                              <button type="submit" class="btn btn-primary">{{ editMode ? 'Edit' : 'Submit' }}</button>
-                              <button type="button" mat-dialog-close  class="btn btn-primary">Cancel</button>
+                              <button mat-raised-button mat-dialog-close type="submit" class="btn btn-primary">{{ editMode ? 'Edit' : 'Submit' }}</button>
+                              <button type="button"  mat-raised-button mat-dialog-close class="btn btn-primary">Cancel</button>
                          </form>
                     </div>
                </ng-template>
 
                <div class="school-list">
                     <h2>School List</h2>
-                    <button class='create-button' (click)="openDialog()">Open School Form</button>
-
+                    <button  mat-raised-button class='create-button' (click)="openDialog()">Open School Form</button>
                     <table>
                          <thead>
                               <tr>
@@ -161,8 +161,20 @@
                                    <td>{{ school.noOfBoys }}</td>
                                    <td>{{ school.noOfGirls }}</td>
                                    <td class="table-buttons">
-                                        <button class="edit" (click)="editSchool(school)">Edit</button>
-                                        <button class="delete" (click)="deleteSchool(school._id)">Delete</button>
+                                        <div class="example-button-container">
+                                             <button (click)="editSchool(school)" mat-mini-fab color="accent"
+                                                  aria-label="Example icon button with a plus one icon">
+                                                  <mat-icon>create</mat-icon> </button>
+                                        </div>
+                                        <div class="example-button-container">
+                                             <button (click)="deleteSchool(school._id)" mat-mini-fab color="warn"
+                                                  aria-label="Example icon button with a filter list icon">
+                                                  <mat-icon>delete</mat-icon> </button>
+                                        </div>
+
+
+                                        <!-- <button class="edit" (click)="editSchool(school)">Edit</button> -->
+                                        <!-- <button class="delete" (click)="deleteSchool(school._id)">Delete</button> -->
                                    </td>
                               </tr>
                          </tbody>

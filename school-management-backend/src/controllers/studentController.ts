@@ -3,6 +3,8 @@ import School from "../models/schoolModel"
 import Student from "../models/studentModel"
 const nodemailer = require("nodemailer");
 const Mailgen = require('mailgen');
+const bcrypt = require('bcrypt');
+
 
 
 exports.getStudentAdmin = async (req: any, res: any) => {
@@ -14,142 +16,186 @@ exports.getStudentAdmin = async (req: any, res: any) => {
      return res.send(result)
 }
 exports.create = async (req: any, res: any) => {
-     let isMailSend = false;
-     const { email, candidateName } = req.body;
-     // const school = await School.findOne({ email });
+     const { candidateName, email } = req.body;
      const student = await Student.findOne({ email })
      const inLogin = await Login.findOne({ email: email, role: 'student' })
-     // console.log(!student, !inLogin);
-
-     if (!student && !inLogin) {
+     let isMailSend1 = false;
+     let isMailSend2 = false;
+     let randomPassword = '';
+     let studentCredentials: any;
+     if (student == null && inLogin == null) {
           // genarate random password
-          function generateRandomPassword(length: number) {
-               const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
-               let password = "";
-               for (let i = 0; i < length; i++) {
-                    const randomIndex = Math.floor(Math.random() * charset.length)
-                    password += charset.charAt(randomIndex);
+          const passwordGenaration = async () => {
+               async function generateRandomPassword(length: number) {
+                    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+                    let password = "";
+                    for (let i = 0; i < length; i++) {
+                         const randomIndex = Math.floor(Math.random() * charset.length)
+                         password += charset.charAt(randomIndex);
+                    }
+                    return password;
                }
-               return password;
-          }
-          const randomPassword = generateRandomPassword(10)
 
-          //send randomly genarated password to  school mail
-          let config = {
-               service: 'gmail',
-               auth: {
-                    user: process.env.ADMIN_MAIL_TO_SEND_PASSWORD,
-                    pass: 'jsug tain gbtm iyks'
-               }
+               randomPassword = await generateRandomPassword(10)
+               const saltRounds = 10;
+               await bcrypt.genSalt(saltRounds, async (err: any, salt: any) => {
+                    if (err) {
+                         console.error('Error generating salt:', err);
+                         return;
+                    }
+                    await bcrypt.hash(randomPassword, salt, (err: any, hash: any) => {
+                         if (err) {
+                              console.error('Error hashing password:', err);
+                              return;
+                         }
+                         console.log('Hashed Password:', hash);
+                         req.body.password = hash
+                    });
+               });
           }
-          let transporter = nodemailer.createTransport(config);
-          let MailGenerator = new Mailgen({
-               theme: "default",
-               product: {
-                    name: "Admin",
-                    link: 'https://mailgen.js/'
-               }
-          })
-          //mail format
-          let response = {
-               body: {
-                    name: candidateName,
-                    intro: "Your Password Is Here!",
-                    table: {
-                         data: [
-                              {
-                                   Password: randomPassword,
-                                   description: "Use this password for further login",
-                              }
-                         ]
-                    },
-                    action: {
-                         instructions: 'To visit our website, click the link below:',
-                         button: {
-                              text: 'Visit Our Website',
-                              link: process.env.student_Dashboard,
-                         },
-                         outro: "Looking forward to do more business"
+
+          //send  password to  school mail
+          const sendMail = async () => {
+               let config = {
+                    service: 'gmail',
+                    auth: {
+                         user: process.env.ADMIN_MAIL_TO_SEND_PASSWORD,
+                         pass: 'jsug tain gbtm iyks'
                     }
                }
-          }
-          // genarating html maill
-          let mail = MailGenerator.generate(response)
-          let message = {
-               from: process.env.ADMIN_MAIL_TO_SEND_PASSWORD,
-               to: email,
-               subject: "Your password",
-               html: mail
-          }
-          let response2 = {
-               body: {
-                    name: "New student  created",
-                    // intro: "Your Password Is Here!",
-                    table: {
-                         data: [
-                              {
-                                   email: email,
-                                   description: `student ${candidateName}  profile created `,
-                              }
-                         ]
-                    },
-                    action: {
-                         instructions: 'To visit our website, click the link below:',
-                         button: {
-                              text: 'Visit Our Website',
-                              link: process.env.admin_Dashboard,
+               let transporter = nodemailer.createTransport(config);
+               let MailGenerator = new Mailgen({
+                    theme: "default",
+                    product: {
+                         name: "Admin",
+                         link: 'https://mailgen.js/'
+                    }
+               })
+               let response = {
+                    body: {
+                         name: candidateName,
+                         intro: "Your Password Is Here!",
+                         table: {
+                              data: [
+                                   {
+                                        Password: randomPassword,
+                                        description: "Use this password for further login",
+                                   }
+                              ]
                          },
-                         // outro: "Looking forward to do more business"
+                         action: {
+                              instructions: 'To visit our website, click the link below:',
+                              button: {
+                                   text: 'Visit Our Website',
+                                   link: process.env.student_Dashboard,
+                              },
+                              outro: "Looking forward to do more business"
+                         }
                     }
                }
-          }
-          let mail2 = MailGenerator.generate(response2)
-          let message2 = {
-               from: process.env.ADMIN_MAIL_TO_SEND_PASSWORD,
-               to: process.env.ADMIN_MAIL_TO_GET_UPDATES,
-               subject: "new student created by school",
-               html: mail2
-          }
-          // sending mail
-          transporter.sendMail(message2).then(() => {
-               // console.log({ msg: "you should receive an email", email })
-               isMailSend = true;
-          }).catch((error: any) => {
-          })
-          req.body.password = randomPassword
+               let mail = MailGenerator.generate(response)
+               let message = {
+                    from: process.env.ADMIN_MAIL_TO_SEND_PASSWORD,
+                    to: email,
+                    subject: "Your password",
+                    html: mail
+               }
+               await transporter.sendMail(message).then(() => {
+                    console.log({ msg: "user should receive an email", email })
+                    isMailSend1 = true;
+               }).catch((error: any) => {
+                    console.log(error);
+               })
 
+               let response2 = {
+                    body: {
+                         name: "New student  created",
+                         // intro: "Your Password Is Here!",
+                         table: {
+                              data: [
+                                   {
+                                        email: email,
+                                        description: `student ${candidateName}  profile created `,
+                                   }
+                              ]
+                         },
+                         action: {
+                              instructions: 'To visit our website, click the link below:',
+                              button: {
+                                   text: 'Visit Our Website',
+                                   link: process.env.admin_Dashboard,
+                              },
+                              // outro: "Looking forward to do more business"
+                         }
+                    }
+               }
+               let mail2 = MailGenerator.generate(response2)
+               let message2 = {
+                    from: process.env.ADMIN_MAIL_TO_SEND_PASSWORD,
+                    to: process.env.ADMIN_MAIL_TO_GET_UPDATES,
+                    subject: "new student created by school",
+                    html: mail2
+               }
+               transporter.sendMail(message2).then(() => {  // await
+                    console.log({ msg: "Admin should receive an email", email })
+                    isMailSend2 = true;
+               }).catch((error: any) => {
+                    console.log(error);
+
+               })
+          }
           //schoolId genarating 
-          let studentCity = req.body.residenceCity;
-          let gender = req.body.gender;
-          try {
-               const latestStudent = await Student.findOne().sort({ createdAt: -1 }).exec();
-               const temp_id = latestStudent.candidateID
-               let newString = studentCity.toUpperCase().slice(0, 3) + gender.toUpperCase().slice(0, 1) + (parseInt(temp_id.slice(-7)) + 1).toString().padStart(7, '0');
-               req.body.candidateID = newString
-               // console.log(req.body.candidateID);
-          } catch (error) {
-               console.error(error);
+          const schoolIdGenarate = async () => {
+               let studentCity = req.body.residenceCity;
+               let gender = req.body.gender;
+               try {
+                    const latestStudent = await Student.findOne().sort({ createdAt: -1 }).exec();
+                    const temp_id = latestStudent.candidateID
+                    let newString = studentCity.toUpperCase().slice(0, 3) + gender.toUpperCase().slice(0, 1) + (parseInt(temp_id.slice(-7)) + 1).toString().padStart(7, '0');
+                    req.body.candidateID = newString
+                    // console.log(req.body.candidateID);
+               } catch (error) {
+                    console.error(error);
+               }
           }
+          //calling step by ste
+          passwordGenaration();
+          schoolIdGenarate();
+          await sendMail();
 
-
-          const newStudent = await Student.create(req.body)
-          if (newStudent) {
-               const studentCredentials = await Login.create({ email: email, password: randomPassword, role: 'student' })
-               if (studentCredentials) { return res.status(200).send(true) }
+          if (req.body.password == 'undefined') {
+               console.log('error in creating password');
+               return res.status(200).send({ message: 'error in creating password', studentCreated: false })
+          }
+          if (req.body.candidateID == 'undefined') {
+               console.log('error in genarating candidate ID');
+               return res.status(200).send({ message: 'error in creating candidate ID', studentCreated: false })
+          }
+          if (!isMailSend1) {
+               console.log('error in sending mail to student');
+               return res.status(200).send({ message: 'error in sending mail to student ', studentCreated: false })
+          }
+          // if (!isMailSend2) {
+          //      console.log('error in sending mail to admin');
+          //      return res.status(200).send({ message: 'error in sending mail to Admin', studentCreated: false })
+          // }
+          if (isMailSend1 ) {   //&& isMailSend2
+               const newStudent = await Student.create(req.body)
+               if (newStudent) {
+                    studentCredentials = await Login.create({ email: email, password: req.body.password, role: 'student' })
+               }
+               if (studentCredentials) {
+                    return res.status(200).send({ message: 'student created successfully', studentCreated: true })
+               }
           }
      }
-     if (student) {
-          return res.status(200).send(false)
+     if (student && inLogin) {
+          return res.status(200).send({ message: 'email already exist', studentCreated: false })
      }
-     return res.status(404).send(null)
 }
 
 exports.getAllStudent = async (req: any, res: any) => {
-     // console.log({ schoolID: req.params.schoolID },'in get all student');
-
      const student = await Student.find({ schoolID: req.params.schoolID })
-     // console.log(student);
-
      if (!student) {
           return res.status(401).json({ message: 'there is no data in database' })
      }

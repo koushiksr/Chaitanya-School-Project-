@@ -85,11 +85,6 @@ exports.create = async (req: any, res: any) => {
      }
 }
 
-
-
-
-
-
 exports.getAll = async (req: any, res: any) => {
      const student = await Activity.find({ SchoolID: req.params.schoolID, ID: req.params.candidateID })
      if (!student) {
@@ -97,6 +92,7 @@ exports.getAll = async (req: any, res: any) => {
      }
      res.json(student);
 }
+
 exports.getAllActivityBySchoolID = async (req: any, res: any) => {
      const activity = req.params.activity;
      const rating = parseFloat(req.params.rating);
@@ -122,6 +118,30 @@ exports.getAllActivityBySchoolID = async (req: any, res: any) => {
           } else {
                res.json(student);
           }
+     }
+}
+exports.getLast4ActivityBycandidateID = async (req: any, res: any) => {
+     const activity = req.params.activity;
+     const candidateID = req.params.candidateID;
+     console.log(activity, candidateID);
+
+     try {
+          if (activity) {
+               const studentFiltered = await Activity.aggregate([
+                    { $match: { ID: candidateID } },
+                    { $sort: { createdAt: -1 } },
+                    { $limit: 4 },
+                    { $project: { [activity]: 1, _id: 0 } }
+               ]);
+               if (!studentFiltered) {
+                    return res.status(404).json({ message: 'not found any data ' });
+               } else {
+                    res.status(200).json(studentFiltered);
+               }
+          }
+     } catch (error) {
+          console.log(error);
+          res.status(404).send({ message: ' something went wrong' })
      }
 }
 

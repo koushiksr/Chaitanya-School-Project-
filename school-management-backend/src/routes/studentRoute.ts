@@ -7,6 +7,7 @@ const activityController = require('../controllers/activityController');
 
 router.get('/admin/:id', verifyStudent, studentController.getStudentAdmin);
 
+router.get('/activity/progress/:candidateID/:activity', verifyStudent, activityController.getLast4ActivityBycandidateID);
 router.get('/activity/:schoolID/:candidateID', verifyStudent, activityController.getAll);
 router.get('/activity/:schoolID/:activity?/:rating?', verifySchool, activityController.getAllActivityBySchoolID);
 router.post('/activity/create', verifyStudent, activityController.create);
