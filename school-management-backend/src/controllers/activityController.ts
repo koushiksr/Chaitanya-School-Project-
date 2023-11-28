@@ -131,7 +131,7 @@ exports.getLast4ActivityBycandidateID = async (req: any, res: any) => {
                     { $match: { ID: candidateID } },
                     { $sort: { createdAt: -1 } },
                     { $limit: 4 },
-                    { $project: { [activity]: 1, _id: 0 } }
+                    { $project: { [activity]: 1, _id: 0, createdAt: 1 } }
                ]);
                if (!studentFiltered) {
                     return res.status(404).json({ message: 'not found any data ' });

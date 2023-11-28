@@ -215,6 +215,8 @@ export class StudentDashboardComponent implements AfterViewInit {
       .subscribe((response: any) => {
         this.progressData = response.map((obj: ArrayLike<unknown> | { [s: string]: unknown; }) => Object.values(obj)[0]);
         // this.progressData=[1,2,3,4]
+        let bValues = response.map((item: { createdAt: any; }) => item.createdAt.slice(0, 10));
+        console.log(bValues);
         const data: ChartDataset[] = [
           { data: this.progressData.reverse(), label: this.selectedActivity || 'Dataset 1' },
           // { data: [28, 48, 40, 19], label: 'Dataset 2' },
@@ -239,7 +241,7 @@ export class StudentDashboardComponent implements AfterViewInit {
           // type: 'radar',
 
           data: {
-            labels: ['Oldest', '', '', 'Latest'],
+            labels: bValues,
             datasets: data,
           },
           options: options,

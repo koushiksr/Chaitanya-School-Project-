@@ -427,7 +427,9 @@
 
                          </div>
                     </div>
-                    <canvas #myChart width="10px" height="10px"></canvas>
+                    <div *ngIf="isChartActive" class="canvas-container">
+                         <canvas class="canvas-chart" #myChart width="10px" height="10px"></canvas>
+                    </div>
 
                     <table *ngIf="!isChartActive">
                          <thead>
