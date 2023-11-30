@@ -32,7 +32,7 @@ export class ForgotPasswordComponent {
       .subscribe((response: any) => {
         if (response) {
           this.emailVerified = true
-          console.log(this.emailVerified);
+          // console.log(this.emailVerified);
           this.openSnackBar('OTP sent to your mail ID', 'Close')
         } else {
           this.emailVerified = false
@@ -58,12 +58,12 @@ export class ForgotPasswordComponent {
       })
   }
   resetPassword() {
-    console.log(this.password, this.confirmPassword, 'password');
+    // console.log(this.password, this.confirmPassword, 'password');
     if (this.password == this.confirmPassword) {
       this.http.put(`${environment.apiUrl}/login/forgotpassword/resetpassword/${this.email}/${this.password}`, {})
         .subscribe((response: any) => {
           if (response) {
-            console.log(response);
+            // console.log(response);
             this.openSnackBar('Password reset successfully', 'Close')
             this.router.navigate(['/login']);
           } else {

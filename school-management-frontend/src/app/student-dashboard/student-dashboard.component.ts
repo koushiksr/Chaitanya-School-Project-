@@ -194,7 +194,7 @@ export class StudentDashboardComponent implements AfterViewInit {
       .subscribe((response: any) => {
         localStorage.setItem('candidateID', response[0].candidateID)
         localStorage.setItem('schoolID', response[0].schoolID)
-        console.log(response[0]);
+        // console.log(response[0]);
 
         this.admin = response[0]
         this.email = response[0].email
@@ -216,7 +216,7 @@ export class StudentDashboardComponent implements AfterViewInit {
         this.progressData = response.map((obj: ArrayLike<unknown> | { [s: string]: unknown; }) => Object.values(obj)[0]);
         // this.progressData=[1,2,3,4]
         let bValues = response.map((item: { createdAt: any; }) => item.createdAt.slice(0, 10));
-        console.log(bValues);
+        // console.log(bValues);
         const data: ChartDataset[] = [
           { data: this.progressData.reverse(), label: this.selectedActivity || 'Dataset 1' },
           // { data: [28, 48, 40, 19], label: 'Dataset 2' },
@@ -254,7 +254,7 @@ export class StudentDashboardComponent implements AfterViewInit {
     this.isChartActive = true
   }
   displayChart() {
-    console.log(this.progressData);
+    // console.log(this.progressData);
 
     const data: ChartDataset[] = [
       { data: this.progressData, label: this.selectedActivity || 'Dataset 1' },

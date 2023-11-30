@@ -43,7 +43,7 @@ export class LoginComponent {
         if (response.role == 'student' && response.token) {
           localStorage.setItem('username', email);
           localStorage.setItem('token', response.token);
-          console.log('student login fe')
+          // console.log('student login fe')
           this.router.navigate(['/student']);
         }
       },

@@ -195,7 +195,7 @@ export class SchoolDashboardComponent {
     }
   }
   logout() {
-    console.log('logout');
+    // console.log('logout');
     const token = localStorage.clear();
     this.router.navigate(['/login']);
   }
@@ -228,10 +228,10 @@ export class SchoolDashboardComponent {
     if (!this.editMode) {
       if (this.myForm.valid) {
         this.myForm.value.schoolID = this.admin.schoolID
-        this.openSpinner()
+        // this.openSpinner()
         this.http.post(`${environment.apiUrl}/school/student/create`, this.myForm.value)
           .subscribe((response: any) => {
-            this.closeSpinner()
+            // this.closeSpinner()
             if (response.studentCreated) {
               this.openSnackBar('student created', 'Close')
               this.fetchStudents();
@@ -286,7 +286,7 @@ export class SchoolDashboardComponent {
     this.http.get(`${environment.apiUrl}/school/student/${this.admin.schoolID}`)
       .subscribe((response: any) => {
         this.candidates = response;
-        console.log(this.candidates);
+        // console.log(this.candidates);
         this.cdr.detectChanges();
       }, (error) => {
         console.log(error.error, 'error in creating student')

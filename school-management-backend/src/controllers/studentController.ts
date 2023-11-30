@@ -17,12 +17,16 @@ exports.getStudentAdmin = async (req: any, res: any) => {
 }
 exports.create = async (req: any, res: any) => {
      const { candidateName, email } = req.body;
-     const student = await Student.findOne({ email })
-     const inLogin = await Login.findOne({ email: email, role: 'student' })
+     // console.log('=================================');
+     // console.log(req.body);
+
+     const student = await Student.findOne({ email: email })
+     const inLogin = await Login.findOne({ email: email })
      let isMailSend1 = false;
      let isMailSend2 = false;
      let randomPassword = '';
      let studentCredentials: any;
+     // console.log(student, inLogin)
      if (student == null && inLogin == null) {
           // genarate random password
           const passwordGenaration = async () => {
@@ -37,25 +41,27 @@ exports.create = async (req: any, res: any) => {
                }
 
                randomPassword = await generateRandomPassword(10)
-               const saltRounds = 10;
-               await bcrypt.genSalt(saltRounds, async (err: any, salt: any) => {
-                    if (err) {
-                         console.error('Error generating salt:', err);
-                         return;
-                    }
-                    await bcrypt.hash(randomPassword, salt, (err: any, hash: any) => {
-                         if (err) {
-                              console.error('Error hashing password:', err);
-                              return;
-                         }
-                         console.log('Hashed Password:', hash);
-                         req.body.password = hash
-                    });
-               });
+               req.body.password = randomPassword
+               // const saltRounds = 10;
+               // await bcrypt.genSalt(saltRounds, async (err: any, salt: any) => {
+               //      if (err) {
+               //           console.error('Error generating salt:', err);
+               //           return;
+               //      }
+               //      await bcrypt.hash(randomPassword, salt, (err: any, hash: any) => {
+               //           if (err) {
+               //                console.error('Error hashing password:', err);
+               //                return;
+               //           }
+               //           // console.log('Hashed Password:', hash);
+               //           req.body.password = hash
+               //      });
+               // });
           }
 
           //send  password to  school mail
           const sendMail = async () => {
+               // try {
                let config = {
                     service: 'gmail',
                     auth: {
@@ -100,12 +106,13 @@ exports.create = async (req: any, res: any) => {
                     subject: "Your password",
                     html: mail
                }
-               await transporter.sendMail(message).then(() => {
-                    console.log({ msg: "user should receive an email", email })
+               try {
+                    await transporter.sendMail(message);
+                    console.log({ msg: "user should receive an email", email });
                     isMailSend1 = true;
-               }).catch((error: any) => {
-                    console.log(error);
-               })
+               } catch (error) {
+                    console.error('Error sending email to student:', error);
+               }
 
                let response2 = {
                     body: {
@@ -136,32 +143,38 @@ exports.create = async (req: any, res: any) => {
                     subject: "new student created by school",
                     html: mail2
                }
-               transporter.sendMail(message2).then(() => {  // await
-                    console.log({ msg: "Admin should receive an email", email })
-                    isMailSend2 = true;
-               }).catch((error: any) => {
-                    console.log(error);
 
-               })
+               try {
+                    await transporter.sendMail(message2);
+                    console.log({ msg: "Admin should receive an email", email });
+                    isMailSend2 = true;
+               } catch (error) {
+                    console.error('Error sending email to admin:', error);
+               }
           }
           //schoolId genarating 
           const schoolIdGenarate = async () => {
                let studentCity = req.body.residenceCity;
                let gender = req.body.gender;
                try {
-                    const latestStudent = await Student.findOne().sort({ createdAt: -1 }).exec();
-                    const temp_id = latestStudent.candidateID
+                    const latestStudent = await Student.findOne({ schoolID: req.body.schoolID }).sort({ createdAt: -1 }).exec();
+                    // console.log({ latestStudent });
+
+                    const temp_id = latestStudent ? latestStudent.candidateID : 'ABCD0000000'
+                    // console.log({ temp_id });
+
                     let newString = studentCity.toUpperCase().slice(0, 3) + gender.toUpperCase().slice(0, 1) + (parseInt(temp_id.slice(-7)) + 1).toString().padStart(7, '0');
                     req.body.candidateID = newString
-                    // console.log(req.body.candidateID);
+                    // console.log({ newString });
                } catch (error) {
                     console.error(error);
                }
           }
           //calling step by ste
-          passwordGenaration();
-          schoolIdGenarate();
+          await passwordGenaration();
           await sendMail();
+          await schoolIdGenarate();
+
 
           if (req.body.password == 'undefined') {
                console.log('error in creating password');
@@ -179,7 +192,7 @@ exports.create = async (req: any, res: any) => {
           //      console.log('error in sending mail to admin');
           //      return res.status(200).send({ message: 'error in sending mail to Admin', studentCreated: false })
           // }
-          if (isMailSend1 ) {   //&& isMailSend2
+          if (isMailSend1) {   //&& isMailSend2
                const newStudent = await Student.create(req.body)
                if (newStudent) {
                     studentCredentials = await Login.create({ email: email, password: req.body.password, role: 'student' })
@@ -189,9 +202,12 @@ exports.create = async (req: any, res: any) => {
                }
           }
      }
-     if (student && inLogin) {
+     if (student || inLogin) {
+          // console.log('==========================================');
+
           return res.status(200).send({ message: 'email already exist', studentCreated: false })
      }
+
 }
 
 exports.getAllStudent = async (req: any, res: any) => {

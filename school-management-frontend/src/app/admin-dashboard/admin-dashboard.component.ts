@@ -38,7 +38,7 @@ export class AdminDashboardComponent {
   constructor(private http: HttpClient, private router: Router,
     private _snackBar: MatSnackBar, private formBuilder: FormBuilder,
     private cdr: ChangeDetectorRef, private dialog: MatDialog) {
-      this.dialogRef = {} as MatDialogRef<any>;
+    this.dialogRef = {} as MatDialogRef<any>;
     this.fetchSchools();
     this.adminDetails();
     this.myForm = this.formBuilder.group({
@@ -136,7 +136,7 @@ export class AdminDashboardComponent {
             }
           }, (error) => {
             console.log(error.error, 'error in creating school')
-            this.openSnackBar(`${error.error}error in creating school!`, 'Close');
+            this.openSnackBar(`error in creating school!`, 'Close');
             this.myForm.reset();
           });
       }
