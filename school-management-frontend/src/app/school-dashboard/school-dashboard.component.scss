@@ -1,3 +1,5 @@
+// @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
 .school-template {
   overflow: auto;
 }
@@ -12,7 +14,6 @@
     padding: 19px 0px 0px 0px;
   }
 
-
   form {
     display: flex;
     flex-wrap: wrap;
@@ -24,7 +25,7 @@
       top: 38%;
       left: 39%;
     }
-
+ 
     .form-group {
       flex-basis: calc(50% - 10px);
       margin: 5px;
@@ -69,7 +70,6 @@
       // transition: background-color 0.3s;
     }
   }
-
 }
 
 .example-container {
@@ -89,7 +89,7 @@
     justify-content: center;
     z-index: 9999; /* Set a high z-index value to ensure it's on top */
   }
-  
+
   .spinner {
     position: fixed;
     top: 50%; /* Adjust this value based on your design */
@@ -103,13 +103,15 @@
     height: 309px;
     animation: spin 1s linear infinite;
   }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
 
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 }
 
 .example-sidenav-content {
@@ -133,6 +135,37 @@
       overflow: auto;
       position: relative;
 
+      .dropdown-container {
+        display: flex;
+        gap: 12px;
+        width: 340px;
+        height: 37px;
+        position: absolute;
+        font-size: 16px;
+        top: 0px;
+        right: 249px;
+        align-items: stretch;
+        .dropdown {
+          display: flex;
+          gap: 12px;
+          padding-right: 17px;
+        }
+        .submit-button {
+          background-color: #4caf50;
+          color: white;
+          // margin-top: 16px;
+          padding: 0px 15px;
+          font-size: 16px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+        }
+
+        .submit-button:hover {
+          background-color: #45a049;
+        }
+      }
+
       h2 {
         font-size: 27px;
         margin: 2px 0px 12px 6px;
@@ -150,7 +183,6 @@
             font-size: 27px;
             margin: 12px 16px 0px 16px;
           }
-
         }
 
         .chart-filter-bar {
@@ -186,7 +218,6 @@
             }
           }
 
-
           .create-button {
             margin: 20px 7px 1px 7px;
 
@@ -206,7 +237,6 @@
 
           .clear-filter {
             background-color: #af0000;
-
           }
         }
       }
@@ -268,7 +298,6 @@
         }
       }
     }
-
   }
 }
 
@@ -305,7 +334,7 @@
       /* border: red; */
       border-radius: 50%;
       border-color: #2fff00;
-      width: 101%;
+      width: 94%;
       background-color: rgb(255 255 255 / 87%);
       margin: 23px 0;
     }
@@ -328,7 +357,7 @@
   .side-nav-button {
     display: flex;
     flex-direction: column;
-    magin-left: 10px;
+    // magin-left: 10px;
     align-items: center;
   }
 
@@ -340,7 +369,6 @@
     color: rgb(255, 255, 255);
     margin: 16px;
   }
-
 }
 
 .top-bar {
@@ -382,7 +410,6 @@
         margin-right: 10px;
         border: #ffffff 3px solid;
       }
-
     }
 
     .search-bar {
@@ -396,7 +423,5 @@
         border-radius: 4px;
       }
     }
-
-
   }
 }

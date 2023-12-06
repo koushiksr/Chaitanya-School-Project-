@@ -21,17 +21,98 @@
                          <img class="profile-img" src="../../assets/admin-logo6.jpg" alt="">
                     </div>
                     <div class="profile-info">
-                         <h2>Name: {{firstName}} {{lastName}}</h2>
+                         <h2>Name: {{firstName}} {{lastName}}</h2> 
                          <p>Email: {{email}}</p>
                          <p>Ph: {{phoneNumber}}</p>
                     </div>
                     <hr>
-                    <button mat-button class="logout-button" (click)="logout()">Logout</button>
+                    <div class="side-nav-button">
+                         <button mat-button (click)="activity(true)" (click)="drawer.toggle()">School Dashboard</button>
+                         <button mat-button (click)="activity(false)" (click)="drawer.toggle()">Assessor
+                              Dashboard</button>
+                         <button mat-button class="logout-button" (click)="logout()">Logout</button>
+                    </div>
                </div>
           </div>
      </mat-drawer>
 
-     <div class="example-sidenav-content">
+     <div *ngIf="isActivity" class="example-sidenav-content">
+          <div class="body">
+               <ng-template class="school-template" #formContent let-dialogRef let-closeDialog="closeDialog">
+                    <div class="school-form">
+                         <h2>{{ editMode ? 'Edit Assessor' : 'Add Assessor' }}</h2>
+                         <form [formGroup]="myForm1" (ngSubmit)="onSubmitOfAsssessor(); ">
+                              <div class="form-group">
+                                   <label for="name">Name</label>
+                                   <input type="text" id="name" formControlName="name" required>
+                              </div>
+
+                              <div class="form-group">
+                                   <label for="phNO">Contact No:</label>
+                                   <input type="text" id="phNO" formControlName="phNO" required>
+                              </div>
+
+                              <div class="form-group">
+                                   <label for="email">E-mail ID:</label>
+                                   <input type="email" id="email" formControlName="email" required>
+                              </div>
+
+                              <div class="form-group">
+                                   <label for="address">Address:</label>
+                                   <input type="text" id="address" formControlName="address" required>
+                              </div>
+
+                              <button mat-raised-button type="submit" class="btn btn-primary">{{ editMode ? 'Edit' :
+                                   'Submit' }}</button>
+                              <button type="button" mat-raised-button mat-dialog-close
+                                   class="btn btn-primary">Cancel</button>
+                         </form>
+                    </div>
+               </ng-template>
+
+               <div class="school-list">
+                    <h2>Assessor List</h2>
+                    <button mat-raised-button class='create-button' (click)="openDialog()">Open School Form</button>
+                    <table>
+                         <thead>
+                              <tr>
+                                   <th>Name</th>
+                                   <th>PH NO</th>
+                                   <th>Email</th>
+                                   <th>Address</th>
+                                   <th>Actions</th>
+                              </tr>
+                         </thead>
+                         <tbody>
+                              <tr *ngFor="let assessor of assessors">
+                                   <td>{{ assessor.name }}</td>
+                                   <td>{{ assessor.phNO }}</td>
+                                   <td>{{ assessor.email }}</td>
+                                   <td>{{ assessor.address }}</td>
+                                   <td class="table-buttons">
+                                        <div class="example-button-container">
+                                             <button (click)="editAssessor(assessor)" mat-mini-fab color="accent"
+                                                  aria-label="Example icon button with a plus one icon">
+                                                  <mat-icon>create</mat-icon> </button>
+                                        </div>
+                                        <div class="example-button-container">
+                                             <button (click)="deleteAssesor(assessor._id)" mat-mini-fab color="warn"
+                                                  aria-label="Example icon button with a filter list icon">
+                                                  <mat-icon>delete</mat-icon> </button>
+                                        </div>
+
+
+                                        <!-- <button class="edit" (click)="editSchool(school)">Edit</button> -->
+                                        <!-- <button class="delete" (click)="deleteSchool(school._id)">Delete</button> -->
+                                   </td>
+                              </tr>
+                         </tbody>
+                    </table>
+               </div>
+
+          </div>
+     </div>
+     <div *ngIf="!isActivity" class="example-sidenav-content">
           <div class="body">
                <ng-template class="school-template" #formContent let-dialogRef let-closeDialog="closeDialog">
                     <div class="school-form">

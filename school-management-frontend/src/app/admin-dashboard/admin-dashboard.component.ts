@@ -23,15 +23,19 @@ export class AdminDashboardComponent {
   @ViewChild('schoolForm')
   admin: any;
   schools: any[] = [];
+  assessors: any[] = [];
   isPopupOpen = false;
   myForm: FormGroup;
-  editMode!: boolean;
+  myForm1: FormGroup;
+  editMode: boolean = false;
   currentSchool: any;
+  currentAssessor: any;
   email: any;
   firstName: any;
   lastName: any;
   phoneNumber: any;
   showFiller = false;
+  isActivity: boolean = false;
 
 
 
@@ -41,6 +45,7 @@ export class AdminDashboardComponent {
     this.dialogRef = {} as MatDialogRef<any>;
     this.fetchSchools();
     this.adminDetails();
+    this.fetchAssessors()
     this.myForm = this.formBuilder.group({
       schoolName: ['', Validators.required],
       schoolCity: ['', Validators.required],
@@ -57,6 +62,12 @@ export class AdminDashboardComponent {
       noOfBoys: ['', Validators.required],
       noOfGirls: ['', Validators.required],
     });
+    this.myForm1 = this.formBuilder.group({
+      name: ['', Validators.required],
+      phNO: ['', Validators.required],
+      address: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+    });
   }
 
   customEmailValidator(control: AbstractControl): { [key: string]: any } | null {
@@ -71,6 +82,15 @@ export class AdminDashboardComponent {
   }
   dialogRef!: MatDialogRef<any>;
 
+  activity(clickdata: any) {
+    if (clickdata) {
+      this.isActivity = false;
+      // this.fetchStudentsActivity()
+      // this.SchoolDetails()
+    } else {
+      this.isActivity = true;
+    }
+  }
   // closeDialog(dialogRef: MatDialogRef<any>): void {
   //   dialogRef.afterClosed().subscribe(() => {
   //     this.myForm.reset();
@@ -98,6 +118,13 @@ export class AdminDashboardComponent {
     this.editMode = true;
     this.myForm.patchValue(school);
     this.currentSchool = school;
+    this.openDialog()
+    this.openSnackBar('Edit Mode', '')
+  }
+  editAssessor(assessor: any): void {
+    this.editMode = true;
+    this.myForm1.patchValue(assessor);
+    this.currentAssessor = assessor;
     this.openDialog()
     this.openSnackBar('Edit Mode', '')
   }
@@ -166,6 +193,65 @@ export class AdminDashboardComponent {
       }
     }
   }
+  onSubmitOfAsssessor() {
+    // this.closeDialog(dialogRef)
+    if (!this.myForm1.valid) {
+      this.openSnackBar('fill all the  required feilds', 'Close')
+    }
+    console.log(this.myForm1.value, 'form');
+
+    if (!this.editMode) {
+      if (this.myForm1.valid) {
+        this.http.post(`${environment.apiUrl}/admin/assessor`, this.myForm1.value)
+          .subscribe((response) => {
+            console.log(response)
+            if (response) {
+              this.openSnackBar('Asssessor created', 'Close')
+              this.fetchAssessors();
+              this.myForm1.reset();
+            }
+            if (!response) {
+              this.openSnackBar('email exist', 'Close')
+              this.myForm1.reset();
+            }
+            if (response == null) {
+              this.openSnackBar('Asssessor not created', 'Close')
+              this.myForm1.reset();
+              this.fetchSchools();
+              this.myForm1.reset();
+            }
+          }, (error) => {
+            console.log(error.error, 'error in creating Asssessor')
+            this.openSnackBar(`error in creating Asssessor!`, 'Close');
+            this.myForm1.reset();
+          });
+      }
+    }
+
+    if (this.editMode) {
+      if (this.myForm1.valid) {
+        // console.log(this.currentSchool)
+        this.http.put(`${environment.apiUrl}/admin/asssessor/${this.currentAssessor._id}`, this.myForm1.value)
+          .subscribe((response: any) => {
+            console.log(response.message === 'edit data to update ')
+            if (response.result.modifiedCount == 1 && response.message === 'edit data to update ') {
+              this.openSnackBar('Edit any one feild at least', 'Close')
+              // this.myForm1.reset();
+            } else {
+              this.openSnackBar('Asssessor edited successfully', 'Close')
+              this.fetchAssessors()
+              this.myForm1.reset();
+              this.editMode = false;
+            }
+
+          }, (error) => {
+            console.log(error.error, 'error in creating Asssessor')
+            this.openSnackBar('Somthing went wrong!', 'Close')
+            this.myForm1.reset();
+          })
+      }
+    }
+  }
 
   fetchSchools() {
     const token = localStorage.getItem('token');
@@ -176,11 +262,19 @@ export class AdminDashboardComponent {
     this.http.get(`${environment.apiUrl}/admin/school`)
       .subscribe((response: any) => {
         this.schools = response;
-        console.log(response, 'schools infetch all schools')
-        // console.log(typeof (this.schools));
         this.cdr.detectChanges();
+      }, (error) => {
+        console.log(error.error, 'error in creating school')
+      })
+  }
 
+  fetchAssessors() {
+    this.http.get(`${environment.apiUrl}/admin/assessor`)
+      .subscribe((response: any) => {
+        this.assessors = response;
+        console.log(response);
 
+        this.cdr.detectChanges();
       }, (error) => {
         console.log(error.error, 'error in creating school')
       })
@@ -193,6 +287,15 @@ export class AdminDashboardComponent {
       .subscribe((response: any) => {
         this.openSnackBar('school deleted successfully', 'Close')
         this.fetchSchools();
+      }, (error) => {
+        console.log(error.error, 'error in deleteing')
+      })
+  }
+  deleteAssesor(id: any): void {
+    this.http.delete(`${environment.apiUrl}/admin/assessor/${id}`)
+      .subscribe((response: any) => {
+        this.openSnackBar('Assessor deleted successfully', 'Close')
+        this.fetchAssessors();
       }, (error) => {
         console.log(error.error, 'error in deleteing')
       })

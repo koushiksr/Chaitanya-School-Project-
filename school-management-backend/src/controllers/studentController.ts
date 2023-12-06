@@ -217,6 +217,19 @@ exports.getAllStudent = async (req: any, res: any) => {
      }
      res.json(student)
 }
+exports.getAllStudentByClassGender = async (req: any, res: any) => {
+     const { schoolID, candidateClass, gender } = req.params
+     const matchData: any = {
+          ...(schoolID !== "undefined" && { schoolID }),
+          ...(candidateClass !== "undefined" && { candidateClass }),
+          ...(gender !== "undefined" && { gender }),
+     };
+
+     const student = await Student.aggregate([{ $match: matchData }]);
+     return student && student.length
+          ? res.json(student)
+          : res.status(401).json({ message: 'There is no data in the database' });
+}
 
 exports.editStudent = async (req: any, res: any) => {
 

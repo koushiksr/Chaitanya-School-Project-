@@ -11,14 +11,16 @@ const activitySchema = new mongoose.Schema({
      ParentName: String,
      ParentMobileNo: String,
      AlternateNo: String,
-     EmailID: String,
+     email: String,
      ResidenceArea: String,
      ResidenceCity: String,
+     // schoolInfo: Object,
      SchoolName: String,
      SchoolID: String,
      SchoolContactName: String,
      SchoolContactNumber: String,
      SchoolContactEmailID: String,
+     ongoing: Boolean,
      AssessmentTeam: String,
      AssessmentDate: String,
      AssessmentID: String,
@@ -64,7 +66,6 @@ const activitySchema = new mongoose.Schema({
      RemarksRemark1: String,
      RemarksRemark2: String,
      RemarksRemark3: String,
-
 }, {
      timestamps: true
 });

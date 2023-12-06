@@ -142,6 +142,28 @@ export const verifyAdmin = (req: { headers: { [x: string]: any; }; decoded: any;
     res.status(401).json({ result: 'Token is missing' });
   }
 };
+export const verifyAssessor = (req: { headers: { [x: string]: any; }; decoded: any; }, res: { status: (arg0: number) => { (): any; new(): any; json: { (arg0: { result: string; }): void; new(): any; }; }; }, next: () => void) => {
+  const bearerHeader = req.headers.authorization;
+  if (typeof bearerHeader !== 'undefined') {
+    const token = bearerHeader.split(' ')[1];
+
+    jwt.verify(token, secretKey, (err: any, decoded: any) => {
+      if (err) {
+        res.status(403).json({ result: 'Invalid token' });
+      } else {
+        req.decoded = decoded;
+
+        if (decoded && decoded.role === 'assessor') {
+          next();
+        } else {
+          res.status(403).json({ result: 'Unauthorized: User is not an assessor' });
+        }
+      }
+    });
+  } else {
+    res.status(401).json({ result: 'Token is missing' });
+  }
+};
 
 export const verifySchool = (req: { headers: { [x: string]: any; }; decoded: any; }, res: { status: (arg0: number) => { (): any; new(): any; json: { (arg0: { result: string; }): void; new(): any; }; }; }, next: () => void) => {
   const bearerHeader = req.headers.authorization;

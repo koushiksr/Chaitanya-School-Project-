@@ -18,6 +18,8 @@ const studentSchema = new mongoose.Schema({
      },
      residenceArea: { type: String, },
      residenceCity: { type: String, },
+     pastInjury: { type: String, },
+     presentInjury: { type: String, },
 }, {
      timestamps: true
 });

@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { SchoolDashboardComponent } from './school-dashboard/school-dashboard.component';
+import { AssessorComponent } from './assessor/assessor.component';
 import { StudentDashboardComponent } from './student-dashboard/student-dashboard.component';
-import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './auth.service';
@@ -31,10 +32,11 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 @NgModule({
   declarations: [
     AppComponent,
+    LoginComponent,
     AdminDashboardComponent,
     SchoolDashboardComponent,
+    AssessorComponent,
     StudentDashboardComponent,
-    LoginComponent,
     ForgotPasswordComponent,
     RegistrationFormComponent,
   ],

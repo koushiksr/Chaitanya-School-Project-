@@ -3,14 +3,15 @@
 }
 
 .school-form {
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(67, 66, 66);
   //  max-width: 45vw;
 
   h2 {
-    font-size: 36px;
+    font-size: 29px;
     font-weight: bold;
     text-align: center;
     padding: 19px 0px 0px 0px;
+    color: white;
   }
 
   form {
@@ -21,7 +22,7 @@
 
     h3 {
       font-size: 20px;
-      font-weight: bold;
+      font-weight: bold; 
     }
 
     //  width: 89%;
@@ -36,6 +37,7 @@
 
         label {
           display: block;
+          color: white;
           font-weight: bold;
         }
 
@@ -66,7 +68,7 @@
       // bottom: -58px;
       // text-decoration: none;
       // transition: background-color 0.3s;
-      background-color: #007BFF;
+      background-color: #007bff;
       color: #fff;
       border: none;
       border-radius: 7px;
@@ -79,7 +81,6 @@
       transition: background-color 0.3s;
     }
   }
-
 }
 
 .example-container {
@@ -110,16 +111,16 @@
       overflow: auto;
       // overflow-x: auto;
       // position: relative;
-      .canvas-container{
+      .canvas-container {
         overflow: auto;
         width: 78%;
         height: 654px;
-     .canvas-chart{
-      position: fixed;
-      overflow: auto;
-      top: 150px;
-     }
-    }
+        .canvas-chart {
+          position: fixed;
+          overflow: auto;
+          top: 150px;
+        }
+      }
       .chart-filter-bar-list {
         display: flex;
         flex-direction: row;
@@ -132,13 +133,16 @@
             // margin-bottom: 10px;
             margin: 12px 16px 0px 16px;
           }
-
         }
 
         .chart-filter-bar {
           display: flex;
           align-items: center;
-
+          .c-dropdown-chart {
+            height: 4.1rem;
+            border-radius: 10px !important;
+            margin-left: 220px;
+          }
           //   .display-column {
           //     display: flex;
           //     flex-direction: column;
@@ -155,7 +159,7 @@
           //       box-sizing: border-box;
           //       // margin-top: 8px;
           //     }
-          //   }
+          //
           .button-chart {
             margin: 1px 26px 24px 15px;
             padding: 20px 29px;
@@ -173,20 +177,20 @@
 
           .dropdown-chart {
             padding: 0px;
-            margin-left: 220px;
+            // margin-left: 220px;
             background-color: white;
           }
 
           .create-button {
-            margin: 20px 7px 1px 7px;
+            margin: 20px 7px 5px 7px;
             background-color: #007bff;
             color: #fff;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s;
-            height: 33px;
-            width: 109px;
+            height: 32px;
+            width: 137px;
           }
 
           .create-button:hover {
@@ -209,7 +213,6 @@
           border: 1px solid #ddd;
 
           .icon-button-container {
-
             // padding: 7px 20px;
             // margin: 5px;
             button {
@@ -255,7 +258,6 @@
         }
       }
     }
-
   }
 }
 
@@ -292,7 +294,7 @@
       /* border: red; */
       border-radius: 50%;
       border-color: #2fff00;
-      width: 101%;
+      width: 94%;
       background-color: rgb(255 255 255 / 87%);
       margin: 23px 0;
     }
@@ -327,7 +329,6 @@
     color: rgb(255, 255, 255);
     margin: 16px;
   }
-
 }
 
 .top-bar {
@@ -369,7 +370,6 @@
         margin-right: 10px;
         border: #ffffff 3px solid;
       }
-
     }
 
     .search-bar {
@@ -380,10 +380,8 @@
       .search-input {
         padding: 5px;
         border: 1px solid #ccc;
-        border-radius: 4px; 
+        border-radius: 4px;
       }
     }
-
-
   }
 }

@@ -1,5 +1,6 @@
-$background-image: url('../../assets/rows-assorted-stationery.jpg'); // Adjust the path
-$theme-color: #0080ff; 
+$background-image: url("../../assets/rows-assorted-stationery.jpg"); // Adjust the path
+$background-image2: url("../../assets/logo.png"); // Adjust the path
+$theme-color: #0080ff;
 body {
   background: $background-image center/cover no-repeat;
   margin: 0;
@@ -12,17 +13,18 @@ body {
   justify-content: center;
 
   .login-container {
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 20px;
+    background: $background-image2 no-repeat padding-box;
+    padding: 77px 20px 20px 20px;
     border-radius: 8px;
     text-align: center;
     width: 279px;
-    height: 305px;
+    height: 234px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    filter: contrast(125%);
 
     h2 {
       color: $theme-color;
@@ -37,22 +39,22 @@ body {
 
         input {
           width: 100%;
-        padding: 10px;
-        box-sizing: border-box;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        outline: none; 
+          padding: 10px;
+          box-sizing: border-box;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          outline: none;
         }
       }
 
       button {
         background-color: #0080ff;
-    color: #fff;
-    padding: 9px 43%;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
+        color: #fff;
+        padding: 9px 43%;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
       }
     }
 
@@ -72,14 +74,9 @@ body {
           text-decoration: underline;
         }
       }
-    }}
+    }
+  }
 }
-
-
-
-
-
-
 
 // .loginContainer {
 //   text-align: center;

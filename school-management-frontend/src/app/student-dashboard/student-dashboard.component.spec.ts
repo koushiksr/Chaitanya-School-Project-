@@ -17,5 +17,5 @@ describe('StudentDashboardComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
+  }); 
 });

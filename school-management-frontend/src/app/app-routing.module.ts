@@ -6,6 +6,7 @@ import { SchoolDashboardComponent } from './school-dashboard/school-dashboard.co
 import { StudentDashboardComponent } from './student-dashboard/student-dashboard.component';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { AssessorComponent } from './assessor/assessor.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'admin', component: AdminDashboardComponent },
   { path: 'school', component: SchoolDashboardComponent },
+  { path: 'assessor', component: AssessorComponent },
   { path: 'student', component: StudentDashboardComponent },
 ];
 @NgModule({

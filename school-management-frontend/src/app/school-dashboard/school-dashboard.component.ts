@@ -137,6 +137,8 @@ export class SchoolDashboardComponent {
       email: ['', Validators.required],
       residenceArea: ['', Validators.required],
       residenceCity: ['', Validators.required],
+      pastInjury: ['', Validators.required],
+      presentInjury: ['', Validators.required],
     });
   }
   // someAsyncOperation() {
@@ -293,11 +295,33 @@ export class SchoolDashboardComponent {
       })
   }
 
+  fetchStudentsByClassGender(classNumber: any, gender: any): any {
+    try {
+      if (classNumber != "" || gender != "") {
+        classNumber = classNumber ? classNumber : undefined
+        gender = gender ? gender : undefined
+
+        this.admin = JSON.parse(localStorage.getItem('adminDetails') ?? '{}');
+        this.http.get(`${environment.apiUrl}/school/student/${this.admin.schoolID}/${classNumber}/${gender}`)
+          .subscribe((response: any) => {
+            this.candidates = response;
+            this.cdr.detectChanges();
+          }, (error) => {
+            console.log(error.error, 'error in getting student')
+          })
+      } else {
+        this.openSnackBar("Both class and gender is empty", "close")
+      }
+    } catch (error) {
+      console.log("something went wrong ");
+
+    }
+  }
   fetchStudentsActivity() {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
     if (!token || role !== 'school') {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/login']); 
     }
     this.admin = JSON.parse(localStorage.getItem('adminDetails') ?? '{}');
     this.http.get(`${environment.apiUrl}/student/activity/${this.admin.schoolID}`)
@@ -312,12 +336,13 @@ export class SchoolDashboardComponent {
   saveCandidateAssinmentData(candidateActivity: any) {
     if (this.dateFormData == '') {
       this.openSnackBar('date is empty', 'Close')
-      return
+      return 
     }
 
     this.http.put(`${environment.apiUrl}/student/activity/edit/${candidateActivity._id}`, { AssessmentDate: this.dateFormData })
       .subscribe((response: any) => {
         if (response.modifiedCount == 1) {
+          this.fetchStudentsActivity()
           this.openSnackBar('date updated successfully', 'Close')
         }
       }, (error) => {
@@ -345,14 +370,22 @@ export class SchoolDashboardComponent {
       })
   }
   onFilterClick() {
-    this.admin = JSON.parse(localStorage.getItem('adminDetails') ?? '{}');
-    this.http.get(`${environment.apiUrl}/student/activity/${this.admin.schoolID}/${this.selectedActivity}/${this.selectedRating}`)
-      .subscribe((response: any) => {
-        this.candidateActivities = response;
-        this.cdr.detectChanges();
-      }, (error) => {
-        console.log(error.error, 'error in creating student')
-      })
+    try {
+      if (this.selectedActivity && this.selectedRating) {
+        this.admin = JSON.parse(localStorage.getItem('adminDetails') ?? '{}');
+        this.http.get(`${environment.apiUrl}/student/activity/${this.admin.schoolID}/${this.selectedActivity}/${this.selectedRating}`)
+          .subscribe((response: any) => {
+            this.candidateActivities = response;
+            this.cdr.detectChanges();
+          }, (error) => {
+            console.log(error.error, 'error in creating student')
+          })
+      } else {
+        this.openSnackBar("Select filters", "Slose")
+      }
+    } catch (error) {
+
+    }
   }
   // generatePDF() {
   //   // const data = this.candidateActivities
@@ -458,16 +491,38 @@ export class SchoolDashboardComponent {
   //     return newObj;
   // }
 
-  generateExcel() {
-    const data = this.candidateActivities;
+  generateActivityExcel() {
+    const data = this.candidateActivities
+    const excludedFields: string[] = ['createdAt', 'updatedAt', '_id', '__v'];
+
+    const newData = data.map(item => this.excludeFields1(item, excludedFields));
+
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(newData);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Activity Report');
+    XLSX.writeFile(wb, 'Activity Report.xlsx');
+  }
+
+  private excludeFields1(obj: any, excludedFields: string[]): any {
+    const newObj: any = {};
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key) && !excludedFields.includes(key)) {
+        newObj[key] = obj[key];
+      }
+    }
+    return newObj;
+  }
+
+  generateCandidatesExcel() {
+    const data = this.candidates
     const excludedFields: string[] = ['createdAt', 'updatedAt', '_id', '__v'];
 
     const newData = data.map(item => this.excludeFields(item, excludedFields));
 
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(newData);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Activity Report');
-    XLSX.writeFile(wb, 'Activity Report.xlsx');
+    XLSX.utils.book_append_sheet(wb, ws, 'Student List');
+    XLSX.writeFile(wb, 'Student List.xlsx');
   }
 
   private excludeFields(obj: any, excludedFields: string[]): any {

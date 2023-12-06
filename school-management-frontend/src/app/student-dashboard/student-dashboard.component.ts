@@ -41,7 +41,7 @@ export class StudentDashboardComponent implements AfterViewInit {
   isChartActive: boolean = false;
   myChart: any
   progressData: any;
-  allTaskFeilds: any[] = [
+  allTaskFeilds: any[] = [ 
     // "Name",
     // "ID",
     // "Gender",
@@ -123,69 +123,69 @@ export class StudentDashboardComponent implements AfterViewInit {
     // this.funa();
 
     this.myForm = this.formBuilder.group({
-      Name: ['', Validators.required],
-      ID: ['', Validators.required],
-      Gender: ['', Validators.required],
-      DOB: ['', Validators.required],
-      Age: ['', Validators.required],
-      Class: ['', Validators.required],
-      DominantSide: ['', Validators.required],
-      ParentName: ['', Validators.required],
-      ParentMobileNo: ['', Validators.required],
-      AlternateNo: ['', Validators.required],
-      Email: ['', Validators.required],
-      ResidenceArea: ['', Validators.required],
-      ResidenceCity: ['', Validators.required],
-      SchoolName: ['', Validators.required],
-      SchoolID: ['', Validators.required],
-      SchoolContactName: ['', Validators.required],
-      SchoolContactNumber: ['', Validators.required],
-      SchoolContactEmailID: ['', Validators.required],
-      AssessmentTeam: ['', Validators.required],
-      // AssessmentDate: ['', Validators.required],
-      AssessmentID: ['', Validators.required],
-      HeightCMs: ['', Validators.required],
-      HeightRating: ['', Validators.required],
-      WeightKG: ['', Validators.required],
-      WeightRating: ['', Validators.required],
-      BMI: ['', Validators.required],
-      BmiRating: ['', Validators.required],
-      BodyFatPercentage: ['', Validators.required],
-      BodyFatRating: ['', Validators.required],
-      ArmLengthCMs: ['', Validators.required],
-      ArmLengthRating: ['', Validators.required],
-      LegLengthCMs: ['', Validators.required],
-      LegLengthRating: ['', Validators.required],
-      SitAndReachCMs: ['', Validators.required],
-      SitAndReachRating: ['', Validators.required],
-      SingleLegBalance: ['', Validators.required],
-      SingleLegBalanceRating: ['', Validators.required],
-      PushUps: ['', Validators.required],
-      PushUpsRating: ['', Validators.required],
-      GripStrengthKGs: ['', Validators.required],
-      GripStrengthRating: ['', Validators.required],
-      SquatTest30Secs: ['', Validators.required],
-      SquatTestRating: ['', Validators.required],
-      PlankSecs: ['', Validators.required],
-      PlankRating: ['', Validators.required],
-      StandingLongJumpCMs: ['', Validators.required],
-      StandingLongJumpRating: ['', Validators.required],
-      StandingVerticalJumpInches: ['', Validators.required],
-      StandingVerticalJumpRating: ['', Validators.required],
-      FiveZeroFiveSecs: ['', Validators.required],
-      FiveZeroFiveRating: ['', Validators.required],
-      Speed30MtrsSecs: ['', Validators.required],
-      Speed30MtrsRating: ['', Validators.required],
-      SixHundredMtrsMins: ['', Validators.required],
-      SixHundredMtrsRating: ['', Validators.required],
-      OneMileTest: ['', Validators.required],
-      OneMileTestRating: ['', Validators.required],
-      BearPositionHoldRating: ['', Validators.required],
-      OverheadSquatsRating: ['', Validators.required],
-      LungesRating: ['', Validators.required],
-      RemarksRemark1: ['', Validators.required],
-      RemarksRemark2: ['', Validators.required],
-      RemarksRemark3: ['', Validators.required],
+      // Name: ['', Validators.required],
+      // ID: ['', Validators.required],
+      // Gender: ['', Validators.required],
+      // DOB: ['', Validators.required],
+      // Age: ['', Validators.required],
+      // Class: ['', Validators.required],
+      // DominantSide: ['', Validators.required],
+      // ParentName: ['', Validators.required],
+      // ParentMobileNo: ['', Validators.required],
+      // AlternateNo: ['', Validators.required],
+      // Email: ['', Validators.required],
+      // ResidenceArea: ['', Validators.required],
+      // ResidenceCity: ['', Validators.required],
+      // SchoolName: ['', Validators.required],
+      // SchoolID: ['', Validators.required],
+      // SchoolContactName: ['', Validators.required],
+      // SchoolContactNumber: ['', Validators.required],
+      // SchoolContactEmailID: ['', Validators.required],
+      // AssessmentTeam: ['', Validators.required],
+      AssessmentDate: ['', Validators.required],
+      // AssessmentID: ['', Validators.required],
+      // HeightCMs: ['', Validators.required],
+      // HeightRating: ['', Validators.required],
+      // WeightKG: ['', Validators.required],
+      // WeightRating: ['', Validators.required],
+      // BMI: ['', Validators.required],
+      // BmiRating: ['', Validators.required],
+      // BodyFatPercentage: ['', Validators.required],
+      // BodyFatRating: ['', Validators.required],
+      // ArmLengthCMs: ['', Validators.required],
+      // ArmLengthRating: ['', Validators.required],
+      // LegLengthCMs: ['', Validators.required],
+      // LegLengthRating: ['', Validators.required],
+      // SitAndReachCMs: ['', Validators.required],
+      // SitAndReachRating: ['', Validators.required],
+      // SingleLegBalance: ['', Validators.required],
+      // SingleLegBalanceRating: ['', Validators.required],
+      // PushUps: ['', Validators.required],
+      // PushUpsRating: ['', Validators.required],
+      // GripStrengthKGs: ['', Validators.required],
+      // GripStrengthRating: ['', Validators.required],
+      // SquatTest30Secs: ['', Validators.required],
+      // SquatTestRating: ['', Validators.required],
+      // PlankSecs: ['', Validators.required],
+      // PlankRating: ['', Validators.required],
+      // StandingLongJumpCMs: ['', Validators.required],
+      // StandingLongJumpRating: ['', Validators.required],
+      // StandingVerticalJumpInches: ['', Validators.required],
+      // StandingVerticalJumpRating: ['', Validators.required],
+      // FiveZeroFiveSecs: ['', Validators.required],
+      // FiveZeroFiveRating: ['', Validators.required],
+      // Speed30MtrsSecs: ['', Validators.required],
+      // Speed30MtrsRating: ['', Validators.required],
+      // SixHundredMtrsMins: ['', Validators.required],
+      // SixHundredMtrsRating: ['', Validators.required],
+      // OneMileTest: ['', Validators.required],
+      // OneMileTestRating: ['', Validators.required],
+      // BearPositionHoldRating: ['', Validators.required],
+      // OverheadSquatsRating: ['', Validators.required],
+      // LungesRating: ['', Validators.required],
+      // RemarksRemark1: ['', Validators.required],
+      // RemarksRemark2: ['', Validators.required],
+      // RemarksRemark3: ['', Validators.required],
     });
   }
   SchoolDetails = () => {
@@ -338,8 +338,8 @@ export class StudentDashboardComponent implements AfterViewInit {
 
   openDialog() {
     const dialogRef = this.dialog.open(this.formContent, {
-      width: '243vh',
-      height: '90vh',
+      width: '31vh',
+      height: '23.1vh'
     });
     dialogRef.afterClosed().subscribe(result => {
       this.myForm.reset();
@@ -353,10 +353,14 @@ export class StudentDashboardComponent implements AfterViewInit {
 
     if (!this.editMode) {
       if (this.myForm.valid) {
-        this.http.post(`${environment.apiUrl}/student/activity/create`, this.myForm.value)
+        const candidateID = localStorage.getItem("candidateID")
+        const schoolID = localStorage.getItem("schoolID")
+        console.log(candidateID, schoolID);
+
+        this.http.post(`${environment.apiUrl}/student/activity/create`, { formData: this.myForm.value, schoolID, candidateID })
           .subscribe((response) => {
             if (response) {
-              this.openSnackBar('student created', 'Close')
+              this.openSnackBar('activity initiated', 'Close')
               this.fetchAllActivites();
               this.myForm.reset();
             }

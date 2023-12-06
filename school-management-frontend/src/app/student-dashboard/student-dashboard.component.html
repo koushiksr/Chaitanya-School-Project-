@@ -9,7 +9,7 @@
                <input type="text" class="search-input" placeholder="Search...">
           </div>
 
-          <!-- <span>Welcome, School Name</span> -->
+          <!-- <span>Welcome, School Name</span> --> 
      </div>
 </div>
 <mat-drawer-container class="example-container" autosize>
@@ -29,7 +29,7 @@
                     </div>
                     <hr>
                     <div class="side-nav-button">
-                         <button mat-button (click)="activity(true)" (click)="drawer.toggle()">Dashboard</button>
+                         <!-- <button mat-button (click)="activity(true)" (click)="drawer.toggle()">Dashboard</button> -->
                          <!-- <button mat-button (click)="activity(false)">Activity</button> -->
                          <button mat-button class="logout-button" (click)="logout()">Logout</button>
                     </div>
@@ -41,18 +41,24 @@
           <div class="body">
                <ng-template class="school-template" #formContent let-dialogRef let-closeDialog="closeDialog">
                     <div class="school-form">
-                         <h2>{{ editMode ? 'Edit a school' : 'Add Activity' }}</h2>
+                         <h2>{{ editMode ? 'Edit a school' : 'Book Assessment' }}</h2>
                          <form [formGroup]="myForm" (ngSubmit)="onSubmit();">
                               <!-- Candidate Information -->
-                              <h3>Personal Details</h3>
+                              <!-- <h3>Personal Details</h3> -->
                               <div>
 
                                    <div class="form-section">
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                              <label for="Name">Name:</label>
-                                             <input type="text" id="Name" formControlName="Name" required>
-                                        </div>
-                                        <div class="form-group">
+                                             <select id="Name" formControlName="Name" required>
+                                                  <option value="" disabled selected>Select a Name</option>
+                                                  <option value="John">John</option>
+                                                  <option value="Jane">Jane</option>
+                                                  <option value="Doe">Doe</option>
+                                             </select>
+                                        </div> -->
+
+                                        <!-- <div class="form-group">
                                              <label for="ID">ID:</label>
                                              <input type="text" id="ID" formControlName="ID" required>
                                         </div>
@@ -103,16 +109,22 @@
                                              <label for="ResidenceCity">Residence City:</label>
                                              <input type="text" id="ResidenceCity" formControlName="ResidenceCity"
                                                   required>
-                                        </div>
+                                        </div> -->
                                    </div>
                                    <!-- School Information -->
-                                   <h3>School Details</h3>
+                                   <!-- <h3>School Details</h3> -->
                                    <div class="form-section">
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                              <label for="SchoolName">School Name:</label>
-                                             <input type="text" id="SchoolName" formControlName="SchoolName" required>
-                                        </div>
-                                        <div class="form-group">
+                                             <select id="SchoolName" formControlName="SchoolName" required>
+                                                  <option value="" disabled selected>Select a School Name</option>
+                                                  <option value="SchoolA">School A</option>
+                                                  <option value="SchoolB">School B</option>
+                                                  <option value="SchoolC">School C</option>
+                                             </select>
+                                        </div> -->
+
+                                        <!-- <div class="form-group">
                                              <label for="SchoolID">School ID:</label>
                                              <input type="text" id="SchoolID" formControlName="SchoolID" required>
                                         </div>
@@ -130,27 +142,27 @@
                                              <label for="SchoolContactEmailID">School Contact Email ID:</label>
                                              <input type="email" id="SchoolContactEmailID"
                                                   formControlName="SchoolContactEmailID" required>
-                                        </div>
+                                        </div> -->
                                    </div>
                                    <!-- Assessment Information -->
-                                   <h3>Assignment Details</h3>
+                                   <!-- <h3>Assignment Details</h3> -->
                                    <div class="form-section">
                                         <div class="form-group">
-                                             <div class="form-group">
+                                             <!-- <div class="form-group">
                                                   <label for="AssessmentTeam">Assessment Team:</label>
                                                   <input type="text" id="AssessmentTeam"
                                                        formControlName="AssessmentTeam" required>
+                                             </div> -->
+                                             <div class="form-group">
+                                                  <label for="AssessmentDate">Assessment Date:</label>
+                                                  <input type="date" id="AssessmentDate"
+                                                       formControlName="AssessmentDate" required>
                                              </div>
                                              <!-- <div class="form-group">
-                                             <label for="AssessmentDate">Assessment Date:</label>
-                                             <input type="date" id="AssessmentDate" formControlName="AssessmentDate"
-                                                  required>
-                                        </div> -->
-                                             <div class="form-group">
                                                   <label for="AssessmentID">Assessment ID:</label>
                                                   <input type="text" id="AssessmentID" formControlName="AssessmentID"
                                                        required>
-                                             </div>
+                                             </div> -->
                                         </div>
                                    </div>
                                    <!-- Physical Attributes -->
@@ -160,7 +172,7 @@
                                         required>
                               </div> -->
                                    <!-- Physical Attributes Information -->
-                                   <h3>Physical Details</h3>
+                                   <!-- <h3>Physical Details</h3>
                                    <div class="form-section last-form-section">
                                         <div class="form-group">
                                              <label for="HeightCMs">Height in CMs:</label>
@@ -273,7 +285,6 @@
                                              <label for="PlankSecs">Plank (Seconds):</label>
                                              <input type="number" id="PlankSecs" formControlName="PlankSecs" required>
                                         </div>
-                                        <!-- Add similar form elements for the remaining fields -->
                                         <div class="form-group">
                                              <label for="PlankRating">Plank Rating:</label>
                                              <input type="number" id="PlankRating" formControlName="PlankRating"
@@ -371,7 +382,7 @@
                                              <input type="text" id="RemarksRemark3" formControlName="RemarksRemark3"
                                                   required>
                                         </div>
-                                   </div>
+                                   </div> -->
                                    <div>
                                         <div>
                                              <button mat-raised-button type="submit" class="btn btn-primary">{{ editMode
@@ -391,7 +402,7 @@
                <div class="school-list">
                     <div class="chart-filter-bar-list">
                          <div>
-                              <h2>{{!isChartActive?' Activity List':'Progress'}}</h2>
+                              <h2>{{!isChartActive?' Assessment List':'Progress'}}</h2>
                          </div>
                          <div class="chart-filter-bar">
                               <!-- <div *ngIf="isChartActive" class="display-column">
@@ -403,16 +414,13 @@
                                         </option>
                                    </select>
                               </div> -->
-                              <mat-form-field class="dropdown-chart" *ngIf="isChartActive">
-                                   <mat-label>Favorite food</mat-label>
+                              <mat-form-field class="c-dropdown-chart" *ngIf="isChartActive">
+                                   <mat-label class="mat-select">Select Assessment</mat-label>
                                    <mat-select [(ngModel)]="selectedActivity">
-                                        <!-- @for (food of foods; track food) { -->
                                         <mat-option *ngFor="let activity of allTaskFeilds"
                                              [value]="activity">{{activity}}</mat-option>
-                                        <!-- } -->
                                    </mat-select>
                               </mat-form-field>
-
 
                               <button class="button-chart" mat-raised-button *ngIf="isChartActive" type="button"
                                    (click)="onFilterClick()">Submit</button>
@@ -422,7 +430,7 @@
                               <button class="button-Cancel" *ngIf="isChartActive" type="button"
                                    (click)="destroyChart()"><mat-icon *ngIf="isChartActive">close</mat-icon>
                               </button>
-                              <button *ngIf="!isChartActive" class='create-button' (click)="openDialog()">Activity
+                              <button *ngIf="!isChartActive" class='create-button' (click)="openDialog()">Assessment
                                    Form</button>
 
                          </div>
@@ -445,7 +453,7 @@
                                    <th>Name of Parent</th>
                                    <th>Parent's Mobile No</th>
                                    <th>Alternate No</th>
-                                   <!-- <th>Email ID</th> -->
+                                   <th>Email ID</th>
                                    <th>Residence Area/Colony</th>
                                    <th>Residence City</th>
                                    <th>School Name</th>
@@ -503,16 +511,16 @@
                          <tbody>
                               <tr *ngFor="let candidatesActivit of candidatesActivity">
                                    <td class="table-buttons">
-                                        <div class="icon-button-container">
+                                        <!-- <div class="icon-button-container">
                                              <button (click)="editCandidate(candidatesActivit)" mat-mini-fab
                                                   color="accent" aria-label="Example icon button with a plus one icon">
                                                   <mat-icon>create</mat-icon> </button>
-                                        </div>
-                                        <div class="icon-button-container">
+                                        </div> -->
+                                        <!-- <div class="icon-button-container">
                                              <button (click)="deleteCandidate(candidatesActivit._id)" mat-mini-fab
                                                   color="warn" aria-label="Example icon button with a filter list icon">
                                                   <mat-icon>delete</mat-icon> </button>
-                                        </div>
+                                        </div> -->
                                         <div class="icon-button-container">
                                              <button (click)="generatePDF(candidatesActivit)" mat-mini-fab
                                                   aria-label="Example icon button with a filter list icon">
@@ -530,7 +538,7 @@
                                    <td>{{ candidatesActivit.ParentName }}</td>
                                    <td>{{ candidatesActivit.ParentMobileNo }}</td>
                                    <td>{{ candidatesActivit.AlternateNo }}</td>
-                                   <!-- <td>{{ candidatesActivit.EmailID }}</td> -->
+                                   <td>{{ candidatesActivit.email }}</td>
                                    <td>{{ candidatesActivit.ResidenceArea }}</td>
                                    <td>{{ candidatesActivit.ResidenceCity }}</td>
                                    <td>{{ candidatesActivit.SchoolName }}</td>
@@ -595,7 +603,7 @@
      <div *ngIf="isActivity" class="example-sidenav-content">
           <div class="body">
                <div class="school-list">
-                    <h2>Student Activity List</h2>
+                    <h2>Student Assessment List</h2>
                     <!-- <button class='create-button' (click)="openDialog()">Open Student Form</button> -->
                     <table>
                          <thead>

@@ -11,6 +11,7 @@ exports.getSchoolAdmin = async (req: any, res: any) => {
      const admin_details = await School.findOne({ schoolEmail: email });
      return res.send({ admin_login, admin_details })
 }
+
 exports.create = async (req: any, res: any) => {
      let isMailSend = false;
      const { schoolEmail, schoolName, } = req.body;
@@ -129,8 +130,6 @@ exports.create = async (req: any, res: any) => {
      }
      return res.status(404).send(null)
 }
-
-
 
 
 exports.getAllSchool = async (req: any, res: any) => {

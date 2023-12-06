@@ -7,17 +7,63 @@ const nodemailer = require("nodemailer");
 
 
 exports.create = async (req: any, res: any) => {
+     // console.log(req.body);
      let isMailSend = false;
-     const { Email } = req.body;
-     const student = await Student.findOne({ email: Email });
-     const inLogin = await Login.findOne({ email: Email });
+     const { formData, schoolID, candidateID } = req.body;
+     // const bodyData = formData.AssessmentDate
+     const student = await Student.findOne({ candidateID });
+     console.log(student);
+
+     // const inLogin = await Login.findOne({ email: Email });
      // console.log(Email, student, inLogin);
 
-     if (student && inLogin) {
-          // const newStudent = await Activity.create(req.body);
-          // return res.status(200).send(true)     
-          Activity.create(req.body)
-               .then((createdActivity: any) => {
+     if (student) {
+          const details = await Student.aggregate([
+               {
+                    $match: { candidateID }
+               },
+               {
+                    $lookup: {
+                         from: "schools",
+                         localField: "schoolID",
+                         foreignField: "schoolID",
+                         as: "schoolInfo"
+                    }
+               },
+               {
+                    $unwind: "$schoolInfo"
+               },
+               {
+                    $unset: ["createdAt", "updatedAt", "__v", "schoolInfo.createdAt", "schoolInfo.updatedAt", "schoolInfo.__v"]
+               },
+               {
+                    $project: {
+                         _id: 0,
+                         Name: "$candidateName",
+                         ID: "$candidateID",
+                         Gender: "$gender",
+                         DOB: "$dob",
+                         Age: "$age",
+                         Class: "$candidateClass",
+                         DominantSide: "$dominantSide",
+                         ParentName: "$parentName",
+                         ParentMobileNo: "$parentMobileNo",
+                         AlternateNo: "$alternateNo",
+                         email: "$email",
+                         ResidenceArea: "$residenceArea",
+                         ResidenceCity: "$residenceCity",
+                         SchoolName: "$schoolInfo.schoolName",
+                         SchoolID: "$schoolInfo.schoolID",
+                         SchoolContactName: "$schoolInfo.contactName",
+                         SchoolContactNumber: "$schoolInfo.contactNo",
+                         SchoolContactEmailID: "$schoolInfo.schoolEmail",
+                    }
+               }
+          ])
+
+          details[0].AssessmentDate = formData.AssessmentDate
+          await Activity.create(details)
+               .then(async (createdActivity: any) => {
                     let config = {
                          service: 'gmail',
                          auth: {
@@ -25,64 +71,215 @@ exports.create = async (req: any, res: any) => {
                               pass: 'jsug tain gbtm iyks'
                          }
                     }
-                    let transporter = nodemailer.createTransport(config);
+                    let transporter = await nodemailer.createTransport(config);
                     let MailGenerator = new Mailgen({
                          theme: "default",
                          product: {
-                              name: "Student Activity",
+                              name: "Admin",
                               link: 'https://mailgen.js/'
                          }
                     })
 
                     let response = {
                          body: {
-                              name: req.body.Name,
-                              intro: `${req.body.Name}  Is Created Assignment`,
-                              // table: {
-                              //      data: [
-                              //           {
-                              //                // Password: randomPassword,
-                              //                description: "Use this password for further login",
-                              //           }
-                              //      ]
-                              // },
+                              name: "Assessor",
+                              intro: `${student.candidateName}  Is Created Assignment`,
                               action: {
                                    instructions: 'To visit website to assign date, click the link below:',
                                    button: {
                                         text: 'Visit Our Website',
-                                        link: 'https://www.example.com', // Your website link
+                                        link: 'https://www.example.com',
                                    },
                                    outro: "thanks for attention"
                               }
                          }
                     }
 
-                    let mail = MailGenerator.generate(response)
+                    let mail = await MailGenerator.generate(response)
 
                     let message = {
                          from: 'technohmsit@gmail.com',
-                         to: 'koushiksr1999@gmail.com',
+                         to: process.env.ASSESSOR,
                          subject: "activity created",
                          html: mail
                     }
 
-                    // transporter.sendMail(message).then(() => {
-                    //      console.log({ msg: "you should receive an email" })
-                    //      isMailSend = true;
-                    // }).catch((error: any) => {
-                    // })
-                    res.status(201).json({ message: 'Activity created successfully', activity: createdActivity });
+                    await transporter.sendMail(message).then(() => {
+                         console.log({ msg: "you should receive an email" })
+                         isMailSend = true;
+                    }).catch((error: any) => {
+                    })
+
+                    if (isMailSend) {
+                         return res.status(201).json({
+                              message: 'Activity created successfully', activity: createdActivity
+                         })
+                    }
                })
                .catch((error: { message: any; }) => {
                     res.status(500).json({ error: 'Internal Server Error', details: error.message });
                });
-
      } else {
-          // if (!student) {
-          //      return res.status(200).send(false)
-          // }
           res.status(404).send(null)
      }
+}
+exports.createbyAssesser = async (req: any, res: any) => {
+     // console.log(req.body);
+     let isMailSend = false;
+     const { formData, schoolID, candidateID } = req.body;
+     // const bodyData = formData.AssessmentDate
+     const student = await Student.findOne({ candidateID });
+     // console.log(student);
+
+     // const inLogin = await Login.findOne({ email: Email });
+     // console.log(Email, student, inLogin);
+
+     if (student) {
+          const details = await Student.aggregate([
+               {
+                    $match: { candidateID }
+               },
+               {
+                    $lookup: {
+                         from: "schools",
+                         localField: "schoolID",
+                         foreignField: "schoolID",
+                         as: "schoolInfo"
+                    }
+               },
+               {
+                    $unwind: "$schoolInfo"
+               },
+               {
+                    $unset: ["createdAt", "updatedAt", "__v", "schoolInfo.createdAt", "schoolInfo.updatedAt", "schoolInfo.__v"]
+               },
+               {
+                    $project: {
+                         _id: 0,
+                         Name: "$candidateName",
+                         ID: "$candidateID",
+                         Gender: "$gender",
+                         DOB: "$dob",
+                         Age: "$age",
+                         Class: "$candidateClass",
+                         DominantSide: "$dominantSide",
+                         ParentName: "$parentName",
+                         ParentMobileNo: "$parentMobileNo",
+                         AlternateNo: "$alternateNo",
+                         email: "$email",
+                         ResidenceArea: "$residenceArea",
+                         ResidenceCity: "$residenceCity",
+                         SchoolName: "$schoolInfo.schoolName",
+                         SchoolID: "$schoolInfo.schoolID",
+                         SchoolContactName: "$schoolInfo.contactName",
+                         SchoolContactNumber: "$schoolInfo.contactNo",
+                         SchoolContactEmailID: "$schoolInfo.schoolEmail",
+                    }
+               }
+          ])
+
+          details[0].AssessmentDate = formData.AssessmentDate
+          // console.log(details);
+          
+          await Activity.create(details)
+               .then(async (createdActivity: any) => {
+                    let config = {
+                         service: 'gmail',
+                         auth: {
+                              user: 'technohmsit@gmail.com',
+                              pass: 'jsug tain gbtm iyks'
+                         }
+                    }
+                    let transporter = await nodemailer.createTransport(config);
+                    let MailGenerator = new Mailgen({
+                         theme: "default",
+                         product: {
+                              name: "Admin",
+                              link: 'https://mailgen.js/'
+                         }
+                    })
+
+                    let response = {
+                         body: {
+                              name: "Assessor",
+                              intro: `${student.candidateName}  Is Created Assignment`,
+                              action: {
+                                   instructions: 'To visit website to assign date, click the link below:',
+                                   button: {
+                                        text: 'Visit Our Website',
+                                        link: 'https://www.example.com',
+                                   },
+                                   outro: "thanks for attention"
+                              }
+                         }
+                    }
+
+                    let mail = await MailGenerator.generate(response)
+
+                    let message = {
+                         from: 'technohmsit@gmail.com',
+                         to: process.env.ASSESSOR,
+                         subject: "activity created",
+                         html: mail
+                    }
+
+                    await transporter.sendMail(message).then(() => {
+                         console.log({ msg: "you should receive an email" })
+                         isMailSend = true;
+                    }).catch((error: any) => {
+                    })
+                    console.log("start", isMailSend);
+
+                    if (isMailSend) {
+                         // console.log("insade uwn", createdActivity[0]._id);
+
+                         // exports.addingData = async (req: any, res: any) => {
+                         req.body.formData.ongoing = true
+                         const result = await Activity.updateOne(
+                              { _id: createdActivity[0]._id },
+                              {
+                                   $set: req.body.formData
+                              }
+                         );
+                         if (result.matchedCount === 1) {
+                              console.log('Date updated successfully');
+                         } else {
+                              console.log('Date not found or not updated');
+                         }
+                         // console.log(result);
+                         
+                         // res.send(result)
+                         // };
+                         return res.status(201).json({
+                              message: 'Activity created successfully', activity: result
+                         })
+                    }
+               })
+               .catch((error: { message: any; }) => {
+                    res.status(500).json({ error: 'Internal Server Error', details: error.message });
+               });
+     } else {
+          res.status(404).send(null)
+     }
+}
+
+
+exports.getAllforAssessor = async (req: any, res: any) => {
+     const data: any = {};
+     if (req.params.schoolID != 'undefined') {
+          data.SchoolID = req.params.schoolID;
+     }
+
+     if (req.params.candidateID != 'undefined') {
+          data.ID = req.params.candidateID;
+     }
+     console.log(data);
+
+     const student = await Activity.find(data)
+     if (!student) {
+          return res.status(404).json({ message: 'there is no data in database' });
+     }
+     res.json(student);
 }
 
 exports.getAll = async (req: any, res: any) => {
@@ -92,7 +289,6 @@ exports.getAll = async (req: any, res: any) => {
      }
      res.json(student);
 }
-
 exports.getAllActivityBySchoolID = async (req: any, res: any) => {
      const activity = req.params.activity;
      const rating = parseFloat(req.params.rating);
@@ -146,6 +342,7 @@ exports.getLast4ActivityBycandidateID = async (req: any, res: any) => {
 }
 
 exports.edit = async (req: any, res: any) => {
+     req.body.ongoing = true
      const result = await Activity.updateOne(
           { _id: Object(req.params.id) },
           {

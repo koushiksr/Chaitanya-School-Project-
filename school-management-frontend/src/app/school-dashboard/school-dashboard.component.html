@@ -2,7 +2,7 @@
      <div class="dashboard-heading">{{ !isActivity ? 'School Dashboard' : 'Activity Dashboard' }}</div>
      <div class="profile">
           <div class="profile-open">
-               <button (click)="SchoolDetails()" (click)="drawer.toggle()"></button>
+               <button type="button" (click)="SchoolDetails()" (click)="drawer.toggle()"></button>
                <img class="profile-image" src="../../assets/school-logo2.jpg" alt="Profile Image">
           </div>
           <div class="search-bar">
@@ -11,7 +11,7 @@
 
           <!-- <span>Welcome, School Name</span> -->
      </div>
-</div>
+</div> 
 
 <mat-drawer-container class="example-container" autosize>
 
@@ -55,7 +55,7 @@
                               <div class="form-group">
                                    <label for="candidateName">Candidate Name:</label>
                                    <input type="text" id="candidateName" formControlName="candidateName" required>
-                              </div>
+                               </div>
                               <!-- <div class="form-group">
                                    <label for="candidateID">Candidate ID:</label>
                                    <input type="text" id="candidateID" formControlName="candidateID" required>
@@ -117,6 +117,14 @@
                                    <label for="residenceCity">Residence City:</label>
                                    <input type="text" id="residenceCity" formControlName="residenceCity" required>
                               </div>
+                              <div class="form-group last-form-grou">
+                                   <label for="pastInjury">Major Injury In the past:</label>
+                                   <input type="text" id="pastInjury" formControlName="pastInjury" required>
+                              </div>
+                              <div class="form-group last-form-grou">
+                                   <label for="presentInjury">Present Injury:</label>
+                                   <input type="text" id="presentInjury" formControlName="presentInjury" required>
+                              </div>
 
                               <button mat-raised-button type="submit" class="btn btn-primary">{{
                                    editMode ? 'Edit' :
@@ -125,12 +133,44 @@
                               <button mat-raised-button type="button" mat-dialog-close
                                    class="btn btn-primary">Cancel</button>
                          </form>
- 
+
                     </div>
                </ng-template>
 
                <div class="school-list">
                     <h2>Student List</h2>
+                    <div class="dropdown-container">
+                         <select id="dropdown1" class="dropdown" #classDropdown>
+                              <option value="" disabled selected>Class</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                         </select>
+
+                         <select id="dropdown2" class="dropdown" #genderDropdown>
+                              <option value="" disabled selected>Gender</option>
+                              <option value="male">Male</option>
+                              <option value="female">Female</option>
+                         </select>
+                         <div>
+                              <button mat-raised-button class='create-button' type="button"
+                                   (click)="fetchStudentsByClassGender(classDropdown.value, genderDropdown.value)"><mat-icon>filter_list</mat-icon></button>
+                         </div>
+                         <div> <button mat-raised-button color="warn" class='create-button clear-filter' type="button"
+                                   (click)="fetchStudents()" (click)="genderDropdown.value=''"
+                                   (click)="classDropdown.value=''"><mat-icon>restore</mat-icon></button>
+                         </div>
+                         <button mat-raised-button class='create-button' type="button"
+                              (click)="generateCandidatesExcel()"><mat-icon>get_app</mat-icon></button>
+                         <!-- <button id="submitButton" class="submit-button">filter</button> -->
+                    </div>
                     <button mat-raised-button class='create-button-openform' (click)="openDialog()">Open Student
                          Form</button>
                     <table>
@@ -149,6 +189,8 @@
                                    <th>Email ID</th>
                                    <th>Residence Area/Colony</th>
                                    <th>Residence City</th>
+                                   <th>Major Past Injury</th>
+                                   <th>Present Injury</th>
                                    <th>Actions</th>
                               </tr>
                          </thead>
@@ -167,6 +209,8 @@
                                    <td>{{ candidate?.email }}</td>
                                    <td>{{ candidate?.residenceArea }}</td>
                                    <td>{{ candidate?.residenceCity }}</td>
+                                   <td>{{ candidate?.pastInjury }}</td>
+                                   <td>{{ candidate?.presentInjury }}</td>
                                    <td class="table-buttons">
                                         <!-- <button class="edit" (click)="editCandidate(candidate)">Edit</button>
                                         <button class="delete"
@@ -222,7 +266,7 @@
                                    (click)="fetchStudentsActivity()"><mat-icon>restore</mat-icon>Filter</button>
 
                               <button mat-raised-button class='create-button' type="button"
-                                   (click)="generateExcel()"><mat-icon>get_app</mat-icon></button>
+                                   (click)="generateActivityExcel()"><mat-icon>get_app</mat-icon></button>
 
 
 
@@ -257,7 +301,7 @@
                                    <th>Assessment ID</th>
                                    <!-- <th>Height (CMs)</th>
                                    <th>Height Rating</th> -->
-                                   <!-- <th>Actions</th> -->
+                                   <th>Assign Date</th>
                               </tr>
                          </thead>
                          <tbody>
@@ -281,13 +325,13 @@
                                    <td>{{ candidateActivity.SchoolContactNumber }}</td>
                                    <td>{{ candidateActivity.SchoolContactEmailID }}</td> -->
                                    <td>{{ candidateActivity.AssessmentTeam }}</td>
-                                   <!-- <td>{{ candidateActivity.AssessmentDate }}</td> -->
+                                   <td>{{ candidateActivity.AssessmentDate }}</td>
                                    <td>{{ candidateActivity.AssessmentID }}</td>
                                    <td>
                                         <form (submit)="saveCandidateAssinmentData(candidateActivity)">
                                              <input type='date' name="data" id="data" [(ngModel)]="dateFormData"
                                                   required>
-                                             <h5>{{dateFormData}}</h5>
+                                             <!-- <h5>{{dateFormData}}</h5> -->
                                              <h5>{{candidateActivity.AssessmentDate}}</h5>
                                              <button mat-flat-button type="submit">Save Date</button>
                                         </form>

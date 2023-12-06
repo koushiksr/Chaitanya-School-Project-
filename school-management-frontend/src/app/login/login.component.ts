@@ -46,6 +46,12 @@ export class LoginComponent {
           // console.log('student login fe')
           this.router.navigate(['/student']);
         }
+        if (response.role == 'assessor' && response.token) {
+          localStorage.setItem('username', email);
+          localStorage.setItem('token', response.token);
+          // console.log('student login fe')
+          this.router.navigate(['/assessor']);
+        }
       },
       (error) => {
         this.loginError = 'Login failed. Please check your email and password.';
