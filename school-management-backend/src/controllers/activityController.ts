@@ -12,7 +12,7 @@ exports.create = async (req: any, res: any) => {
      const { formData, schoolID, candidateID } = req.body;
      // const bodyData = formData.AssessmentDate
      const student = await Student.findOne({ candidateID });
-     console.log(student);
+     // console.log(student);
 
      // const inLogin = await Login.findOne({ email: Email });
      // console.log(Email, student, inLogin);
@@ -124,16 +124,9 @@ exports.create = async (req: any, res: any) => {
      }
 }
 exports.createbyAssesser = async (req: any, res: any) => {
-     // console.log(req.body);
      let isMailSend = false;
      const { formData, schoolID, candidateID } = req.body;
-     // const bodyData = formData.AssessmentDate
      const student = await Student.findOne({ candidateID });
-     // console.log(student);
-
-     // const inLogin = await Login.findOne({ email: Email });
-     // console.log(Email, student, inLogin);
-
      if (student) {
           const details = await Student.aggregate([
                {
@@ -179,8 +172,6 @@ exports.createbyAssesser = async (req: any, res: any) => {
           ])
 
           details[0].AssessmentDate = formData.AssessmentDate
-          // console.log(details);
-          
           await Activity.create(details)
                .then(async (createdActivity: any) => {
                     let config = {
@@ -228,12 +219,7 @@ exports.createbyAssesser = async (req: any, res: any) => {
                          isMailSend = true;
                     }).catch((error: any) => {
                     })
-                    console.log("start", isMailSend);
-
                     if (isMailSend) {
-                         // console.log("insade uwn", createdActivity[0]._id);
-
-                         // exports.addingData = async (req: any, res: any) => {
                          req.body.formData.ongoing = true
                          const result = await Activity.updateOne(
                               { _id: createdActivity[0]._id },
@@ -246,10 +232,6 @@ exports.createbyAssesser = async (req: any, res: any) => {
                          } else {
                               console.log('Date not found or not updated');
                          }
-                         // console.log(result);
-                         
-                         // res.send(result)
-                         // };
                          return res.status(201).json({
                               message: 'Activity created successfully', activity: result
                          })
@@ -265,21 +247,16 @@ exports.createbyAssesser = async (req: any, res: any) => {
 
 
 exports.getAllforAssessor = async (req: any, res: any) => {
-     const data: any = {};
-     if (req.params.schoolID != 'undefined') {
-          data.SchoolID = req.params.schoolID;
-     }
 
-     if (req.params.candidateID != 'undefined') {
-          data.ID = req.params.candidateID;
-     }
-     console.log(data);
-
-     const student = await Activity.find(data)
-     if (!student) {
-          return res.status(404).json({ message: 'there is no data in database' });
-     }
-     res.json(student);
+     const { schoolID, candidateID } = req.params
+     const matchData: any = {
+          ...(schoolID !== "undefined" && { SchoolID: schoolID }),
+          ...(candidateID !== "undefined" && { ID: candidateID }),
+     };
+     const activity = await Activity.aggregate([{ $match: matchData }]);
+     return activity && activity.length
+          ? res.json(activity)
+          : (activity != null ? res.status(200).json([]) : res.status(404).json({ message: 'something wrong' }));
 }
 
 exports.getAll = async (req: any, res: any) => {
@@ -290,6 +267,7 @@ exports.getAll = async (req: any, res: any) => {
      res.json(student);
 }
 exports.getAllActivityBySchoolID = async (req: any, res: any) => {
+
      const activity = req.params.activity;
      const rating = parseFloat(req.params.rating);
      const schoolID = req.params.schoolID;
@@ -302,10 +280,10 @@ exports.getAllActivityBySchoolID = async (req: any, res: any) => {
                     },
                }
           ]);
-          if (!studentFiltered) {
-               return res.status(404).json({ message: 'there is no data in database' });
+          if (studentFiltered == null) {
+               return res.status(200).json([]);
           } else {
-               res.json(studentFiltered);
+               res.status(200).json(studentFiltered);
           }
      } else {
           const student = await Activity.find({ SchoolID: schoolID });
@@ -319,7 +297,7 @@ exports.getAllActivityBySchoolID = async (req: any, res: any) => {
 exports.getLast4ActivityBycandidateID = async (req: any, res: any) => {
      const activity = req.params.activity;
      const candidateID = req.params.candidateID;
-     console.log(activity, candidateID);
+     // console.log(activity, candidateID);
 
      try {
           if (activity) {

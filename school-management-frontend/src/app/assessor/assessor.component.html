@@ -33,7 +33,12 @@
                     </div>
                </div>
           </div>
-     </mat-drawer>
+     </mat-drawer> 
+     <!-- <button (click)="onButtonClick()">Insert Data and Download</button> -->
+
+<!-- <button (click)="insertDataIntoPDF()">Insert Data into PDF</button> -->
+<!-- <button (click)="downloadLink.click()">download Data into PDF</button> -->
+<!-- <iframe *ngIf="modifiedPdfSrc" [src]="modifiedPdfSrc" width="100%" height="600px"></iframe> -->
 
      <div *ngIf="!isActivity" class="example-sidenav-content">
           <div class="body">
@@ -253,7 +258,7 @@
                                              <input type="number" id="SitAndReachRating"
                                                   formControlName="SitAndReachRating" required>
                                         </div>
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                              <label for="SingleLegBalance">Single Leg Balance:</label>
                                              <input type="number" id="SingleLegBalance"
                                                   formControlName="SingleLegBalance" required>
@@ -262,7 +267,7 @@
                                              <label for="SingleLegBalanceRating">Single Leg Balance Rating:</label>
                                              <input type="number" id="SingleLegBalanceRating"
                                                   formControlName="SingleLegBalanceRating" required>
-                                        </div>
+                                        </div> -->
                                         <div class="form-group">
                                              <label for="PushUps">Push-Ups:</label>
                                              <input type="number" id="PushUps" formControlName="PushUps" required>
@@ -395,7 +400,7 @@
                                         </div>
                                    </div>
                                    <div>
-                                        <div>
+                                        <div class="buttons-div-submit-cancel">
                                              <button mat-raised-button type="submit" class="btn btn-primary">{{ editMode
                                                   ? 'Edit' :
                                                   'Submit'
@@ -471,9 +476,9 @@
 
                          </div>
                     </div>
-                    <div *ngIf="isChartActive" class="canvas-container">
+                    <!-- <div *ngIf="isChartActive" class="canvas-container">
                          <canvas class="canvas-chart" #myChart width="10px" height="10px"></canvas>
-                    </div>
+                    </div> -->
 
                     <table *ngIf="!isChartActive">
                          <thead>
@@ -549,18 +554,24 @@
                                    <td class="table-buttons">
                                         <div *ngIf="!candidatesActivit.ongoing" class="icon-button-container">
                                              <button (click)="editCandidate(candidatesActivit)" mat-mini-fab
-                                                  color="accent" aria-label="Example icon button with a plus one icon">
-                                                  <mat-icon>create</mat-icon> </button>
+                                                  color="accent">
+                                                  <mat-icon>create</mat-icon> 
+                                             </button>
                                         </div>
                                         <div *ngIf="!candidatesActivit.ongoing" class="icon-button-container">
                                              <button (click)="deleteCandidate(candidatesActivit._id)" mat-mini-fab
-                                                  color="warn" aria-label="Example icon button with a filter list icon">
+                                                  color="warn">
                                                   <mat-icon>delete</mat-icon> </button>
                                         </div>
                                         <div class="icon-button-container">
-                                             <button (click)="generatePDF(candidatesActivit)" mat-mini-fab
-                                                  aria-label="Example icon button with a filter list icon">
+                                             <button (click)="generatePDF(candidatesActivit)" mat-mini-fab>
                                                   <mat-icon>get_app</mat-icon>
+                                             </button>
+                                        </div>
+                                        <div class="icon-button-container">
+                                             <button (click)="insertDataIntoPDF(candidatesActivit)" mat-mini-fab
+                                                  aria-label="Example icon button with a filter list icon">
+                                             <mat-icon>mail</mat-icon>
                                              </button>
                                         </div>
                                    </td>
@@ -649,53 +660,3 @@
                </div>
           </div>
      </div>
-
-     <!-- <div *ngIf="isActivity" class="example-sidenav-content">
-          <div class="body">
-               <div class="school-list">
-                    <h2>Student Assessment List</h2>
-                    <table>
-                         <thead>
-                              <tr>
-                                   <th>Candidate Name</th>
-                                   <th>Candidate ID</th>
-                                   <th>Gender</th>
-                                   <th>Date of Birth</th>
-                                   <th>Age</th>
-                                   <th>Class</th>
-                                   <th>Dominant Side</th>
-                                   <th>Name of Parent</th>
-                                   <th>Parent's Mobile No</th>
-                                   <th>Alternate No</th>
-                                   <th>Email ID</th>
-                                   <th>Residence Area/Colony</th>
-                                   <th>Residence City</th>
-                                   <th>Actions</th>
-                              </tr>
-                         </thead>
-                         <tbody>
-                              <tr *ngFor="let candidate of candidates">
-                                   <td>{{ candidate.candidateName }}</td>
-                                   <td>{{ candidate.candidateID }}</td>
-                                   <td>{{ candidate.gender }}</td>
-                                   <td>{{ candidate.dob | date:'shortDate' }}</td>
-                                   <td>{{ candidate.age }}</td>
-                                   <td>{{ candidate.candidateClass }}</td>
-                                   <td>{{ candidate.dominantSide }}</td>
-                                   <td>{{ candidate.parentName }}</td>
-                                   <td>{{ candidate.parentMobileNo }}</td>
-                                   <td>{{ candidate.alternateNo }}</td>
-                                   <td>{{ candidate.email }}</td>
-                                   <td>{{ candidate.residenceArea }}</td>
-                                   <td>{{ candidate.residenceCity }}</td>
-                                   <td class="table-buttons">
-                                        <button class="edit" (click)="editCandidate(candidate)">Edit</button>
-                                        <button class="delete"
-                                             (click)="deleteCandidate(candidate.candidateID)">Delete</button>
-                                   </td>
-                              </tr>
-                         </tbody>
-                    </table>
-               </div>
-          </div>
-     </div> -->

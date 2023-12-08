@@ -1,34 +1,25 @@
 import Login from "../models/loginModel"
-import School from "../models/schoolModel"
+// import School from "../models/schoolModel"
 import Student from "../models/studentModel"
 const nodemailer = require("nodemailer");
 const Mailgen = require('mailgen');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 
 
 
 exports.getStudentAdmin = async (req: any, res: any) => {
-     // console.log(req.params.id);
-
      const result = await Student.find({ email: req.params.id })
-     // console.log('student admin', result);
-
      return res.send(result)
 }
 exports.create = async (req: any, res: any) => {
      const { candidateName, email } = req.body;
-     // console.log('=================================');
-     // console.log(req.body);
-
      const student = await Student.findOne({ email: email })
      const inLogin = await Login.findOne({ email: email })
      let isMailSend1 = false;
-     let isMailSend2 = false;
+     // let isMailSend2 = false;
      let randomPassword = '';
      let studentCredentials: any;
-     // console.log(student, inLogin)
      if (student == null && inLogin == null) {
-          // genarate random password
           const passwordGenaration = async () => {
                async function generateRandomPassword(length: number) {
                     const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
@@ -147,7 +138,7 @@ exports.create = async (req: any, res: any) => {
                try {
                     await transporter.sendMail(message2);
                     console.log({ msg: "Admin should receive an email", email });
-                    isMailSend2 = true;
+                    // isMailSend2 = true;
                } catch (error) {
                     console.error('Error sending email to admin:', error);
                }
@@ -158,14 +149,9 @@ exports.create = async (req: any, res: any) => {
                let gender = req.body.gender;
                try {
                     const latestStudent = await Student.findOne({ schoolID: req.body.schoolID }).sort({ createdAt: -1 }).exec();
-                    // console.log({ latestStudent });
-
                     const temp_id = latestStudent ? latestStudent.candidateID : 'ABCD0000000'
-                    // console.log({ temp_id });
-
                     let newString = studentCity.toUpperCase().slice(0, 3) + gender.toUpperCase().slice(0, 1) + (parseInt(temp_id.slice(-7)) + 1).toString().padStart(7, '0');
                     req.body.candidateID = newString
-                    // console.log({ newString });
                } catch (error) {
                     console.error(error);
                }
@@ -175,17 +161,16 @@ exports.create = async (req: any, res: any) => {
           await sendMail();
           await schoolIdGenarate();
 
-
           if (req.body.password == 'undefined') {
-               console.log('error in creating password');
+               // console.log('error in creating password');
                return res.status(200).send({ message: 'error in creating password', studentCreated: false })
           }
           if (req.body.candidateID == 'undefined') {
-               console.log('error in genarating candidate ID');
+               // console.log('error in genarating candidate ID');
                return res.status(200).send({ message: 'error in creating candidate ID', studentCreated: false })
           }
           if (!isMailSend1) {
-               console.log('error in sending mail to student');
+               // console.log('error in sending mail to student');
                return res.status(200).send({ message: 'error in sending mail to student ', studentCreated: false })
           }
           // if (!isMailSend2) {
@@ -218,6 +203,8 @@ exports.getAllStudent = async (req: any, res: any) => {
      res.json(student)
 }
 exports.getAllStudentByClassGender = async (req: any, res: any) => {
+     // console.log("inside gender class filter");
+
      const { schoolID, candidateClass, gender } = req.params
      const matchData: any = {
           ...(schoolID !== "undefined" && { schoolID }),
@@ -228,7 +215,7 @@ exports.getAllStudentByClassGender = async (req: any, res: any) => {
      const student = await Student.aggregate([{ $match: matchData }]);
      return student && student.length
           ? res.json(student)
-          : res.status(401).json({ message: 'There is no data in the database' });
+          : (student != null ? res.status(200).json([]) : res.status(404).json({ message: 'something wrong' }));
 }
 
 exports.editStudent = async (req: any, res: any) => {

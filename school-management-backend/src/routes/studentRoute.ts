@@ -10,7 +10,7 @@ router.get('/admin/:id', verifyStudent, studentController.getStudentAdmin);
 // for assessor
 router.get('/activity/assessor/:schoolID?/:candidateID?', verifyAssessor, activityController.getAllforAssessor);
 router.post('/activity/assessor/create', verifyAssessor, activityController.createbyAssesser);
-
+ 
 //for other
 router.get('/activity/progress/:candidateID/:activity', verifyStudent, activityController.getLast4ActivityBycandidateID);
 router.get('/activity/:schoolID/:candidateID', verifyStudent, activityController.getAll);

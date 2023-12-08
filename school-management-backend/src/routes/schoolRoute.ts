@@ -4,11 +4,6 @@ const router = express.Router();
 const schoolController = require('../controllers/schoolController');
 const studentController = require('../controllers/studentController');
 
-const test = () => {
-     console.log('middle get all student')
-}
-
-
 
 router.get('/admin/:id', verifySchool, schoolController.getSchoolAdmin);
 router.post('/student/create', verifySchool, studentController.create);
