@@ -13,7 +13,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 
 @Component({
-  selector: 'app-admin-dashboard',
+  selector: 'app-admin-dashboard', 
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.scss'],
 })

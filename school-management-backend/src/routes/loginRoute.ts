@@ -71,7 +71,7 @@ export const verifyEmail = async (req: any, res: any) => {
     let message = {
       from: process.env.ADMIN_MAIL_TO_SEND_PASSWORD,
       to: req.params.email,
-      subject: "school password",
+      subject: "Your OTP!",
       html: mail
     }
     // sending mail

@@ -134,6 +134,7 @@ exports.create = async (req: any, res: any) => {
 }
 exports.sendPdfToStudent = async (req: any, res: any) => {
      try {
+          console.clear()
           let isMailSend = false;
           const email = req.params.email
           // console.log(email);

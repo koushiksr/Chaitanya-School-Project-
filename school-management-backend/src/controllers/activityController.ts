@@ -192,8 +192,8 @@ exports.createbyAssesser = async (req: any, res: any) => {
 
                     let response = {
                          body: {
-                              name: "Assessor",
-                              intro: `${student.candidateName}  Is Created Assignment`,
+                              name: student.candidateName,
+                              intro: "Assessor Is Created Your Assignment",
                               action: {
                                    instructions: 'To visit website to assign date, click the link below:',
                                    button: {
@@ -209,7 +209,7 @@ exports.createbyAssesser = async (req: any, res: any) => {
 
                     let message = {
                          from: 'technohmsit@gmail.com',
-                         to: process.env.ASSESSOR,
+                         to: student.email,
                          subject: "activity created",
                          html: mail
                     }
@@ -298,7 +298,6 @@ exports.getLast4ActivityBycandidateID = async (req: any, res: any) => {
      const activity = req.params.activity;
      const candidateID = req.params.candidateID;
      // console.log(activity, candidateID);
-
      try {
           if (activity) {
                const studentFiltered = await Activity.aggregate([
@@ -320,7 +319,9 @@ exports.getLast4ActivityBycandidateID = async (req: any, res: any) => {
 }
 
 exports.edit = async (req: any, res: any) => {
-     req.body.ongoing = true
+     if (req.body.BMI) {
+          req.body.ongoing = true
+     }
      const result = await Activity.updateOne(
           { _id: Object(req.params.id) },
           {
@@ -330,6 +331,8 @@ exports.edit = async (req: any, res: any) => {
      if (result.matchedCount === 1) {
           console.log('Date updated successfully');
      } else {
+          // res.send)
+
           console.log('Date not found or not updated');
      }
      res.send(result)

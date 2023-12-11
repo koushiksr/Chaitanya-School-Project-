@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, OnInit, AfterViewInit, Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -7,12 +7,12 @@ import { AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import * as pdfMake from 'pdfmake/build/pdfmake';
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+// import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Content, TDocumentDefinitions } from 'pdfmake/interfaces';
 import 'chartjs-adapter-moment';
 import * as XLSX from 'xlsx';
-import { StandardFonts } from 'pdf-lib';
-import { MatLine } from '@angular/material/core';
+import { StandardFonts, error } from 'pdf-lib';
+// import { MatLine } from '@angular/material/core';
 const { PDFDocument, rgb } = require('pdf-lib');
 
 @Component({
@@ -51,7 +51,6 @@ export class AssessorComponent {
 
     this.myForm = this.formBuilder.group({
       // Name: ['', Validators.required],
-      ID: ['', Validators.required],
       // Gender: ['', Validators.required],
       // DOB: ['', Validators.required],
       // Age: ['', Validators.required],
@@ -64,59 +63,83 @@ export class AssessorComponent {
       // ResidenceArea: ['', Validators.required],
       // ResidenceCity: ['', Validators.required],
       // SchoolName: ['', Validators.required],
-      SchoolID: ['', Validators.required],
       // SchoolContactName: ['', Validators.required],
       // SchoolContactNumber: ['', Validators.required],
       // SchoolContactEmailID: ['', Validators.required],
+      ID: ['', Validators.required],
+      SchoolID: ['', Validators.required],
       AssessmentTeam: ['', Validators.required],
       AssessmentDate: ['', Validators.required],
       AssessmentID: ['', Validators.required],
-      HeightCMs: ['', Validators.required],
-      HeightRating: ['', Validators.required],
-      WeightKG: ['', Validators.required],
-      WeightRating: ['', Validators.required],
-      BMI: ['', Validators.required],
-      BmiRating: ['', Validators.required],
-      BodyFatPercentage: ['', Validators.required],
-      BodyFatRating: ['', Validators.required],
-      ArmLengthCMs: ['', Validators.required],
-      ArmLengthRating: ['', Validators.required],
-      LegLengthCMs: ['', Validators.required],
-      LegLengthRating: ['', Validators.required],
-      SitAndReachCMs: ['', Validators.required],
-      SitAndReachRating: ['', Validators.required],
-      // SingleLegBalance: ['', Validators.required],
-      // SingleLegBalanceRating: ['', Validators.required],
-      PushUps: ['', Validators.required],
-      PushUpsRating: ['', Validators.required],
-      GripStrengthKGs: ['', Validators.required],
-      GripStrengthRating: ['', Validators.required],
-      SquatTest30Secs: ['', Validators.required],
-      SquatTestRating: ['', Validators.required],
-      PlankSecs: ['', Validators.required],
-      PlankRating: ['', Validators.required],
-      StandingLongJumpCMs: ['', Validators.required],
-      StandingLongJumpRating: ['', Validators.required],
-      StandingVerticalJumpInches: ['', Validators.required],
-      StandingVerticalJumpRating: ['', Validators.required],
-      FiveZeroFiveSecs: ['', Validators.required],
-      FiveZeroFiveRating: ['', Validators.required],
-      Speed30MtrsSecs: ['', Validators.required],
-      Speed30MtrsRating: ['', Validators.required],
-      SixHundredMtrsMins: ['', Validators.required],
-      SixHundredMtrsRating: ['', Validators.required],
-      OneMileTest: ['', Validators.required],
-      OneMileTestRating: ['', Validators.required],
-      BearPositionHoldRating: ['', Validators.required],
-      OverheadSquatsRating: ['', Validators.required],
-      LungesRating: ['', Validators.required],
-      RemarksRemark1: ['', Validators.required],
-      RemarksRemark2: ['', Validators.required],
-      RemarksRemark3: ['', Validators.required],
+      HeightCMs: ['', [Validators.required]],
+      HeightRating: ['', [Validators.required]],
+      HeightComment: ['', [Validators.required]],
+      WeightKG: ['', [Validators.required]],
+      WeightRating: ['', [Validators.required]],
+      WeightComment: ['', [Validators.required]],
+      BMI: ['', [Validators.required]],
+      BmiRating: ['', [Validators.required]],
+      BMIComment: ['', [Validators.required]],
+      BodyFatPercentage: ['', [Validators.required]],
+      BodyFatRating: ['', [Validators.required]],
+      BodyFatComment: ['', [Validators.required]],
+      ArmLengthCMs: ['', [Validators.required]],
+      ArmLengthRating: ['', [Validators.required]],
+      ArmLengthComment: ['', [Validators.required]],
+      LegLengthCMs: ['', [Validators.required]],
+      LegLengthRating: ['', [Validators.required]],
+      LegLengthComment: ['', [Validators.required]],
+      SitAndReachCMs: ['', [Validators.required]],
+      SitAndReachRating: ['', [Validators.required]],
+      SitAndReachComment: ['', [Validators.required]],
+      SingleLegBalance: ['', [Validators.required]],
+      SingleLegBalanceRating: ['', [Validators.required]],
+      SingleLegBalanceComment: ['', [Validators.required]],
+      PushUps: ['', [Validators.required]],
+      PushUpsRating: ['', [Validators.required]],
+      PushUpsComment: ['', [Validators.required]],
+      GripStrengthKGs: ['', [Validators.required]],
+      GripStrengthRating: ['', [Validators.required]],
+      GripStrengthComment: ['', [Validators.required]],
+      SquatTest30Secs: ['', [Validators.required]],
+      SquatTestRating: ['', [Validators.required]],
+      SquatTestComment: ['', [Validators.required]],
+      PlankSecs: ['', [Validators.required]],
+      PlankRating: ['', [Validators.required]],
+      PlankComment: ['', [Validators.required]],
+      StandingLongJumpCMs: ['', [Validators.required]],
+      StandingLongJumpRating: ['', [Validators.required]],
+      StandingLongJumpComment: ['', [Validators.required]],
+      StandingVerticalJumpInches: ['', [Validators.required]],
+      StandingVerticalJumpRating: ['', [Validators.required]],
+      StandingVerticalJumpComment: ['', [Validators.required]],
+      FiveZeroFiveSecs: ['', [Validators.required]],
+      FiveZeroFiveRating: ['', [Validators.required]],
+      FiveZeroFiveComment: ['', [Validators.required]],
+      Speed30MtrsSecs: ['', [Validators.required]],
+      Speed30MtrsRating: ['', [Validators.required]],
+      Speed30MtrsComment: ['', [Validators.required]],
+      SixHundredMtrsMins: ['', [Validators.required]],
+      SixHundredMtrsRating: ['', [Validators.required]],
+      SixHundredMtrsComment: ['', [Validators.required]],
+      OneMileTest: ['', [Validators.required]],
+      OneMileTestRating: ['', [Validators.required]],
+      OneMileTestComment: ['', [Validators.required]],
+      BearPositionHold: ['', [Validators.required]],
+      BearPositionHoldRating: ['', [Validators.required]],
+      BearPositionHoldComment: ['', [Validators.required]],
+      OverheadSquats: ['', [Validators.required]],
+      OverheadSquatsRating: ['', [Validators.required]],
+      OverheadSquatsComment: ['', [Validators.required]],
+      LungesTest: ['', [Validators.required]],
+      LungesRating: ['', [Validators.required]],
+      LungesComment: ['', [Validators.required]],
+      RemarksRemark1: ['', [Validators.required]],
+      RemarksRemark2: ['', [Validators.required]],
+      RemarksRemark3: ['', [Validators.required]],
     });
   }
-
-  insertDataIntoPDF = async (assessment: any) => {
+  insertDataIntoPDF = async (assessment: any, download: boolean) => {
     try {
       const cm_coord = 28.34645669291339;
       const fileInput = document.createElement('input');
@@ -131,15 +154,7 @@ export class AssessorComponent {
             console.log('PDF document not loaded.');
             return;
           }
-
-          // const text = pdfDoc.getPages()[0].getTextContent().items.find((item: { str: string; }) => item.str === 'Age');
-
-          // Set the background color to transparent (RGB: 1, 0, 0)
-          // text.bgColor = { red: 1, green: 0, blue: 0, alpha: 0 };
-
-
-
-          //helper functions start
+          //helper functions
           const drawInnerBar = async (
             page2: {
               drawRectangle: (arg0: { x: any; y: any; width: any; height: any; color: any; borderColor: any; borderRadius: any }) => void;
@@ -164,8 +179,8 @@ export class AssessorComponent {
               borderRadius: 8,
             });
           }
-          const drawRoundedRectangle = async (page2: { drawText: (arg0: any, arg1: { x: any; y: any; font: any; size: number; color: any; textAlign: any; }) => any; drawLine: (arg0: { start: { x: number; y: any; } | { x: number; y: any; } | { x: number; y: any; } | { x: number; y: any; }; end: { x: number; y: number; } | { x: number; y: number; } | { x: number; y: number; } | { x: number; y: number; }; thickness: number; color: any; }) => void; }, x: number, y: number, width: number, height: number, borderRadius: number, color: any, val: any, label?: any, labelSuffix?: any) => {
-            const step = 0.2; // Adjust as needed for smoothness
+          const drawRoundedRectangle = async (label: any, page2: { drawText: (arg0: any, arg1: { x: any; y: any; font: any; size: number; color: any; textAlign: any; }) => any; drawLine: (arg0: { start: { x: number; y: any; } | { x: number; y: any; } | { x: number; y: any; } | { x: number; y: any; }; end: { x: number; y: number; } | { x: number; y: number; } | { x: number; y: number; } | { x: number; y: number; }; thickness: number; color: any; }) => void; }, x: number, y: number, width: number, height: number, borderRadius: number, color: any, val: any, labelSuffix?: any) => {
+            const step = 0.2;
             const radius = borderRadius;
 
             for (let angle = 0; angle < 90; angle += step) {
@@ -191,56 +206,56 @@ export class AssessorComponent {
               const y1 = y + radius - radius * Math.sin(((angle - 270) * Math.PI) / 180);
               page2.drawLine({ start: { x: x1, y: y }, end: { x: x1, y: y1 }, thickness: 0, color });
             }
-            // if (label) {
-            // let dynamicDataString = label + ""
-            // let decimalIndex = dynamicDataString.indexOf('.');
-            // let labelTrim = decimalIndex !== -1
-            // ? dynamicDataString.slice(0, decimalIndex + 2)
-            // : dynamicDataString;
-            // if (labelSuffix) {
-            // label = labelTrim + " " + labelSuffix
-            // }
-            val <= 33.33 ? label = "Below Average" : (val <= 66.66 ? label = "Average" : label = "Above Average")
             await page2.drawText(label, { x: ((x) + width / 2) - 40, y: (y - 3.7) + height / 2, font: undefined, size: 12, color: rgb(0, 0, 0), textAlign: 'center' });
-            // }
             return label
           }
-          const ProgressBar = async (x: number, y: number, val: number, totalVal: number, labelSuffix?: string) => {
+          const ProgressBar = async (x: number, y: number, valdummy: string, label: string, labelSuffix?: string) => {
             const progressBarX = cm_coord * x
             const progressBarY = cm_coord * (y - 0.5);
             const progressBarHeight = 20;
             const progressBarBorderRadius = 10;
             let innerBarColor = rgb(1, 0, 0)
-            let innerBarLabel = `${val}`;
+            valdummy = ""
+            let val = 33
+            if (typeof label == "number") {
+              val = parseInt(label)
+              innerBarColor = rgb(0, (val / 100), 0)
+              label = label + " " + "th Percentile"
+              if (val >= 66) {
+                innerBarColor = rgb(0, 1, 0.14)
+              }
+              if (val <= 66) {
+                innerBarColor = rgb(1, 0.55, 0)
+              }
+              if (val <= 33) {
+                innerBarColor = rgb(1, 0, 0)
+              }
+            }
+            else {
+              if (label.toLowerCase() === "Above Average".toLowerCase()) {
+                innerBarColor = rgb(0, 1, 0.14)
+                val = 90
+              }
+              if (label.toLowerCase() === "Average".toLowerCase()) {
+                innerBarColor = rgb(1, 0.55, 0)
+                val = 55
+              }
+              if (label.toLowerCase() === "Below Average".toLowerCase()) {
+                innerBarColor = rgb(1, 0, 0)
+                val = 25
+              }
+            }
 
-            (val > totalVal && val < 2 * totalVal) ? (innerBarColor = rgb(1, (val / totalVal) - 1, 0)) : ((val < 2 * totalVal) ? (innerBarColor = rgb(1, val / totalVal, 0)) : "");//1 - ((val / totalVal) - 1)//1 - (val / totalVal)
-            val = (val / totalVal) * 100
-            innerBarLabel = `${val}`;
-            (val >= 100) ? (innerBarLabel = `${val}`, val = 100) : "";
-            totalVal = (100 - totalVal) + totalVal
-            // drawRoundedRectangle(currentPage, progressBarX, progressBarY, val, progressBarHeight, progressBarBorderRadius, rgb(1, 1, 1));
+            const totalVal = 100
             drawInnerBar(currentPage, progressBarX, progressBarY, totalVal, progressBarHeight, rgb(0.33, 0.33, 0.33));
             drawInnerBar(currentPage, progressBarX, progressBarY, val, progressBarHeight, innerBarColor);
-            return await drawRoundedRectangle(currentPage, progressBarX, progressBarY, totalVal, progressBarHeight, progressBarBorderRadius, rgb(1, 1, 1), val, innerBarLabel, labelSuffix);
+            return await drawRoundedRectangle(label, currentPage, progressBarX, progressBarY, totalVal, progressBarHeight, progressBarBorderRadius, rgb(1, 1, 1), val, labelSuffix);
           }
           const insertText = async (Name: string, x: any, y: any, color: any, size?: number, font?: any) => {
-            // Helvetica
-            // Helvetica - Bold
-            // Helvetica - Oblique
-            // Helvetica - BoldOblique
-            // Courier
-            // Courier - Bold
-            // Courier - Oblique
-            // Courier - BoldOblique
-            // Times - Roman
-            // Times - Bold
-            // Times - Italic
-            // Times - BoldItalic
             if (font == undefined) {
               font = StandardFonts.Helvetica
             }
             // console.log(font);
-
             const NameOptions = { font: await pdfDoc.embedFont(font), size: size, color: color, fillOpacity: 0.1 };//Helvetica
             currentPage.drawText(Name, { x: cm_coord * x, y: cm_coord * (y - 0.5), ...NameOptions });
           }
@@ -275,27 +290,27 @@ export class AssessorComponent {
 
           //page3
           currentPage = pdfDoc.getPage(2);
-          await insertText(assessment.HeightCMs + " CMs", 8.5, 21.696, rgb(0, 0.69, 1), 16, StandardFonts.HelveticaBold)
-          await insertText(assessment.WeightKG + " KG", 8.5, 20.396, rgb(0, 0.69, 1), 16, StandardFonts.HelveticaBold)
-          await insertText(assessment.BMI + "", 8.5, 19.096, rgb(0, 0.69, 1), 16, StandardFonts.HelveticaBold)
-          await insertText(assessment.BodyFatPercentage + " %", 8.5, 17.6, rgb(0, 0.69, 1), 16, StandardFonts.HelveticaBold)
-          await insertText(assessment.ArmLengthCMs + " CMs", 8.5, 16.196, rgb(0, 0.69, 1), 16, StandardFonts.HelveticaBold)
-          await insertText(assessment.LegLengthCMs + " CMs", 8.5, 14.9, rgb(0, 0.69, 1), 16, StandardFonts.HelveticaBold)
+          await insertText(assessment.HeightCMs, 8.5, 21.696, rgb(0, 0.69, 1), 16, StandardFonts.HelveticaBold)
+          await insertText(assessment.WeightKG, 8.5, 20.396, rgb(0, 0.69, 1), 16, StandardFonts.HelveticaBold)
+          await insertText(assessment.BMI, 8.5, 19.096, rgb(0, 0.69, 1), 16, StandardFonts.HelveticaBold)
+          await insertText(assessment.BodyFatPercentage, 8.5, 17.6, rgb(0, 0.69, 1), 16, StandardFonts.HelveticaBold)
+          await insertText(assessment.ArmLengthCMs, 8.5, 16.196, rgb(0, 0.69, 1), 16, StandardFonts.HelveticaBold)
+          await insertText(assessment.LegLengthCMs, 8.5, 14.9, rgb(0, 0.69, 1), 16, StandardFonts.HelveticaBold)
 
-          ProgressBar(15.1275, 21.4815, assessment.HeightCMs, 168)
-          ProgressBar(15.1275, 20.1449, assessment.WeightKG, 65)
-          ProgressBar(15.1275, 18.8198, assessment.BMI, 20.7)
-          ProgressBar(15.1275, 17.4719, assessment.BodyFatPercentage, 21)
-          ProgressBar(15.1275, 16.1503, assessment.ArmLengthCMs, 100)
-          ProgressBar(15.1275, 14.9153, assessment.LegLengthCMs, 100)
+          ProgressBar(15.1275, 21.4815, assessment.HeightCMs, assessment.HeightRating)
+          ProgressBar(15.1275, 20.1449, assessment.WeightKG, assessment.WeightRating)
+          ProgressBar(15.1275, 18.8198, assessment.BMI, assessment.BmiRating)
+          ProgressBar(15.1275, 17.4719, assessment.BodyFatPercentage, assessment.BodyFatRating)
+          ProgressBar(15.1275, 16.1503, assessment.ArmLengthCMs, assessment.ArmLengthRating)
+          ProgressBar(15.1275, 14.9153, assessment.LegLengthCMs, assessment.LegLengthRating)
 
           //page 4
           let font = 11; let y = 13.77; let x = 1.4324
           let fontHeadingVal = 16
           let color = rgb(0, 0.69, 1)//undefined/
           currentPage = pdfDoc.getPage(3);
-          await insertText(assessment.SitAndReachCMs + " CM", 8.9159, 20.4613, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
-          let status = await ProgressBar(16, 20.2698, assessment.SitAndReachCMs, 100)
+          await insertText(assessment.SitAndReachCMs, 8.9159, 20.4613, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
+          let status = await ProgressBar(16, 20.2698, assessment.SitAndReachCMs, assessment.SitAndReachRating)
           let text1 = "The above average results on the test show optimal flexibility."
           let text2 = "An Average result indicates appropriate flexibility."
           let text3 = "A below-average /5th Percentile result on the Sit and Reach Test suggests limited flexibility in the "
@@ -307,8 +322,8 @@ export class AssessorComponent {
 
           //page 6
           currentPage = pdfDoc.getPage(5);
-          await insertText(assessment.SingleLegBalance + " falls/26 sec", 8.9159, 23.2641, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
-          status = await ProgressBar(16, 23.1, assessment.SingleLegBalance, 100)
+          await insertText(assessment.SingleLegBalance, 8.9159, 23.2641, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
+          status = await ProgressBar(16, 23.1, assessment.SingleLegBalance, assessment.SingleLegBalanceRating)
           x = x + 0.2; y = 16.07
           text1 = "An Above Average balance indicates an athlete's excellent ability to maintain a state of equilibrium (balance) in"
           text2 = "a static position."
@@ -319,12 +334,11 @@ export class AssessorComponent {
           await insertText(text2, x, y = y - 0.51, (status == "Above Average") ? color : undefined, font, (status == "Above Average") ? StandardFonts.Helvetica : undefined)//46 px
           await insertText(text3, x, y = y - 0.51, (status == "Average") ? color : undefined, font, (status == "Average") ? StandardFonts.Helvetica : undefined)
           await insertText(text4, x, y = y - 0.51, (status == "Below Average") ? color : undefined, font, (status == "Below Average") ? StandardFonts.Helvetica : undefined)
-          // await insertText(text5, x, y = y - 0.49, (status == "Above Average") ? color : undefined, font, (status == "Above Average") ? StandardFonts.Helvetica : undefined)
 
           //page 8
           currentPage = pdfDoc.getPage(7);
-          await insertText(assessment.PushUps + "", 9.4, 23, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
-          status = await ProgressBar(16, 22.8726, assessment.PushUps, 100)
+          await insertText(assessment.PushUps, 9.4, 23, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
+          status = await ProgressBar(16, 22.8726, assessment.PushUps, assessment.PushUpsRating)
           x = x - 0.2; y = 14.5
           text1 = "Above average results suggests excellent upper body strength and power."
           text2 = "An Average result shows appropriate upper body strength."
@@ -339,8 +353,8 @@ export class AssessorComponent {
           //page 10
 
           currentPage = pdfDoc.getPage(9);
-          await insertText(assessment.GripStrengthKGs + " KGs", 9.7, 24, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
-          status = await ProgressBar(16, 23.8726, assessment.GripStrengthKGs, 100)
+          await insertText(assessment.GripStrengthKGs, 9.7, 24, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
+          status = await ProgressBar(16, 23.8726, assessment.GripStrengthKGs, assessment.GripStrengthRating)
           x = x + 0.2; y = 16.7
           text1 = "Above-average results indicate excellent strength in wrist and forearm muscles."
           text2 = "An Average/Normal grip strength indicates appropriate strength in hand and forearm muscles."
@@ -352,8 +366,8 @@ export class AssessorComponent {
           await insertText(text4, x, y = y - 0.51, (status == "Below Average") ? color : undefined, font, (status == "Below Average") ? StandardFonts.Helvetica : undefined)
           //page 11
           currentPage = pdfDoc.getPage(10);
-          await insertText(assessment.PlankSecs + " sec", 9.1, 23.0641, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
-          status = await ProgressBar(16, 22.8326, assessment.PlankSecs, 100)
+          await insertText(assessment.PlankSecs, 9.1, 23.0641, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
+          status = await ProgressBar(16, 22.8326, assessment.PlankSecs, assessment.PlankRating)
           y = 16
           text1 = "Above Average result shows excellent core strength and endurance."
           text2 = "An Average result indicates appropriate core strength and endurance."
@@ -365,8 +379,8 @@ export class AssessorComponent {
           await insertText(text4, x, y = y - 0.48, (status == "Below Average") ? color : undefined, font, (status == "Below Average") ? StandardFonts.Helvetica : undefined)
           //page 12
           currentPage = pdfDoc.getPage(11);
-          await insertText(assessment.StandingLongJumpCMs + " CMs", 9.4, 23.2641, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
-          status = await ProgressBar(16, 23.0826, assessment.StandingLongJumpCMs, 100)
+          await insertText(assessment.StandingLongJumpCMs, 9.4, 23.2641, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
+          status = await ProgressBar(16, 23.0826, assessment.StandingLongJumpCMs, assessment.StandingLongJumpRating)
           x = x - 0.5; y = 17.3
           text1 = "Above Average result on the Standing Long Jump Test suggests excellent lower body power and"
           text2 = "explosiveness."
@@ -386,8 +400,8 @@ export class AssessorComponent {
           await insertText(text8, x, y = y - 0.48, (status == "Below Average") ? color : undefined, font, (status == "Below Average") ? StandardFonts.Helvetica : undefined)
           //page 14
           currentPage = pdfDoc.getPage(13);
-          await insertText(assessment.StandingVerticalJumpInches + " inches", 9.7, 24.2, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
-          status = await ProgressBar(16, 24, assessment.StandingVerticalJumpInches, 100)
+          await insertText(assessment.StandingVerticalJumpInches, 9.7, 24.2, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
+          status = await ProgressBar(16, 24, assessment.StandingVerticalJumpInches, assessment.StandingVerticalJumpRating)
           x = x + 0.2; y = 19.5
           text1 = "Above Average vertical jump suggests excellent lower body power and explosiveness."
           text2 = "An Average vertical jump suggests that the individual has appropriate lower body power and"
@@ -407,8 +421,8 @@ export class AssessorComponent {
           await insertText(text8, x, y = y - 0.48, (status == "Below Average") ? color : undefined, font, (status == "Below Average") ? StandardFonts.Helvetica : undefined)
           //page 16
           currentPage = pdfDoc.getPage(15);
-          await insertText(assessment.FiveZeroFiveSecs + " Secs", 8.9159, 23.2641, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
-          status = await ProgressBar(16, 23.1, assessment.FiveZeroFiveSecs, 100)
+          await insertText(assessment.FiveZeroFiveSecs, 8.9159, 23.2641, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
+          status = await ProgressBar(16, 23.1, assessment.FiveZeroFiveSecs, assessment.FiveZeroFiveRating)
           x = x + 0.3; y = 17.9
           text1 = "Above-average/Excellent result suggests excellent agility."
           text2 = "An Average result shows an appropriate agility."
@@ -422,8 +436,8 @@ export class AssessorComponent {
           await insertText(text5, x, y = y - 0.48, (status == "Below Average") ? color : undefined, font, (status == "Below Average") ? StandardFonts.Helvetica : undefined)
           //page 18
           currentPage = pdfDoc.getPage(17);
-          await insertText(assessment.Speed30MtrsSecs + " Sec", 8.9159, 23.2641, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
-          status = await ProgressBar(16, 23.1, assessment.Speed30MtrsSecs, 100)
+          await insertText(assessment.Speed30MtrsSecs, 8.9159, 23.2641, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
+          status = await ProgressBar(16, 23.1, assessment.Speed30MtrsSecs, assessment.Speed30MtrsRating)
           y = 17.4
           text1 = "Above average result shows excellent speed."
           text2 = "Average test result indicates appropriate speed."
@@ -437,8 +451,8 @@ export class AssessorComponent {
           await insertText(text5, x, y = y - 0.48, (status == "Below Average") ? color : undefined, font, (status == "Below Average") ? StandardFonts.Helvetica : undefined)
           //page 19
           currentPage = pdfDoc.getPage(18);
-          await insertText(assessment.SixHundredMtrsMins + " min(300mts)", 8.6159, 23.4641, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
-          status = await ProgressBar(16, 23.3, assessment.SixHundredMtrsMins, 100)
+          await insertText(assessment.SixHundredMtrsMins, 8.6159, 23.4641, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
+          status = await ProgressBar(16, 23.3, assessment.SixHundredMtrsMins, assessment.SixHundredMtrsRating)
           y = 16.7
           text1 = "Above Average test result suggests excellent aerobic endurance and cardiovascular fitness."
           text2 = "Average test result suggests appropriate aerobic endurance and cardiovascular fitness."
@@ -450,8 +464,8 @@ export class AssessorComponent {
           await insertText(text4, x, y = y - 0.48, (status == "Below Average") ? color : undefined, font, (status == "Below Average") ? StandardFonts.Helvetica : undefined)
           //page 20          
           currentPage = pdfDoc.getPage(19);
-          await insertText(assessment.SquatTest30Secs + " Secs", 9.7, 24.1, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
-          status = await ProgressBar(16, 24, assessment.SquatTest30Secs, 100)
+          await insertText(assessment.SquatTest30Secs, 9.7, 24.1, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
+          status = await ProgressBar(16, 24, assessment.SquatTest30Secs, assessment.SquatTestRating)
           x = x + 0.5; y = 16.3
           text1 = "An above-average result on the 30-Second Squats Test indicates excellent lower-body muscular endurance and"
           text2 = "strength"
@@ -465,8 +479,8 @@ export class AssessorComponent {
           await insertText(text5, x, y = y - 0.48, (status == "Below Average") ? color : undefined, font, (status == "Below Average") ? StandardFonts.Helvetica : undefined)
           //page 21
           currentPage = pdfDoc.getPage(20);
-          await insertText(assessment.BearPositionHoldRating + "", 9.7, 20, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
-          status = await ProgressBar(16, 20, assessment.BearPositionHoldRating, 100)
+          await insertText(assessment.BearPositionHoldRating, 9.7, 20, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
+          status = await ProgressBar(16, 20, assessment.BearPositionHoldRating, assessment.BearPositionHoldRating)
           x = x - 0.8; y = 14
           text1 = "An above average position indicates Excellent core strength, stability and overall body control."
           text2 = "An average position indicates appropriate core strength, stability and overall body control."
@@ -476,8 +490,8 @@ export class AssessorComponent {
           await insertText(text3, x, y = y - 0.48, (status == "Below Average") ? color : undefined, font, (status == "Below Average") ? StandardFonts.Helvetica : undefined)
           //page 22
           currentPage = pdfDoc.getPage(21);
-          await insertText(assessment.OverheadSquatsRating + "", 9.3, 22.5, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
-          status = await ProgressBar(16, 22.3, assessment.OverheadSquatsRating, 100)
+          await insertText(assessment.OverheadSquatsRating, 9.3, 22.5, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
+          status = await ProgressBar(16, 22.3, assessment.OverheadSquatsRating, assessment.OverheadSquatsRating)
           x = x + 0.2; y = 15.9
           text1 = "An Above Average score indicates Excellent mobility, flexibility, balance and overall co ordination.."
           text2 = "Average score indicates appropriate mobility, flexibility, balance and overall co ordination.."
@@ -487,8 +501,8 @@ export class AssessorComponent {
           await insertText(text3, x, y = y - 0.48, (status == "Below Average") ? color : undefined, font, (status == "Below Average") ? StandardFonts.Helvetica : undefined)
           //page 23
           currentPage = pdfDoc.getPage(22);
-          await insertText(assessment.LungesRating + "", 9.3, 22.7, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
-          status = await ProgressBar(16, 22.8326, assessment.LungesRating, 100)
+          await insertText(assessment.LungesRating, 9.3, 22.7, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
+          status = await ProgressBar(16, 22.8326, assessment.LungesRating, assessment.LungesRating)
           x = x - 0.2; y = 16.3
           text1 = "An Above average score indicates Excellent balance ,stability, proprioception and lower body strength."
           text2 = "An average score indicates appropriate balance ,stability, proprioception and lower body strength."
@@ -499,43 +513,41 @@ export class AssessorComponent {
 
           const modifiedPdfBytes = await pdfDoc.save();
           const modifiedPdfBlob = new Blob([modifiedPdfBytes], { type: 'application/pdf' });
-          //preview
           const modifiedPdfUrl = URL.createObjectURL(modifiedPdfBlob);
-          const previewUrl = `${modifiedPdfUrl}`;
-          window.open(previewUrl, '_blank');
+          //preview
+          if (!download) {
+            const previewUrl = `${modifiedPdfUrl}`;
+            window.open(previewUrl, '_blank');
+          }
           //mail send
           const formData = new FormData();
-          let name = assessment.Name
-          formData.append('file', modifiedPdfBlob, `${assessment.Name}.pdf`);
-          this.http.post(`${environment.apiUrl}/assessor/students/assesment/${assessment.email}/${name}`, formData)
-            .subscribe(
-              (response: any) => {
-                console.log("Response from backend:", response);
-                this.openSnackBar("PDF Sent to Student", "Close")
-              },
-              (error) => {
-                console.log("Error sending PDF to backend:", error);
-                this.openSnackBar("Failed To Send PDF", "Close")
-              }
-            );
+          if (!download && modifiedPdfBlob) {
+            let name = assessment.Name
+            formData.append('file', modifiedPdfBlob, `${assessment.Name}.pdf`);
+            this.http.post(`${environment.apiUrl}/assessor/students/assesment/${assessment.email}/${name}`, formData)
+              .subscribe(
+                (response: any) => {
+                  console.log("Response from backend:", response);
+                  this.openSnackBar("PDF Sent to Student", "Close")
+                },
+                (error) => {
+                  console.log("Error sending PDF to backend:", error);
+                  this.openSnackBar("Failed To Send PDF", "Close")
+                }
+              );
+          }
           //download 
-          // const downloadLink = document.createElement('a');
-          // downloadLink.href = modifiedPdfUrl;
-          // downloadLink.download = `${assessment.Name}.pdf`;
-          // document.body.appendChild(downloadLink);
-          // downloadLink.click();
-          // window.open(modifiedPdfUrl, '_blank');
-          // URL.revokeObjectURL(modifiedPdfUrl);
-          // document.body.removeChild(downloadLink);
-
-          //preview
-
-          // Revoke the object URL
-          // URL.revokeObjectURL(modifiedPdfUrl);
-
+          if (download) {
+            const downloadLink = document.createElement('a');
+            downloadLink.href = modifiedPdfUrl;
+            downloadLink.download = `${assessment.Name}.pdf`;
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+          }
+          URL.revokeObjectURL(modifiedPdfUrl);
         }
       });
-
       fileInput.click();
     } catch (error) {
       console.error('Error inserting data into PDF:', error);
@@ -645,16 +657,12 @@ export class AssessorComponent {
   onSubmit() {
     if (!this.myForm.valid) {
       this.openSnackBar('fill all the  required feilds', 'Close')
-      // console.log(this.myForm.value);
     }
 
     if (!this.editMode) {
       if (this.myForm.valid) {
         const candidateID = this.myForm.value.ID// localStorage.getItem("candidateID")
         const schoolID = this.myForm.value.SchoolID// localStorage.getItem("schoolID")
-        // console.log(candidateID, schoolID);
-        // console.log(this.myForm);
-
         this.http.post(`${environment.apiUrl}/student/activity/assessor/create`, { formData: this.myForm.value, schoolID, candidateID })
           .subscribe((response) => {
             if (response) {
@@ -693,7 +701,6 @@ export class AssessorComponent {
               }
               if (response.matchedCount == 1 && response.modifiedCount == 0) {
                 this.openSnackBar('Edit any one feild at least', 'Close')
-                // this.myForm.reset();
               }
             }, (error) => {
               console.log(error.error, 'error in creating student')
@@ -713,13 +720,9 @@ export class AssessorComponent {
     }
     !schoolID && (schoolID = undefined)
     !candidateID && (candidateID = undefined)
-    console.log(candidateID, schoolID);
-
     this.http.get(`${environment.apiUrl}/student/activity/assessor/${schoolID}/${candidateID}`)
       .subscribe((response: any) => {
         this.candidatesActivity = response;
-        console.log(response);
-
       }, (error) => {
         console.log(error.error, 'error in creating student')
       })
@@ -752,8 +755,6 @@ export class AssessorComponent {
     this.http.put(`${environment.apiUrl}/student/activity/edit/${candidateActivity._id}`, { AssessmentDate: `${date}` })
       .subscribe((response: any) => {
         if (response.modifiedCount == 1) {
-          console.log(response);
-
           this.fetchAllActivites()
           this.openSnackBar('date updated successfully', 'Close')
         }
@@ -797,7 +798,6 @@ export class AssessorComponent {
         },
       },
     };
-
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
     pdfDocGenerator.download(`${data.Name ? data.Name : ''}  Activity Report.pdf`);
   }
@@ -807,9 +807,6 @@ export class AssessorComponent {
     for (const [key, value] of Object.entries(data)) {
       tableData.push([key, value]);
     }
-
     return { table: { body: tableData }, layout: 'lightHorizontalLines' } as Content;
   }
-
-
 }

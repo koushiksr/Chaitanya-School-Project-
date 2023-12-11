@@ -21,7 +21,7 @@
                          <img class="profile-img" src="../../assets/admin-logo6.jpg" alt="">
                     </div>
                     <div class="profile-info">
-                         <h2>Name: {{firstName}} {{lastName}}</h2> 
+                         <h2>Name: {{firstName}} {{lastName}}</h2>
                          <p>Email: {{email}}</p>
                          <p>Ph: {{phoneNumber}}</p>
                     </div>
@@ -61,34 +61,33 @@
                                    <label for="address">Address:</label>
                                    <input type="text" id="address" formControlName="address" required>
                               </div>
+                              <div class="form-buttons"> <button mat-raised-button type="submit"
+                                        class="btn btn-primary">{{ editMode ? 'Edit' :
+                                        'Submit' }}</button>
+                                   <button type="button" color="accent" mat-raised-button mat-dialog-close
+                                        class="btn btn-primary">Cancel</button>
+                              </div>
 
-                              <button mat-raised-button type="submit" class="btn btn-primary">{{ editMode ? 'Edit' :
-                                   'Submit' }}</button>
-                              <button type="button" mat-raised-button mat-dialog-close
-                                   class="btn btn-primary">Cancel</button>
                          </form>
                     </div>
                </ng-template>
 
                <div class="school-list">
                     <h2>Assessor List</h2>
-                    <button mat-raised-button class='create-button' (click)="openDialog()">Open School Form</button>
+                    <button mat-raised-button class='create-button'
+                         (click)="openDialog()"><mat-icon>add</mat-icon></button>
                     <table>
                          <thead>
                               <tr>
+                                   <th>Actions</th>
                                    <th>Name</th>
                                    <th>PH NO</th>
                                    <th>Email</th>
                                    <th>Address</th>
-                                   <th>Actions</th>
                               </tr>
                          </thead>
                          <tbody>
                               <tr *ngFor="let assessor of assessors">
-                                   <td>{{ assessor.name }}</td>
-                                   <td>{{ assessor.phNO }}</td>
-                                   <td>{{ assessor.email }}</td>
-                                   <td>{{ assessor.address }}</td>
                                    <td class="table-buttons">
                                         <div class="example-button-container">
                                              <button (click)="editAssessor(assessor)" mat-mini-fab color="accent"
@@ -100,11 +99,11 @@
                                                   aria-label="Example icon button with a filter list icon">
                                                   <mat-icon>delete</mat-icon> </button>
                                         </div>
-
-
-                                        <!-- <button class="edit" (click)="editSchool(school)">Edit</button> -->
-                                        <!-- <button class="delete" (click)="deleteSchool(school._id)">Delete</button> -->
                                    </td>
+                                   <td>{{ assessor.name }}</td>
+                                   <td>{{ assessor.phNO }}</td>
+                                   <td>{{ assessor.email }}</td>
+                                   <td>{{ assessor.address }}</td>
                               </tr>
                          </tbody>
                     </table>
@@ -193,21 +192,25 @@
                                    <label for="noOfGirls">No of Girls:</label>
                                    <input type="number" id="noOfGirls" formControlName="noOfGirls" required>
                               </div>
-
-                              <button mat-raised-button type="submit" class="btn btn-primary">{{ editMode ? 'Edit' :
-                                   'Submit' }}</button>
-                              <button type="button" mat-raised-button mat-dialog-close
-                                   class="btn btn-primary">Cancel</button>
+                              <div class="form-buttons">
+                                   <button mat-raised-button type="submit" class="btn btn-primary">{{ editMode ? 'Edit'
+                                        :
+                                        'Submit' }}</button>
+                                   <button type="button" mat-raised-button color="accent"
+                                        mat-dialog-close>Cancel</button>
+                              </div>
                          </form>
                     </div>
                </ng-template>
 
                <div class="school-list">
                     <h2>School List</h2>
-                    <button mat-raised-button class='create-button' (click)="openDialog()">Open School Form</button>
+                    <button mat-raised-button class='create-button'
+                         (click)="openDialog()"><mat-icon>add</mat-icon></button>
                     <table>
                          <thead>
                               <tr>
+                                   <th>Actions</th>
                                    <th>School Name</th>
                                    <th>ID</th>
                                    <th>Contact Name</th>
@@ -223,11 +226,22 @@
                                    <th>Total Students</th>
                                    <th>Total Boys</th>
                                    <th>Total Girls</th>
-                                   <th>Actions</th>
                               </tr>
                          </thead>
                          <tbody>
                               <tr *ngFor="let school of schools">
+                                   <td class="table-buttons">
+                                        <div class="example-button-container">
+                                             <button (click)="editSchool(school)" mat-mini-fab color="accent"
+                                                  aria-label="Example icon button with a plus one icon">
+                                                  <mat-icon>create</mat-icon> </button>
+                                        </div>
+                                        <div class="example-button-container">
+                                             <button (click)="deleteSchool(school._id)" mat-mini-fab color="warn"
+                                                  aria-label="Example icon button with a filter list icon">
+                                                  <mat-icon>delete</mat-icon> </button>
+                                        </div>
+                                   </td>
                                    <td>{{ school.schoolName }}</td>
                                    <td>{{ school.schoolID }}</td>
                                    <td>{{ school.contactName }}</td>
@@ -243,22 +257,6 @@
                                    <td>{{ school.totalStudents }}</td>
                                    <td>{{ school.noOfBoys }}</td>
                                    <td>{{ school.noOfGirls }}</td>
-                                   <td class="table-buttons">
-                                        <div class="example-button-container">
-                                             <button (click)="editSchool(school)" mat-mini-fab color="accent"
-                                                  aria-label="Example icon button with a plus one icon">
-                                                  <mat-icon>create</mat-icon> </button>
-                                        </div>
-                                        <div class="example-button-container">
-                                             <button (click)="deleteSchool(school._id)" mat-mini-fab color="warn"
-                                                  aria-label="Example icon button with a filter list icon">
-                                                  <mat-icon>delete</mat-icon> </button>
-                                        </div>
-
-
-                                        <!-- <button class="edit" (click)="editSchool(school)">Edit</button> -->
-                                        <!-- <button class="delete" (click)="deleteSchool(school._id)">Delete</button> -->
-                                   </td>
                               </tr>
                          </tbody>
                     </table>

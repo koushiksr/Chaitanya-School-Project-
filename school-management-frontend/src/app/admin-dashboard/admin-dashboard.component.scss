@@ -13,7 +13,11 @@
     flex-wrap: wrap;
     padding: 1% 5% 5% 5%;
     width: 89%;
-
+    .form-buttons {
+      display: flex;
+      width: 100%;
+      flex-direction: row-reverse;
+    } 
     .form-group {
       flex-basis: calc(50% - 10px);
       margin: 5px;

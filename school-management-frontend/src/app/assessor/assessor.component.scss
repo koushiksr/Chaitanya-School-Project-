@@ -1,18 +1,15 @@
 .school-template {
   overflow: auto;
-  // background: white;
 }
 
 .school-form {
   background: white;
-  //  max-width: 45vw;
 
   h2 {
     font-size: 29px;
     font-weight: bold;
     text-align: center;
     padding: 19px 0px 0px 0px;
-    //     color: white;
   }
 
   form {
@@ -26,7 +23,6 @@
       font-weight: bold;
     }
 
-    //  width: 89%;
     .form-section {
       display: flex;
       flex-direction: row;
@@ -34,12 +30,38 @@
       align-items: center;
 
       .form-group {
-        flex-basis: calc(19% - 10px);
+        flex-basis: calc(25% - 10px);
         margin: 5px;
 
+        select {
+          width: 100%;
+          padding: 12px;
+          border: 2px solid #3498db;
+          border-radius: 5px;
+          box-sizing: border-box;
+          margin-top: 10px;
+          font-size: 16px;
+          color: #2c3e50;
+          appearance: none;
+          outline: none;
+          transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+          &:hover,
+          &:focus {
+            border-color: #2980b9;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+          }
+
+          option {
+            color: #2c3e50;
+            background-color: #ecf0f1;
+          }
+        }
+        .top-labels {
+          margin-left: 54px;
+        }
         label {
           display: block;
-          // color: white;
           font-weight: bold;
         }
 
@@ -65,18 +87,6 @@
     }
 
     button {
-      // position: absolute;
-      // background-color: #007BFF;
-      // color: #fff;
-      // border: none;
-      // border-radius: 5px;
-      // padding: 10px 71px;
-      // font-size: 16px;
-      // cursor: pointer;
-      // text-align: center;
-      // bottom: -58px;
-      // text-decoration: none;
-      // transition: background-color 0.3s;
       background-color: #007bff;
       color: #fff;
       border: none;
@@ -111,25 +121,23 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    // background-color: #ffffff;
     width: 100%;
 
     .school-list {
       margin: 20px;
       max-height: 859px;
       overflow: auto;
-      // overflow-x: auto;
-      // position: relative;
       .dropdown-container {
         display: flex;
         gap: 12px;
-        /* width: 340px; */
-        /* height: 37px; */
         position: absolute;
         font-size: 16px;
+        background-color: white;
+        width: 100%;
         top: 23px;
-        right: 81px;
-        align-items: stretch;
+        right: 59px;
+        padding-right: 22px;
+        flex-direction: row-reverse;
         .dropdown {
           display: flex;
           gap: 12px;
@@ -185,27 +193,10 @@
             border-radius: 10px !important;
             margin-left: 220px;
           }
-          //   .display-column {
-          //     display: flex;
-          //     flex-direction: column;
-          //     align-items: center;
 
-          //     .custom-dropdown {
-          //       padding: 8px 29px;
-          //       /* margin: -7px; */
-          //       border: 1px solid #ccc;
-          //       border-radius: 4px;
-          //       font-size: 14px;
-          //       color: #333;
-          //       width: 100%;
-          //       box-sizing: border-box;
-          //       // margin-top: 8px;
-          //     }
-          //
           .button-chart {
             margin: 1px 26px 24px 15px;
             padding: 20px 29px;
-            // background-color: white;
           }
 
           .button-Cancel {
@@ -219,7 +210,6 @@
 
           .dropdown-chart {
             padding: 0px;
-            // margin-left: 220px;
             background-color: white;
           }
 
@@ -258,25 +248,11 @@
           border: 1px solid #ddd;
 
           .icon-button-container {
-            // padding: 7px 20px;
-            // margin: 5px;
             button {
               padding: 20px 8px;
               margin: 5px;
             }
           }
-
-          button {
-            // padding: 7px 20px;
-            // margin: 5px;
-            // border: none;
-            // color: white;
-            // cursor: pointer;
-            // border-radius: 5px;
-            // font-weight: bold;
-            // transition: background-color 0.3s;
-          }
-
           .edit {
             background-color: #fca938;
             min-width: 80px;
@@ -334,9 +310,7 @@
     place-items: center;
 
     hr {
-      /* border: 0; */
       height: -14px;
-      /* border: red; */
       border-radius: 50%;
       border-color: #2fff00;
       width: 94%;
@@ -362,7 +336,6 @@
   .side-nav-button {
     display: flex;
     flex-direction: column;
-    // magin-left: 10px;
     align-items: center;
   }
 

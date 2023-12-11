@@ -33,13 +33,7 @@
                     </div>
                </div>
           </div>
-     </mat-drawer> 
-     <!-- <button (click)="onButtonClick()">Insert Data and Download</button> -->
-
-<!-- <button (click)="insertDataIntoPDF()">Insert Data into PDF</button> -->
-<!-- <button (click)="downloadLink.click()">download Data into PDF</button> -->
-<!-- <iframe *ngIf="modifiedPdfSrc" [src]="modifiedPdfSrc" width="100%" height="600px"></iframe> -->
-
+     </mat-drawer>
      <div *ngIf="!isActivity" class="example-sidenav-content">
           <div class="body">
                <ng-template class="school-template" #formContent let-dialogRef let-closeDialog="closeDialog">
@@ -60,15 +54,6 @@
                                              </select>
                                         </div> -->
 
-                                        <div class="form-group">
-                                             <label for="ID">candidate ID:</label>
-                                             <!-- <input type="text" id="ID" formControlName="ID" required> -->
-                                             <select formControlName="ID" id="ID" class="dropdown" #studentDropdown>
-                                                  <option value="" disabled selected>Student</option>
-                                                  <option *ngFor="let allStudent of allStudents" [value]="allStudent.candidateID">{{allStudent.candidateID}}
-                                                  </option>
-                                             </select>
-                                        </div>
                                         <!--  <div class="form-group">
                                              <label for="Gender">Gender:</label>
                                              <input type="text" id="Gender" formControlName="Gender" required>
@@ -79,7 +64,7 @@
                                         </div>
                                         <div class="form-group">
                                              <label for="Age">Age:</label>
-                                             <input type="number" id="Age" formControlName="Age" required>
+                                             <input type="text" id="Age" formControlName="Age" required>
                                         </div>
                                         <div class="form-group">
                                              <label for="Class">Class:</label>
@@ -131,15 +116,6 @@
                                              </select>
                                         </div> -->
 
-                                        <div class="form-group">
-                                             <label for="SchoolID">School ID:</label>
-                                             <!-- <input type="text" id="SchoolID" formControlName="SchoolID" required> -->
-                                             <select formControlName="SchoolID" id="SchoolID" class="dropdown" #schoolDropdown>
-                                                  <option value="" disabled selected>School</option>
-                                                  <option *ngFor="let allSchool of allSchools" [value]="allSchool.schoolID">
-                                                       {{allSchool.schoolID}}</option>
-                                             </select>
-                                        </div>
                                         <!--   <div class="form-group">
                                              <label for="SchoolContactName">School Contact Name:</label>
                                              <input type="text" id="SchoolContactName"
@@ -161,7 +137,28 @@
                                         <!-- <div class="form-section"> -->
                                         <!-- <div class="form-group"> -->
 
-                                       
+                                        <div class="form-group">
+                                             <label for="ID">candidate ID:</label>
+                                             <!-- <input type="text" id="ID" formControlName="ID" required> -->
+                                             <select formControlName="ID" id="ID" class="dropdown" #studentDropdown>
+                                                  <option value="" disabled selected>Student</option>
+                                                  <option *ngFor="let allStudent of allStudents"
+                                                       [value]="allStudent.candidateID">{{allStudent.candidateID}}
+                                                  </option>
+                                             </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                             <label for="SchoolID">School ID:</label>
+                                             <!-- <input type="text" id="SchoolID" formControlName="SchoolID" required> -->
+                                             <select formControlName="SchoolID" id="SchoolID" class="dropdown"
+                                                  #schoolDropdown>
+                                                  <option value="" disabled selected>School</option>
+                                                  <option *ngFor="let allSchool of allSchools"
+                                                       [value]="allSchool.schoolID">
+                                                       {{allSchool.schoolID}}</option>
+                                             </select>
+                                        </div>
 
 
                                         <div class="form-group">
@@ -179,222 +176,497 @@
                                              <input type="text" id="AssessmentID" formControlName="AssessmentID"
                                                   required>
                                         </div>
-                                        <!-- </div> -->
                                    </div>
-                                   <!-- Physical Attributes -->
-                                   <!-- <div class="form-group">
-                                   <label for="heightCMs">Height (CMs):</label>
-                                   <input type="number" id="heightCMs" formControlName="PhysicalAttributes.HeightCMs"
-                                        required>
-                              </div> -->
-                                   <!-- Physical Attributes Information -->
+
                                    <h3>Physical Details</h3>
                                    <div class="form-section last-form-section">
                                         <div class="form-group">
-                                             <label for="HeightCMs">Height in CMs:</label>
-                                             <input type="number" id="HeightCMs" formControlName="HeightCMs" required>
+                                             <label></label>
+                                             <!-- <input type="number" id="HeightCMs" formControlName="HeightCMs" required> -->
                                         </div>
                                         <div class="form-group">
-                                             <label for="HeightRating">Height Rating:</label>
+                                             <label class="top-labels">Score</label>
+                                             <!-- <input type="number" id="HeightCMs" formControlName="HeightCMs" required> -->
+                                        </div>
+                                        <div class="form-group">
+                                             <label class="top-labels">interpretation</label>
+                                             <!-- <input type="number" id="HeightCMs" formControlName="HeightCMs" required> -->
+                                        </div>
+                                        <div class="form-group">
+                                             <label class="top-labels">Comment</label>
+                                             <!-- <input type="number" id="HeightCMs" formControlName="HeightCMs" required> -->
+                                        </div>
+
+
+
+
+                                        <div class="form-group">
+                                             <label>Height in CMs</label>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="HeightCMs" formControlName="HeightCMs" required>
+                                        </div>
+                                        <div class="form-group">
                                              <input type="number" id="HeightRating" formControlName="HeightRating"
                                                   required>
+                                             <!-- <select id="HeightRating" formControlName="HeightRating" required>
+                                                  <option value="Above Average">Above Average</option>
+                                                  <option value="Average">Average</option>
+                                                  <option value="Below Average">Below Average</option>
+                                             </select> -->
                                         </div>
                                         <div class="form-group">
-                                             <label for="WeightKG">Weight in KG:</label>
-                                             <input type="number" id="WeightKG" formControlName="WeightKG" required>
-                                        </div>
-                                        <div class="form-group">
-                                             <label for="WeightRating">Weight Rating:</label>
-                                             <input type="number" id="WeightRating" formControlName="WeightRating"
+                                             <input type="text" id="HeightComment" formControlName="HeightComment"
                                                   required>
                                         </div>
 
 
                                         <div class="form-group">
-                                             <label for="BMI">BMI:</label>
-                                             <input type="number" id="BMI" formControlName="BMI" required>
+                                             <label>Weight in KG</label>
                                         </div>
                                         <div class="form-group">
-                                             <label for="BmiRating">BMI Rating:</label>
+                                             <input type="text" id="WeightKG" formControlName="WeightKG" required>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="nuber" id="WeightRating" formControlName="WeightRating"
+                                                  required>
+                                             <!-- <select id="WeightRating" formControlName="WeightRating" required>
+                                                  <option value="Above Average">Above Average</option>
+                                                  <option value="Average">Average</option>
+                                                  <option value="Below Average">Below Average</option>
+                                             </select> -->
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="WeightComment" formControlName="WeightComment"
+                                                  required>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                             <label>BMI</label>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="BMI" formControlName="BMI" required>
+                                        </div>
+                                        <div class="form-group">
                                              <input type="number" id="BmiRating" formControlName="BmiRating" required>
+
+                                             <!-- <select id="BmiRating" formControlName="BmiRating" required>
+                                                  <option value="Above Average">Above Average</option>
+                                                  <option value="Average">Average</option>
+                                                  <option value="Below Average">Below Average</option>
+                                             </select> -->
                                         </div>
                                         <div class="form-group">
-                                             <label for="BodyFatPercentage">Body Fat Percentage:</label>
-                                             <input type="number" id="BodyFatPercentage"
+                                             <input type="text" id="BmiComment" formControlName="BMIComment" required>
+                                        </div>
+
+
+
+                                        <!-- //////////////////////////////// -->
+                                        <div class="form-group">
+                                             <label>Body Fat Percentage</label>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="BodyFatPercentage"
                                                   formControlName="BodyFatPercentage" required>
                                         </div>
                                         <div class="form-group">
-                                             <label for="BodyFatRating">Body Fat Rating:</label>
                                              <input type="number" id="BodyFatRating" formControlName="BodyFatRating"
                                                   required>
+                                             <!-- <select id="BodyFatRating" formControlName="BodyFatRating" required>
+                                                  <option value="Above Average">Above Average</option>
+                                                  <option value="Average">Average</option>
+                                                  <option value="Below Average">Below Average</option>
+                                             </select> -->
                                         </div>
                                         <div class="form-group">
-                                             <label for="ArmLengthCMs">Arm Length in CMs:</label>
-                                             <input type="number" id="ArmLengthCMs" formControlName="ArmLengthCMs"
+                                             <input type="text" id="BodyFatComment" formControlName="BodyFatComment"
+                                                  required>
+                                        </div>
+
+                                        <!-- //////////////////////////////// -->
+                                        <div class="form-group">
+                                             <label>Arm Length in CMs</label>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="ArmLengthCMs" formControlName="ArmLengthCMs"
                                                   required>
                                         </div>
                                         <div class="form-group">
-                                             <label for="ArmLengthRating">Arm Length Rating:</label>
                                              <input type="number" id="ArmLengthRating" formControlName="ArmLengthRating"
                                                   required>
+                                             <!-- <select id="ArmLengthRating" formControlName="ArmLengthRating" required>
+                                                  <option value="Above Average">Above Average</option>
+                                                  <option value="Average">Average</option>
+                                                  <option value="Below Average">Below Average</option>
+                                             </select> -->
                                         </div>
                                         <div class="form-group">
-                                             <label for="LegLengthCMs">Leg Length in CMs:</label>
-                                             <input type="number" id="LegLengthCMs" formControlName="LegLengthCMs"
+                                             <input type="text" id="ArmLengthComment" formControlName="ArmLengthComment"
+                                                  required>
+                                        </div>
+
+
+
+                                        <div class="form-group">
+                                             <label>Leg Length in CMs</label>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="LegLengthCMs" formControlName="LegLengthCMs"
                                                   required>
                                         </div>
                                         <div class="form-group">
-                                             <label for="LegLengthRating">Leg Length Rating:</label>
                                              <input type="number" id="LegLengthRating" formControlName="LegLengthRating"
                                                   required>
+                                             <!-- <select id="LegLengthRating" formControlName="LegLengthRating" required>
+                                                  <option value="Above Average">Above Average</option>
+                                                  <option value="Average">Average</option>
+                                                  <option value="Below Average">Below Average</option>
+                                             </select> -->
                                         </div>
                                         <div class="form-group">
-                                             <label for="SitAndReachCMs">Sit and Reach in CMs:</label>
-                                             <input type="number" id="SitAndReachCMs" formControlName="SitAndReachCMs"
+                                             <input type="text" id="LegLengthComment" formControlName="LegLengthComment"
+                                                  required>
+                                        </div>
+
+                                        <!-- //////////////////////////////// -->
+                                        <div class="form-group">
+                                             <label>Sit and Reach in CMs</label>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="SitAndReachCMs" formControlName="SitAndReachCMs"
                                                   required>
                                         </div>
                                         <div class="form-group">
-                                             <label for="SitAndReachRating">Sit and Reach Rating:</label>
-                                             <input type="number" id="SitAndReachRating"
-                                                  formControlName="SitAndReachRating" required>
+                                             <select id="SitAndReachRating" formControlName="SitAndReachRating"
+                                                  required>
+                                                  <option value="Above Average">Above Average</option>
+                                                  <option value="Average">Average</option>
+                                                  <option value="Below Average">Below Average</option>
+                                             </select>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="SitAndReachComment"
+                                                  formControlName="SitAndReachComment" required>
+                                        </div>
+                                        <div class="form-group">
+                                             <label>Single Leg Balance</label>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="SingleLegBalance" formControlName="SingleLegBalance"
+                                                  required>
+                                        </div>
+                                        <div class="form-group">
+                                             <select id="SingleLegBalanceRating"
+                                                  formControlName="SingleLegBalanceRating" required>
+                                                  <option value="Above Average">Above Average</option>
+                                                  <option value="Average">Average</option>
+                                                  <option value="Below Average">Below Average</option>
+                                             </select>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="SingleLegBalanceComment"
+                                                  formControlName="SingleLegBalanceComment" required>
                                         </div>
                                         <!-- <div class="form-group">
                                              <label for="SingleLegBalance">Single Leg Balance:</label>
-                                             <input type="number" id="SingleLegBalance"
+                                             <input type="text" id="SingleLegBalance"
                                                   formControlName="SingleLegBalance" required>
                                         </div>
                                         <div class="form-group">
                                              <label for="SingleLegBalanceRating">Single Leg Balance Rating:</label>
-                                             <input type="number" id="SingleLegBalanceRating"
+                                             <input type="text" id="SingleLegBalanceRating"
                                                   formControlName="SingleLegBalanceRating" required>
                                         </div> -->
+
+
+                                        <!-- //////////////////////////////// -->
                                         <div class="form-group">
-                                             <label for="PushUps">Push-Ups:</label>
-                                             <input type="number" id="PushUps" formControlName="PushUps" required>
+                                             <label>Push-Ups</label>
                                         </div>
                                         <div class="form-group">
-                                             <label for="PushUpsRating">Push-Ups Rating:</label>
-                                             <input type="number" id="PushUpsRating" formControlName="PushUpsRating"
+                                             <input type="text" id="PushUps" formControlName="PushUps" required>
+                                        </div>
+                                        <div class="form-group">
+                                             <select id="PushUpsRating" formControlName="PushUpsRating" required>
+                                                  <option value="Above Average">Above Average</option>
+                                                  <option value="Average">Average</option>
+                                                  <option value="Below Average">Below Average</option>
+                                             </select>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="PushUpsComment" formControlName="PushUpsComment"
+                                                  required>
+                                        </div>
+
+                                        <!-- //////////////////////////////// -->
+                                        <div class="form-group">
+                                             <label>Grip Strength in KGs</label>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="GripStrengthKGs" formControlName="GripStrengthKGs"
                                                   required>
                                         </div>
                                         <div class="form-group">
-                                             <label for="GripStrengthKGs">Grip Strength in KGs:</label>
-                                             <input type="number" id="GripStrengthKGs" formControlName="GripStrengthKGs"
+                                             <select id="GripStrengthRating" formControlName="GripStrengthRating"
+                                                  required>
+                                                  <option value="Above Average">Above Average</option>
+                                                  <option value="Average">Average</option>
+                                                  <option value="Below Average">Below Average</option>
+                                             </select>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="GripStrengthComment"
+                                                  formControlName="GripStrengthComment" required>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                             <label>Squat Test (30 Seconds)</label>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="SquatTest30Secs" formControlName="SquatTest30Secs"
                                                   required>
                                         </div>
                                         <div class="form-group">
-                                             <label for="GripStrengthRating">Grip Strength Rating:</label>
-                                             <input type="number" id="GripStrengthRating"
-                                                  formControlName="GripStrengthRating" required>
+                                             <select id="SquatTestRating" formControlName="SquatTestRating" required>
+                                                  <option value="Above Average">Above Average</option>
+                                                  <option value="Average">Average</option>
+                                                  <option value="Below Average">Below Average</option>
+                                             </select>
                                         </div>
                                         <div class="form-group">
-                                             <label for="SquatTest30Secs">Squat Test (30 Seconds):</label>
-                                             <input type="number" id="SquatTest30Secs" formControlName="SquatTest30Secs"
+                                             <input type="text" id="SquatTestComment" formControlName="SquatTestComment"
                                                   required>
                                         </div>
+
                                         <div class="form-group">
-                                             <label for="SquatTestRating">Squat Test Rating:</label>
-                                             <input type="number" id="SquatTestRating" formControlName="SquatTestRating"
+                                             <label>Plank (Seconds)</label>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="PlankSecs" formControlName="PlankSecs" required>
+                                        </div>
+                                        <div class="form-group">
+                                             <select id="PlankRating" formControlName="PlankRating" required>
+                                                  <option value="Above Average">Above Average</option>
+                                                  <option value="Average">Average</option>
+                                                  <option value="Below Average">Below Average</option>
+                                             </select>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="PlankComment" formControlName="PlankComment"
                                                   required>
                                         </div>
+
+
+
                                         <div class="form-group">
-                                             <label for="PlankSecs">Plank (Seconds):</label>
-                                             <input type="number" id="PlankSecs" formControlName="PlankSecs" required>
+                                             <label>Standing Long Jump (CMs)</label>
                                         </div>
                                         <div class="form-group">
-                                             <label for="PlankRating">Plank Rating:</label>
-                                             <input type="number" id="PlankRating" formControlName="PlankRating"
-                                                  required>
-                                        </div>
-                                        <div class="form-group">
-                                             <label for="StandingLongJumpCMs">Standing Long Jump (CMs):</label>
-                                             <input type="number" id="StandingLongJumpCMs"
+                                             <input type="text" id="StandingLongJumpCMs"
                                                   formControlName="StandingLongJumpCMs" required>
                                         </div>
                                         <div class="form-group">
-                                             <label for="StandingLongJumpRating">Standing Long Jump Rating:</label>
-                                             <input type="number" id="StandingLongJumpRating"
+                                             <select id="StandingLongJumpRating"
                                                   formControlName="StandingLongJumpRating" required>
+                                                  <option value="Above Average">Above Average</option>
+                                                  <option value="Average">Average</option>
+                                                  <option value="Below Average">Below Average</option>
+                                             </select>
                                         </div>
                                         <div class="form-group">
-                                             <label for="StandingVerticalJumpInches">Standing Vertical Jump
-                                                  (Inches):</label>
-                                             <input type="number" id="StandingVerticalJumpInches"
+                                             <input type="text" id="StandingLongJumpComment"
+                                                  formControlName="StandingLongJumpComment" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                             <label>Standing Vertical Jump (Inches)</label>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="StandingVerticalJumpInches"
                                                   formControlName="StandingVerticalJumpInches" required>
                                         </div>
                                         <div class="form-group">
-                                             <label for="StandingVerticalJumpRating">Standing Vertical Jump
-                                                  Rating:</label>
-                                             <input type="number" id="StandingVerticalJumpRating"
+                                             <select id="StandingVerticalJumpRating"
                                                   formControlName="StandingVerticalJumpRating" required>
+                                                  <option value="Above Average">Above Average</option>
+                                                  <option value="Average">Average</option>
+                                                  <option value="Below Average">Below Average</option>
+                                             </select>
                                         </div>
                                         <div class="form-group">
-                                             <label for="FiveZeroFiveSecs">Five Zero Five (Secs):</label>
-                                             <input type="number" id="FiveZeroFiveSecs"
-                                                  formControlName="FiveZeroFiveSecs" required>
+                                             <input type="text" id="StandingVerticalJumpComment"
+                                                  formControlName="StandingVerticalJumpComment" required>
+                                        </div>
+
+
+
+                                        <!-- //////////////////////////////// -->
+                                        <div class="form-group">
+                                             <label>Five Zero Five (Secs)</label>
                                         </div>
                                         <div class="form-group">
-                                             <label for="FiveZeroFiveRating">Five Zero Five Rating:</label>
-                                             <input type="number" id="FiveZeroFiveRating"
-                                                  formControlName="FiveZeroFiveRating" required>
-                                        </div>
-                                        <div class="form-group">
-                                             <label for="Speed30MtrsSecs">Speed (30 Meters - Secs):</label>
-                                             <input type="number" id="Speed30MtrsSecs" formControlName="Speed30MtrsSecs"
+                                             <input type="text" id="FiveZeroFiveSecs" formControlName="FiveZeroFiveSecs"
                                                   required>
                                         </div>
                                         <div class="form-group">
-                                             <label for="Speed30MtrsRating">Speed (30 Meters) Rating:</label>
-                                             <input type="number" id="Speed30MtrsRating"
-                                                  formControlName="Speed30MtrsRating" required>
+                                             <select id="FiveZeroFiveRating" formControlName="FiveZeroFiveRating"
+                                                  required>
+                                                  <option value="Above Average">Above Average</option>
+                                                  <option value="Average">Average</option>
+                                                  <option value="Below Average">Below Average</option>
+                                             </select>
                                         </div>
                                         <div class="form-group">
-                                             <label for="SixHundredMtrsMins">Six Hundred Meters (Mins):</label>
-                                             <input type="number" id="SixHundredMtrsMins"
+                                             <input type="text" id="FiveZeroFiveComment"
+                                                  formControlName="FiveZeroFiveComment" required>
+                                        </div>
+
+                                        <!-- //////////////////////////////// -->
+                                        <div class="form-group">
+                                             <label>Speed (30 Meters - Secs)</label>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="Speed30MtrsSecs" formControlName="Speed30MtrsSecs"
+                                                  required>
+                                        </div>
+                                        <div class="form-group">
+                                             <select id="Speed30MtrsRating" formControlName="Speed30MtrsRating"
+                                                  required>
+                                                  <option value="Above Average">Above Average</option>
+                                                  <option value="Average">Average</option>
+                                                  <option value="Below Average">Below Average</option>
+                                             </select>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="Speed30MtrsComment"
+                                                  formControlName="Speed30MtrsComment" required>
+                                        </div>
+
+
+
+                                        <!-- //////////////////////////////// -->
+                                        <div class="form-group">
+                                             <label>Six Hundred Meters (Mins)</label>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="SixHundredMtrsMins"
                                                   formControlName="SixHundredMtrsMins" required>
                                         </div>
                                         <div class="form-group">
-                                             <label for="SixHundredMtrsRating">Six Hundred Meters Rating:</label>
-                                             <input type="number" id="SixHundredMtrsRating"
-                                                  formControlName="SixHundredMtrsRating" required>
+                                             <select id="SixHundredMtrsRating" formControlName="SixHundredMtrsRating"
+                                                  required>
+                                                  <option value="Above Average">Above Average</option>
+                                                  <option value="Average">Average</option>
+                                                  <option value="Below Average">Below Average</option>
+                                             </select>
                                         </div>
                                         <div class="form-group">
-                                             <label for="OneMileTest">One Mile Test:</label>
-                                             <input type="number" id="OneMileTest" formControlName="OneMileTest"
+                                             <input type="text" id="SixHundredMtrsComment"
+                                                  formControlName="SixHundredMtrsComment" required>
+                                        </div>
+
+                                        <!-- //////////////////////////////// -->
+                                        <div class="form-group">
+                                             <label>One Mile Test</label>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="OneMileTest" formControlName="OneMileTest" required>
+                                        </div>
+                                        <div class="form-group">
+                                             <select id="OneMileTestRating" formControlName="OneMileTestRating"
+                                                  required>
+                                                  <option value="Above Average">Above Average</option>
+                                                  <option value="Average">Average</option>
+                                                  <option value="Below Average">Below Average</option>
+                                             </select>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="OneMileTestComment"
+                                                  formControlName="OneMileTestComment" required>
+                                        </div>
+
+                                        <!-- /////////////////////////////////////////// -->
+                                        <div class="form-group">
+                                             <label>Bear Position Hold</label>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="BearPositionHold" formControlName="BearPositionHold"
                                                   required>
                                         </div>
                                         <div class="form-group">
-                                             <label for="OneMileTestRating">One Mile Test Rating:</label>
-                                             <input type="number" id="OneMileTestRating"
-                                                  formControlName="OneMileTestRating" required>
-                                        </div>
-                                        <div class="form-group">
-                                             <label for="BearPositionHoldRating">Bear Position Hold Rating:</label>
-                                             <input type="number" id="BearPositionHoldRating"
+                                             <select id="BearPositionHoldRating"
                                                   formControlName="BearPositionHoldRating" required>
+                                                  <option value="Above Average">Above Average</option>
+                                                  <option value="Average">Average</option>
+                                                  <option value="Below Average">Below Average</option>
+                                             </select>
                                         </div>
                                         <div class="form-group">
-                                             <label for="OverheadSquatsRating">Overhead Squats Rating:</label>
-                                             <input type="number" id="OverheadSquatsRating"
-                                                  formControlName="OverheadSquatsRating" required>
+                                             <input type="text" id="BearPositionHoldComment"
+                                                  formControlName="BearPositionHoldComment" required>
+                                        </div>
+
+                                        <!-- /////////////////////////////////////////// -->
+                                        <div class="form-group">
+                                             <label>Overhead Squats</label>
                                         </div>
                                         <div class="form-group">
-                                             <label for="LungesRating">Lunges Rating:</label>
-                                             <input type="number" id="LungesRating" formControlName="LungesRating"
+                                             <input type="text" id="OverheadSquats" formControlName="OverheadSquats"
                                                   required>
                                         </div>
                                         <div class="form-group">
-                                             <label for="RemarksRemark1">Remarks 1:</label>
+                                             <select id="OverheadSquatsRating" formControlName="OverheadSquatsRating"
+                                                  required>
+                                                  <option value="Above Average">Above Average</option>
+                                                  <option value="Average">Average</option>
+                                                  <option value="Below Average">Below Average</option>
+                                             </select>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="OverheadSquatsComment"
+                                                  formControlName="OverheadSquatsComment" required>
+                                        </div>
+
+
+
+                                        <div class="form-group">
+                                             <label>Lunges Rating</label>
+                                        </div>
+                                        <div class="form-group">
+                                             <input type="text" id="LungesTest" formControlName="LungesTest" required>
+                                        </div>
+                                        <div class="form-group">
+                                             <!-- Dropdown for Lunges Rating -->
+                                             <select id="LungesRating" formControlName="LungesRating" required>
+                                                  <option value="Above Average">Above Average</option>
+                                                  <option value="Average">Average</option>
+                                                  <option value="Below Average">Below Average</option>
+                                             </select>
+                                        </div>
+                                        <div class="form-group">
+                                             <!-- Text input for Lunges Comment -->
+                                             <input type="text" id="LungesComment" formControlName="LungesComment"
+                                                  required>
+                                        </div>
+
+
+
+                                        <div class="form-group"></div>
+                                        <div class="form-group">
+                                             <label for="RemarksRemark1">Remarks 1</label>
                                              <input type="text" id="RemarksRemark1" formControlName="RemarksRemark1"
                                                   required>
                                         </div>
                                         <div class="form-group">
-                                             <label for="RemarksRemark2">Remarks 2:</label>
+                                             <label for="RemarksRemark2">Remarks 2</label>
                                              <input type="text" id="RemarksRemark2" formControlName="RemarksRemark2"
                                                   required>
                                         </div>
                                         <div class="form-group">
-                                             <label for="RemarksRemark3">Remarks 3:</label>
+                                             <label for="RemarksRemark3">Remarks 3</label>
                                              <input type="text" id="RemarksRemark3" formControlName="RemarksRemark3"
                                                   required>
                                         </div>
@@ -409,8 +681,7 @@
                                                   class="btn btn-primary">Cancel</button>
                                         </div>
                                    </div>
-
-                              </div> <!-- </div> -->
+                              </div>
                          </form>
                     </div>
                </ng-template>
@@ -505,7 +776,72 @@
                                    <th>Assessment Team</th>
                                    <th>Assessment Date</th>
                                    <th>Assessment ID</th>
+
                                    <th>Height (CMs)</th>
+                                   <th>Rating</th>
+                                   <th>Comment</th>
+                                   <th>Weight (KG)</th>
+                                   <th>Rating</th>
+                                   <th>Comment</th>
+                                   <th>BMI</th>
+                                   <th>Rating</th>
+                                   <th>Comment</th>
+                                   <th>Body Fat Percentage</th>
+                                   <th>Rating</th>
+                                   <th>Comment</th>
+                                   <th>Arm Length (CMs)</th>
+                                   <th>Rating</th>
+                                   <th>Comment</th>
+                                   <th>Leg Length (CMs)</th>
+                                   <th>Rating</th>
+                                   <th>Comment</th>
+                                   <th>Sit & Reach (CMs)</th>
+                                   <th>Rating</th>
+                                   <th>Comment</th>
+                                   <th>Single Leg Balance (Falls/Secs)</th>
+                                   <th>Rating</th>
+                                   <th>Comment</th>
+                                   <th>Push Ups</th>
+                                   <th>Rating</th>
+                                   <th>Comment</th>
+                                   <th>Grip Strength (KGs)</th>
+                                   <th>Rating</th>
+                                   <th>Comment</th>
+                                   <th>Squat Test (30 Secs)</th>
+                                   <th>Rating</th>
+                                   <th>Comment</th>
+                                   <th>Plank (Secs)</th>
+                                   <th>Rating</th>
+                                   <th>Comment</th>
+                                   <th>Standing Long Jump (CMs)</th>
+                                   <th>Rating</th>
+                                   <th>Comment</th>
+                                   <th>Standing Vertical Jump (Inches)</th>
+                                   <th>Rating</th>
+                                   <th>Comment</th>
+                                   <th>5-0-5 (Secs)</th>
+                                   <th>Rating</th>
+                                   <th>Comment</th>
+                                   <th>Speed (30 Mtrs) (Secs)</th>
+                                   <th>Rating</th>
+                                   <th>Comment</th>
+                                   <th>600 Mtrs (Mins)</th>
+                                   <th>Rating</th>
+                                   <th>Comment</th>
+                                   <th>1 Mile Test</th>
+                                   <th>Rating</th>
+                                   <th>Comment</th>
+                                   <th>Bear Position Hold Rating</th>
+                                   <th>Comment</th>
+                                   <th>Overhead Squats Rating</th>
+                                   <th>Comment</th>
+                                   <th>Lunges Rating</th>
+                                   <th>Comment</th>
+                                   <th>Remarks-1</th>
+                                   <th>Remarks-2</th>
+                                   <th>Remarks-3</th>
+
+                                   <!-- <th>Height (CMs)</th>
                                    <th>Height Rating</th>
                                    <th>Weight (KG)</th>
                                    <th>Weight Rating</th>
@@ -546,7 +882,7 @@
                                    <th>Lunges Rating</th>
                                    <th>Remarks-1</th>
                                    <th>Remarks-2</th>
-                                   <th>Remarks-3</th>
+                                   <th>Remarks-3</th> -->
                               </tr>
                          </thead>
                          <tbody>
@@ -555,10 +891,10 @@
                                         <div *ngIf="!candidatesActivit.ongoing" class="icon-button-container">
                                              <button (click)="editCandidate(candidatesActivit)" mat-mini-fab
                                                   color="accent">
-                                                  <mat-icon>create</mat-icon> 
+                                                  <mat-icon>create</mat-icon>
                                              </button>
                                         </div>
-                                        <div *ngIf="!candidatesActivit.ongoing" class="icon-button-container">
+                                        <div class="icon-button-container">
                                              <button (click)="deleteCandidate(candidatesActivit._id)" mat-mini-fab
                                                   color="warn">
                                                   <mat-icon>delete</mat-icon> </button>
@@ -569,9 +905,14 @@
                                              </button>
                                         </div>
                                         <div class="icon-button-container">
-                                             <button (click)="insertDataIntoPDF(candidatesActivit)" mat-mini-fab
+                                             <button (click)="insertDataIntoPDF(candidatesActivit,true)" mat-mini-fab>
+                                                  <mat-icon>get_app</mat-icon>
+                                             </button>
+                                        </div>
+                                        <div class="icon-button-container">
+                                             <button (click)="insertDataIntoPDF(candidatesActivit,false)" mat-mini-fab
                                                   aria-label="Example icon button with a filter list icon">
-                                             <mat-icon>mail</mat-icon>
+                                                  <mat-icon>mail</mat-icon>
                                              </button>
                                         </div>
                                    </td>
@@ -612,46 +953,89 @@
                                    <td>{{ candidatesActivit.AssessmentID }}</td>
                                    <td>{{ candidatesActivit.HeightCMs }}</td>
                                    <td>{{ candidatesActivit.HeightRating }}</td>
+                                   <td>{{ candidatesActivit.HeightComment }}</td>
+
                                    <td>{{ candidatesActivit.WeightKG }}</td>
                                    <td>{{ candidatesActivit.WeightRating }}</td>
+                                   <td>{{ candidatesActivit.WeightComment }}</td>
+
                                    <td>{{ candidatesActivit.BMI }}</td>
                                    <td>{{ candidatesActivit.BmiRating }}</td>
+                                   <td>{{ candidatesActivit.BMIComment }}</td>
+
                                    <td>{{ candidatesActivit.BodyFatPercentage }}</td>
                                    <td>{{ candidatesActivit.BodyFatRating }}</td>
+                                   <td>{{ candidatesActivit.BodyFatComment }}</td>
+
                                    <td>{{ candidatesActivit.ArmLengthCMs }}</td>
                                    <td>{{ candidatesActivit.ArmLengthRating }}</td>
+                                   <td>{{ candidatesActivit.ArmLengthComment }}</td>
+
                                    <td>{{ candidatesActivit.LegLengthCMs }}</td>
                                    <td>{{ candidatesActivit.LegLengthRating }}</td>
+                                   <td>{{ candidatesActivit.LegLengthComment }}</td>
+
                                    <td>{{ candidatesActivit.SitAndReachCMs }}</td>
                                    <td>{{ candidatesActivit.SitAndReachRating }}</td>
+                                   <td>{{ candidatesActivit.SitAndReachComment }}</td>
+
                                    <td>{{ candidatesActivit.SingleLegBalance }}</td>
                                    <td>{{ candidatesActivit.SingleLegBalanceRating }}</td>
+                                   <td>{{ candidatesActivit.SingleLegBalanceComment }}</td>
+
                                    <td>{{ candidatesActivit.PushUps }}</td>
                                    <td>{{ candidatesActivit.PushUpsRating }}</td>
+                                   <td>{{ candidatesActivit.PushUpsComment }}</td>
+
                                    <td>{{ candidatesActivit.GripStrengthKGs }}</td>
                                    <td>{{ candidatesActivit.GripStrengthRating }}</td>
+                                   <td>{{ candidatesActivit.GripStrengthComment }}</td>
+
                                    <td>{{ candidatesActivit.SquatTest30Secs }}</td>
                                    <td>{{ candidatesActivit.SquatTestRating }}</td>
+                                   <td>{{ candidatesActivit.SquatTestComment }}</td>
+
                                    <td>{{ candidatesActivit.PlankSecs }}</td>
                                    <td>{{ candidatesActivit.PlankRating }}</td>
+                                   <td>{{ candidatesActivit.PlankComment }}</td>
+
                                    <td>{{ candidatesActivit.StandingLongJumpCMs }}</td>
                                    <td>{{ candidatesActivit.StandingLongJumpRating }}</td>
+                                   <td>{{ candidatesActivit.StandingLongJumpComment }}</td>
+
                                    <td>{{ candidatesActivit.StandingVerticalJumpInches }}</td>
                                    <td>{{ candidatesActivit.StandingVerticalJumpRating }}</td>
+                                   <td>{{ candidatesActivit.StandingVerticalJumpComment }}</td>
+
                                    <td>{{ candidatesActivit.FiveZeroFiveSecs }}</td>
                                    <td>{{ candidatesActivit.FiveZeroFiveRating }}</td>
+                                   <td>{{ candidatesActivit.FiveZeroFiveComment }}</td>
+
                                    <td>{{ candidatesActivit.Speed30MtrsSecs }}</td>
                                    <td>{{ candidatesActivit.Speed30MtrsRating }}</td>
+                                   <td>{{ candidatesActivit.Speed30MtrsComment }}</td>
+
                                    <td>{{ candidatesActivit.SixHundredMtrsMins }}</td>
                                    <td>{{ candidatesActivit.SixHundredMtrsRating }}</td>
+                                   <td>{{ candidatesActivit.SixHundredMtrsComment }}</td>
+
                                    <td>{{ candidatesActivit.OneMileTest }}</td>
                                    <td>{{ candidatesActivit.OneMileTestRating }}</td>
+                                   <td>{{ candidatesActivit.OneMileTestComment }}</td>
+
                                    <td>{{ candidatesActivit.BearPositionHoldRating }}</td>
+                                   <td>{{ candidatesActivit.BearPositionHoldComment }}</td>
+
                                    <td>{{ candidatesActivit.OverheadSquatsRating }}</td>
+                                   <td>{{ candidatesActivit.OverheadSquatsComment }}</td>
+
                                    <td>{{ candidatesActivit.LungesRating }}</td>
+                                   <td>{{ candidatesActivit.LungesComment }}</td>
+
                                    <td>{{ candidatesActivit.RemarksRemark1 }}</td>
                                    <td>{{ candidatesActivit.RemarksRemark2 }}</td>
                                    <td>{{ candidatesActivit.RemarksRemark3 }}</td>
+
 
                               </tr>
                          </tbody>
