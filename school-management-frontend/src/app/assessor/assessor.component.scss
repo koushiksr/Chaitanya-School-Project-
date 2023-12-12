@@ -57,9 +57,6 @@
             background-color: #ecf0f1;
           }
         }
-        .top-labels {
-          margin-left: 54px;
-        }
         label {
           display: block;
           font-weight: bold;
@@ -129,15 +126,17 @@
       overflow: auto;
       .dropdown-container {
         display: flex;
+        height: 38px;
         gap: 12px;
-        position: absolute;
+        /* position: absolute; */
         font-size: 16px;
         background-color: white;
         width: 100%;
-        top: 23px;
-        right: 59px;
+        top: 3vh;
+        right: -53vh;
         padding-right: 22px;
-        flex-direction: row-reverse;
+        padding-top: 1px;
+        flex-direction: row;
         .dropdown {
           display: flex;
           gap: 12px;
@@ -175,12 +174,9 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        // align-items: center;
-
         div {
           h2 {
             font-size: 27px;
-            // margin-bottom: 10px;
             margin: 12px 16px 0px 16px;
           }
         }

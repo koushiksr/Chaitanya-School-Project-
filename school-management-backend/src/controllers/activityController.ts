@@ -220,7 +220,7 @@ exports.createbyAssesser = async (req: any, res: any) => {
                     }).catch((error: any) => {
                     })
                     if (isMailSend) {
-                         req.body.formData.ongoing = true
+                         req.body.formData.ongoing = false
                          const result = await Activity.updateOne(
                               { _id: createdActivity[0]._id },
                               {
@@ -245,7 +245,6 @@ exports.createbyAssesser = async (req: any, res: any) => {
      }
 }
 
-
 exports.getAllforAssessor = async (req: any, res: any) => {
 
      const { schoolID, candidateID } = req.params
@@ -267,45 +266,53 @@ exports.getAll = async (req: any, res: any) => {
      res.json(student);
 }
 exports.getAllActivityBySchoolID = async (req: any, res: any) => {
-
-     const activity = req.params.activity;
-     const rating = parseFloat(req.params.rating);
-     const schoolID = req.params.schoolID;
-     if (activity && rating) {
-          const studentFiltered = await Activity.aggregate([
-               {
-                    $match: {
-                         SchoolID: schoolID,
-                         [activity]: rating,
-                    },
+     try {
+          console.log(req.params);
+          const activity = req.params.activity;
+          const rating = req.params.rating;
+          const schoolID = req.params.schoolID;
+          if (activity && rating) {
+               const studentFiltered = await Activity.aggregate([
+                    {
+                         $match: {
+                              SchoolID: schoolID,
+                              [activity]: rating,
+                         },
+                    }
+               ]);
+               console.log({ studentFiltered });
+               if (studentFiltered == null) {
+                    return res.status(200).json([]);
+               } else {
+                    res.status(200).json(studentFiltered);
                }
-          ]);
-          if (studentFiltered == null) {
-               return res.status(200).json([]);
           } else {
-               res.status(200).json(studentFiltered);
+               const student = await Activity.find({ SchoolID: schoolID });
+               if (!student) {
+                    return res.status(404).json({ message: 'there is no data in database' });
+               } else {
+                    res.json(student);
+               }
           }
-     } else {
-          const student = await Activity.find({ SchoolID: schoolID });
-          if (!student) {
-               return res.status(404).json({ message: 'there is no data in database' });
-          } else {
-               res.json(student);
-          }
+     } catch (error) {
+          console.error(error)
      }
 }
 exports.getLast4ActivityBycandidateID = async (req: any, res: any) => {
      const activity = req.params.activity;
      const candidateID = req.params.candidateID;
-     // console.log(activity, candidateID);
+     const SchoolID = req.params.SchoolID;
+     console.log(activity, candidateID);
      try {
           if (activity) {
                const studentFiltered = await Activity.aggregate([
-                    { $match: { ID: candidateID } },
+                    { $match: { ID: candidateID,SchoolID ,ongoing:false} },
                     { $sort: { createdAt: -1 } },
                     { $limit: 4 },
                     { $project: { [activity]: 1, _id: 0, createdAt: 1 } }
                ]);
+               console.log(studentFiltered);
+               
                if (!studentFiltered) {
                     return res.status(404).json({ message: 'not found any data ' });
                } else {
@@ -320,7 +327,7 @@ exports.getLast4ActivityBycandidateID = async (req: any, res: any) => {
 
 exports.edit = async (req: any, res: any) => {
      if (req.body.BMI) {
-          req.body.ongoing = true
+          req.body.ongoing = false
      }
      const result = await Activity.updateOne(
           { _id: Object(req.params.id) },

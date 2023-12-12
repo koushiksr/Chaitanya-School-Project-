@@ -41,7 +41,7 @@ export class StudentDashboardComponent implements AfterViewInit {
   isChartActive: boolean = false;
   myChart: any
   progressData: any;
-  allTaskFeilds: any[] = [ 
+  allTaskFeilds: any[] = [
     // "Name",
     // "ID",
     // "Gender",
@@ -96,7 +96,7 @@ export class StudentDashboardComponent implements AfterViewInit {
     // "SixHundredMtrsMins",
     "SixHundredMtrsRating",
     // "OneMileTest",
-    "OneMileTestRating",
+    // "OneMileTestRating",
     "BearPositionHoldRating",
     "OverheadSquatsRating",
     "LungesRating",
@@ -209,16 +209,30 @@ export class StudentDashboardComponent implements AfterViewInit {
     if (this.myChart) {
       this.myChart.destroy();
     }
+    if (!this.selectedActivity) {
+      this.openSnackBar("select any one assesment", "Close")
+      return
+    }
     // this.displayChart()
     const candidateID = localStorage.getItem('candidateID')
-    this.http.get(`${environment.apiUrl}/student/activity/progress/${candidateID}/${this.selectedActivity}`)
+    const SchoolID = localStorage.getItem("schoolID")
+    this.http.get(`${environment.apiUrl}/student/activity/progress/${SchoolID}/${candidateID}/${this.selectedActivity}`)
       .subscribe((response: any) => {
-        this.progressData = response.map((obj: ArrayLike<unknown> | { [s: string]: unknown; }) => Object.values(obj)[0]);
-        // this.progressData=[1,2,3,4]
+        this.progressData = response.map((obj: ArrayLike<unknown> | { [s: string]: unknown; }) => Object.values(obj)[1]);
+        const average = this.progressData.filter((value: string) => value === "Average").length / this.progressData.length;
+        let replacedData
+        if (this.progressData.every((value: any) => typeof value === "number")) {
+          replacedData = this.progressData
+        } else {
+          replacedData = this.progressData.map((value: string) =>
+            value === "Above Average" ? average > 2 ? 3 : 2 : value === "Below Average" && average < 2 ? 1 : 2
+          );
+        }
+
+        console.log(replacedData, this.progressData);
         let bValues = response.map((item: { createdAt: any; }) => item.createdAt.slice(0, 10));
-        // console.log(bValues);
         const data: ChartDataset[] = [
-          { data: this.progressData.reverse(), label: this.selectedActivity || 'Dataset 1' },
+          { data: replacedData.reverse(), label: this.selectedActivity || 'Dataset 1' },
           // { data: [28, 48, 40, 19], label: 'Dataset 2' },
           // { data: [45, 25, 16, 36], label: 'Dataset 3' },
           // { data: [12, 30, 50, 65], label: 'Dataset 4' }
@@ -241,7 +255,7 @@ export class StudentDashboardComponent implements AfterViewInit {
           // type: 'radar',
 
           data: {
-            labels: bValues,
+            labels: bValues.reverse(),
             datasets: data,
           },
           options: options,
@@ -253,38 +267,38 @@ export class StudentDashboardComponent implements AfterViewInit {
   isChartActiveFun() {
     this.isChartActive = true
   }
-  displayChart() {
-    // console.log(this.progressData);
+  // displayChart() {
+  //   console.log(this.progressData);
 
-    const data: ChartDataset[] = [
-      { data: this.progressData, label: this.selectedActivity || 'Dataset 1' },
-      // { data: [28, 48, 40, 19], label: 'Dataset 2' },
-      // { data: [45, 25, 16, 36], label: 'Dataset 3' },
-      // { data: [12, 30, 50, 65], label: 'Dataset 4' }
-    ];
+  //   const data: ChartDataset[] = [
+  //     { data: this.progressData, label: this.selectedActivity || 'Dataset 1' },
+  //     // { data: [28, 48, 40, 19], label: 'Dataset 2' },
+  //     // { data: [45, 25, 16, 36], label: 'Dataset 3' },
+  //     // { data: [12, 30, 50, 65], label: 'Dataset 4' }
+  //   ];
 
-    const options: ChartOptions = {
-      // Your chart options go here
-    };
+  //   const options: ChartOptions = {
+  //     // Your chart options go here
+  //   };
 
-    // Create the chart
-    const ctx = this.chartRef.nativeElement.getContext('2d');
-    this.myChart = new Chart(ctx, {
-      // type: 'bar',
-      type: 'line',
-      //
-      // type: 'polarArea',
-      // type: 'pie',
-      // type: 'doughnut',
-      // type: 'radar',
+  //   // Create the chart
+  //   const ctx = this.chartRef.nativeElement.getContext('2d');
+  //   this.myChart = new Chart(ctx, {
+  //     // type: 'bar',
+  //     type: 'line',
+  //     //
+  //     // type: 'polarArea',
+  //     // type: 'pie',
+  //     // type: 'doughnut',
+  //     // type: 'radar',
 
-      data: {
-        labels: ['Category 1', 'Category 2', 'Category 3', 'Category 4'],
-        datasets: data,
-      },
-      options: options,
-    });
-  }
+  //     data: {
+  //       labels: ['Category 1', 'Category 2', 'Category 3', 'Category 4'],
+  //       datasets: data,
+  //     },
+  //     options: options,
+  //   });
+  // }
   destroyChart() {
     this.isChartActive = false
     if (this.myChart) {

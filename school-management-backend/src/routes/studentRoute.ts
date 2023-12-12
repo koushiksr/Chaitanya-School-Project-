@@ -12,7 +12,7 @@ router.get('/activity/assessor/:schoolID?/:candidateID?', verifyAssessor, activi
 router.post('/activity/assessor/create', verifyAssessor, activityController.createbyAssesser);
  
 //for other
-router.get('/activity/progress/:candidateID/:activity', verifyStudent, activityController.getLast4ActivityBycandidateID);
+router.get('/activity/progress/:SchoolID/:candidateID/:activity', verifyStudent, activityController.getLast4ActivityBycandidateID);
 router.get('/activity/:schoolID/:candidateID', verifyStudent, activityController.getAll);
 router.get('/activity/:schoolID/:activity?/:rating?', verifySchool, activityController.getAllActivityBySchoolID);
 router.post('/activity/create', verifyStudent, activityController.create);

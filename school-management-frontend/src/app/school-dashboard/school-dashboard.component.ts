@@ -44,82 +44,39 @@ export class SchoolDashboardComponent {
   isLoading: boolean = false;
   schoolID: string = '';
   allTaskFeilds: any[] = [
-    // "Name",
-    // "ID",
-    // "Gender",
-    // "DOB",
-    // "Age",
-    // "Class",
-    // "DominantSide",
-    // "ParentName",
-    // "ParentMobileNo",
-    // "AlternateNo",
-    // "ResidenceArea",
-    // "ResidenceCity",
-    // "SchoolName",
-    // "SchoolID",
-    // "SchoolContactName",
-    // "SchoolContactNumber",
-    // "SchoolContactEmailID",
-    // "AssessmentTeam",
-    // "AssessmentID",
-    // "HeightCMs",
     "HeightRating",
-    // "WeightKG",
     "WeightRating",
-    // "BMI",
     "BmiRating",
-    // "BodyFatPercentage",
     "BodyFatRating",
-    // "ArmLengthCMs",
     "ArmLengthRating",
-    // "LegLengthCMs",
     "LegLengthRating",
-    // "SitAndReachCMs",
+
     "SitAndReachRating",
-    // "SingleLegBalance",
-    "SingleLegBalanceRating",
-    // "PushUps",
     "PushUpsRating",
-    // "GripStrengthKGs",
+    "SingleLegBalanceRating",
     "GripStrengthRating",
-    // "SquatTest30Secs",
-    "SquatTestRating",
-    // "PlankSecs",
     "PlankRating",
-    // "StandingLongJumpCMs",
     "StandingLongJumpRating",
-    // "StandingVerticalJumpInches",
     "StandingVerticalJumpRating",
-    // "FiveZeroFiveSecs",
     "FiveZeroFiveRating",
-    // "Speed30MtrsSecs",
     "Speed30MtrsRating",
-    // "SixHundredMtrsMins",
-    "SixHundredMtrsRating",
-    // "OneMileTest",
+
     "OneMileTestRating",
+    // "SixHundredMtrsRating",
+    
+    "SquatTestRating",
+    
     "BearPositionHoldRating",
     "OverheadSquatsRating",
     "LungesRating",
-    // "RemarksRemark1",
-    // "RemarksRemark2",
-    // "RemarksRemark3",
-    // "createdAt",
-    // "updatedAt",
-    // "__v",
-    // "AssessmentDate"
   ];
   selectedActivity: string = '';
   selectedRating: string = '';
-  // count = 1
   ngOnInit() {
     // this.someAsyncOperation()
     this.SchoolDetails()
-    // this.loadData()
     // this.fetchStudents();
     // this.fetchStudentsActivity()
-    // this.openSpinner()
   }
 
   constructor(private zone: NgZone, private http: HttpClient, public dialog: MatDialog, private router: Router, private _snackBar: MatSnackBar, private formBuilder: FormBuilder, private cdr: ChangeDetectorRef) {
@@ -141,21 +98,12 @@ export class SchoolDashboardComponent {
       presentInjury: ['', Validators.required],
     });
   }
-  // someAsyncOperation() {
-  //   this.zone.run(() => {
-  // this.SchoolDetails();
-  //   });
-  // }
   SchoolDetails = () => {
     const email = localStorage.getItem('username');
     this.http.get(`${environment.apiUrl}/school/admin/${email}`)
       .subscribe((response: any) => {
         this.email = response.admin_login.email;
         this.name = response.admin_login.name;
-        // this.phoneNumber = response.admin_login.phoneNumber
-        // this.admin = response.admin_details
-        // localStorage.setItem('schoolID', response.admin_details.schoolID)
-        // this.admin = response.admin_details;
         localStorage.setItem('adminDetails', JSON.stringify(response.admin_details));
         this.fetchStudents();
         this.fetchStudentsActivity();
@@ -177,8 +125,6 @@ export class SchoolDashboardComponent {
   activity(clickdata: any) {
     if (clickdata) {
       this.isActivity = false;
-      // this.fetchStudentsActivity()
-      // this.SchoolDetails()
     } else {
       this.isActivity = true;
     }
@@ -197,30 +143,23 @@ export class SchoolDashboardComponent {
     }
   }
   logout() {
-    // console.log('logout');
     const token = localStorage.clear();
     this.router.navigate(['/login']);
   }
 
   openDialog() {
-    // this.openSpinner()
     const dialogRef = this.dialog.open(this.formContent, {
     });
     dialogRef.afterClosed().subscribe(result => {
-      // this.closeSpinner()
       this.myForm.reset();
       this.editMode = false
     });
   }
   openSpinner() {
     this.isLoading = true;
-    // console.log('open spinner');
-
   }
   closeSpinner() {
     this.isLoading = false;
-    // console.log('close spinner');
-
   }
   onSubmit() {
     if (!this.myForm.valid) {
@@ -230,10 +169,8 @@ export class SchoolDashboardComponent {
     if (!this.editMode) {
       if (this.myForm.valid) {
         this.myForm.value.schoolID = this.admin.schoolID
-        // this.openSpinner()
         this.http.post(`${environment.apiUrl}/school/student/create`, this.myForm.value)
           .subscribe((response: any) => {
-            // this.closeSpinner()
             if (response.studentCreated) {
               this.openSnackBar('student created', 'Close')
               this.fetchStudents();
@@ -288,7 +225,6 @@ export class SchoolDashboardComponent {
     this.http.get(`${environment.apiUrl}/school/student/${this.admin.schoolID}`)
       .subscribe((response: any) => {
         this.candidates = response;
-        // console.log(this.candidates);
         this.cdr.detectChanges();
       }, (error) => {
         console.log(error.error, 'error in creating student')
@@ -321,7 +257,7 @@ export class SchoolDashboardComponent {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
     if (!token || role !== 'school') {
-      this.router.navigate(['/login']); 
+      this.router.navigate(['/login']);
     }
     this.admin = JSON.parse(localStorage.getItem('adminDetails') ?? '{}');
     this.http.get(`${environment.apiUrl}/student/activity/${this.admin.schoolID}`)
@@ -336,7 +272,7 @@ export class SchoolDashboardComponent {
   saveCandidateAssinmentData(candidateActivity: any) {
     if (this.dateFormData == '') {
       this.openSnackBar('date is empty', 'Close')
-      return 
+      return
     }
 
     this.http.put(`${environment.apiUrl}/student/activity/edit/${candidateActivity._id}`, { AssessmentDate: this.dateFormData })
@@ -381,115 +317,12 @@ export class SchoolDashboardComponent {
             console.log(error.error, 'error in creating student')
           })
       } else {
-        this.openSnackBar("Select filters", "Slose")
+        this.openSnackBar("Select filters", "Close")
       }
     } catch (error) {
 
     }
   }
-  // generatePDF() {
-  //   // const data = this.candidateActivities
-  //   type DataType = {
-  //     [key: string]: any;
-  //   };
-
-  //   function excludeFields(obj: DataType, excludedFields: string[]): DataType {
-  //     const newObj: DataType = {};
-  //     for (const key in obj) {
-  //       if (obj.hasOwnProperty(key) && !excludedFields.includes(key)) {
-  //         newObj[key] = obj[key];
-  //       }
-  //     }
-  //     return newObj;
-  //   }
-
-  //   const excludedFields: string[] = ['createdAt', 'updatedAt', '_id', '__v'];
-  //   const newObject = excludeFields(data, excludedFields);
-
-  //   const content: Content[] = [
-  //     { text: (data.Name ? data.Name : '') + '  Activity Report', style: 'header' },
-  //     { text: new Date().toLocaleString(), alignment: 'right' },
-  //     this.createTable(newObject), // Pass newObject to createTable
-  //   ];
-
-  //   const documentDefinition: TDocumentDefinitions = {
-  //     content: content,
-  //     styles: {
-  //       header: {
-  //         fontSize: 18,
-  //         bold: true,
-  //         margin: [0, 0, 0, 10],
-  //       },
-  //     },
-  //   };
-
-  //   const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
-  //   pdfDocGenerator.download(`${data.Name ? data.Name : ''}  Activity Report.pdf`);
-  // }
-
-  // private createTable(data: any): Content {
-  //   const tableData: any[][] = [];
-  //   for (const [key, value] of Object.entries(data)) {
-  //     tableData.push([key, value]);
-  //   }
-
-  //   return { table: { body: tableData }, layout: 'lightHorizontalLines' } as Content;
-  // }
-
-  //   generatePDF() {
-  //     const data = this.candidateActivities;
-  //     const excludedFields: string[] = ['createdAt', 'updatedAt', '_id', '__v'];
-
-  //     const content: Content[] = [
-  //         { text: 'Activity Report', style: 'header' },
-  //         { text: new Date().toLocaleString(), alignment: 'right' },
-  //         this.createTable(data, excludedFields),
-  //     ];
-
-  //     const documentDefinition: TDocumentDefinitions = {
-  //         content: content,
-  //         styles: {
-  //             header: {
-  //                 fontSize: 18,
-  //                 bold: true,
-  //                 margin: [0, 0, 0, 10],
-  //             },
-  //         },
-  //         pageOrientation: 'landscape',  // Set page orientation to landscape
-  //     };
-
-  //     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
-  //     pdfDocGenerator.download(`Activity Report.pdf`);
-  // }
-
-  // private createTable(data: any[], excludedFields: string[]): Content {
-  //     const tableData: any[][] = [];
-
-  //     // Assuming all objects in the array have the same structure
-  //     const firstObject = data[0];
-  //     const newObject = this.excludeFields(firstObject, excludedFields);
-
-  //     // Table header
-  //     tableData.push(Object.keys(newObject));
-
-  //     // Table body
-  //     data.forEach(item => {
-  //         const row = Object.values(this.excludeFields(item, excludedFields));
-  //         tableData.push(row);
-  //     });
-
-  //     return { table: { body: tableData, widths: 'auto' }, layout: 'lightHorizontalLines' } as Content;
-  // }
-
-  // private excludeFields(obj: any, excludedFields: string[]): any {
-  //     const newObj: any = {};
-  //     for (const key in obj) {
-  //         if (obj.hasOwnProperty(key) && !excludedFields.includes(key)) {
-  //             newObj[key] = obj[key];
-  //         }
-  //     }
-  //     return newObj;
-  // }
 
   generateActivityExcel() {
     const data = this.candidateActivities

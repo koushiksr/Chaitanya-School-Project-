@@ -90,9 +90,9 @@ const activitySchema = new mongoose.Schema({
      SixHundredMtrsRating: String,
      SixHundredMtrsComment: String,
 
-     OneMileTest: String,
-     OneMileTestRating: String,
-     OneMileTestComment: String,
+     // OneMileTest: String,
+     // OneMileTestRating: String,
+     // OneMileTestComment: String,
 
      BearPositionHold: String,
      BearPositionHoldComment: String,

@@ -8,14 +8,10 @@
           <div class="search-bar">
                <input type="text" class="search-input" placeholder="Search...">
           </div>
-
-          <!-- <span>Welcome, School Name</span> -->
      </div>
 </div>
 
-<mat-drawer-container class="example-container" autosize>
-
-
+<mat-drawer-container class="example-container" autosize> 
      <mat-drawer #drawer class="example-sidenav" mode="side">
           <div class="profile-container">
                <div class="profile-sidenav">
@@ -29,7 +25,6 @@
                          <p>Boys: {{admin?.noOfBoys}}</p>
                          <p>Girls: {{admin?.noOfGirls}}</p>
                          <p>Total: {{admin?.totalStudents}}</p>
-                         <!-- <p>Ph: {{phoneNumber}}</p> -->
                     </div>
                     <hr>
                     <div class="side-nav-button">
@@ -39,7 +34,6 @@
                     </div>
                </div>
           </div>
-
      </mat-drawer>
 
      <div *ngIf="!isActivity" class="example-sidenav-content">
@@ -47,7 +41,6 @@
                <div class="spinner"></div>
           </div>
           <div class="body">
-
                <ng-template class="school-template" #formContent let-dialogRef let-closeDialog="closeDialog">
                     <div class="school-form">
                          <h2>{{ editMode ? 'Edit Student' : 'Add Student' }}</h2>
@@ -56,10 +49,7 @@
                                    <label for="candidateName">Candidate Name:</label>
                                    <input type="text" id="candidateName" formControlName="candidateName" required>
                               </div>
-                              <!-- <div class="form-group">
-                                   <label for="candidateID">Candidate ID:</label>
-                                   <input type="text" id="candidateID" formControlName="candidateID" required>
-                              </div> -->
+                         
                               <div class="form-group">
                                    <label for="gender">Gender:</label>
                                    <select id="gender" formControlName="gender" required>
@@ -82,21 +72,20 @@
                                    <label for="candidateClass">Class:</label>
                                    <select id="candidateClass" formControlName="candidateClass" required>
                                         <option value="" disabled selected>Select Class</option>
-                                        <option value="1">Class 1</option>
-                                        <option value="2">Class 2</option>
-                                        <option value="3">Class 3</option>
-                                        <option value="4">Class 4</option>
-                                        <option value="5">Class 5</option>
-                                        <option value="6">Class 6</option>
-                                        <option value="7">Class 7</option>
-                                        <option value="8">Class 8</option>
-                                        <option value="9">Class 9</option>
+                                        <option value="01">Class 1</option>
+                                        <option value="02">Class 2</option>
+                                        <option value="03">Class 3</option>
+                                        <option value="04">Class 4</option>
+                                        <option value="05">Class 5</option>
+                                        <option value="06">Class 6</option>
+                                        <option value="07">Class 7</option>
+                                        <option value="08">Class 8</option>
+                                        <option value="09">Class 9</option>
                                         <option value="10">Class 10</option>
                                         <option value="11">Class 11</option>
                                         <option value="12">Class 12</option>
                                    </select>
                               </div>
-
 
                               <div class="form-group">
                                    <label for="dominantSide">Dominant Side:</label>
@@ -158,16 +147,18 @@
                     <div class="dropdown-container">
                          <select id="dropdown1" class="dropdown" #classDropdown>
                               <option value="" disabled selected>Class</option>
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
-                              <option value="6">6</option>
-                              <option value="7">7</option>
-                              <option value="8">8</option>
-                              <option value="9">9</option>
+                              <option value="01">01</option>
+                              <option value="02">02</option>
+                              <option value="03">03</option>
+                              <option value="04">04</option>
+                              <option value="05">05</option>
+                              <option value="06">06</option>
+                              <option value="07">07</option>
+                              <option value="08">08</option>
+                              <option value="09">09</option>
                               <option value="10">10</option>
+                              <option value="11">11</option>
+                              <option value="12">12</option>
                          </select>
 
                          <select id="dropdown2" class="dropdown" #genderDropdown>
@@ -185,13 +176,13 @@
                          </div>
                          <button mat-raised-button class='create-button' type="button"
                               (click)="generateCandidatesExcel()"><mat-icon>get_app</mat-icon></button>
-                         <!-- <button id="submitButton" class="submit-button">filter</button> -->
                     </div>
-                    <button mat-raised-button class='create-button-openform' (click)="openDialog()">Open Student
-                         Form</button>
+                    <button mat-raised-button class='create-button-openform'
+                         (click)="openDialog()"><mat-icon>add</mat-icon></button>
                     <table>
                          <thead>
                               <tr>
+                                   <th>Actions</th>
                                    <th>Candidate Name</th>
                                    <th>Candidate ID</th>
                                    <th>Gender</th>
@@ -207,11 +198,22 @@
                                    <th>Residence City</th>
                                    <th>Major Past Injury</th>
                                    <th>Present Injury</th>
-                                   <th>Actions</th>
                               </tr>
                          </thead>
                          <tbody *ngIf="candidates">
                               <tr *ngFor="let candidate of candidates ">
+                                   <td class="table-buttons">
+                                        <div class="example-button-container">
+                                             <button (click)="editCandidate(candidate)" mat-mini-fab color="accent"
+                                                  aria-label="Example icon button with a plus one icon">
+                                                  <mat-icon>create</mat-icon> </button>
+                                        </div>
+                                        <div class="example-button-container">
+                                             <button (click)="deleteCandidate(candidate.email)" mat-mini-fab
+                                                  color="warn" aria-label="Example icon button with a filter list icon">
+                                                  <mat-icon>delete</mat-icon> </button>
+                                        </div>
+                                   </td>
                                    <td>{{ candidate?.candidateName }}</td>
                                    <td>{{ candidate?.candidateID }}</td>
                                    <td>{{ candidate?.gender }}</td>
@@ -227,21 +229,6 @@
                                    <td>{{ candidate?.residenceCity }}</td>
                                    <td>{{ candidate?.pastInjury }}</td>
                                    <td>{{ candidate?.presentInjury }}</td>
-                                   <td class="table-buttons">
-                                        <!-- <button class="edit" (click)="editCandidate(candidate)">Edit</button>
-                                        <button class="delete"
-                                             (click)="deleteCandidate(candidate.email)">Delete</button> -->
-                                        <div class="example-button-container">
-                                             <button (click)="editCandidate(candidate)" mat-mini-fab color="accent"
-                                                  aria-label="Example icon button with a plus one icon">
-                                                  <mat-icon>create</mat-icon> </button>
-                                        </div>
-                                        <div class="example-button-container">
-                                             <button (click)="deleteCandidate(candidate.email)" mat-mini-fab
-                                                  color="warn" aria-label="Example icon button with a filter list icon">
-                                                  <mat-icon>delete</mat-icon> </button>
-                                        </div>
-                                   </td>
                               </tr>
                          </tbody>
                     </table>
@@ -270,53 +257,33 @@
                                    <label for="dropdown2">Rating</label>
                                    <select class="custom-dropdown" id="dropdown2" [(ngModel)]="selectedRating">
                                         <option disabled selected value="">Select Rating</option>
-                                        <option value="1">Rating 1</option>
-                                        <option value="2">Rating 2</option>
-                                        <option value="3">Rating 3</option>
+                                        <option value="Above Average">Above Average</option>
+                                        <option value="Average">Average</option>
+                                        <option value="Below Average">Below Average</option>
                                    </select>
                               </div>
                               <button mat-raised-button class='create-button' type="button"
                                    (click)="onFilterClick()"><mat-icon>filter_list</mat-icon>Filter</button>
-
                               <button mat-raised-button color="warn" class='create-button clear-filter' type="button"
                                    (click)="fetchStudentsActivity()"><mat-icon>restore</mat-icon>Filter</button>
-
                               <button mat-raised-button class='create-button' type="button"
                                    (click)="generateActivityExcel()"><mat-icon>get_app</mat-icon></button>
-
-
-
                          </div>
                     </div>
-
-
-                    <!-- <button class='create-button' (click)="openDialog()">Open Student Form</button> -->
                     <table>
                          <thead>
                               <tr>
                                    <th>Candidate Name</th>
                                    <th>Candidate ID</th>
-                                   <!-- <th>Gender</th> -->
-                                   <!-- <th>Date of Birth</th> -->
-                                   <!-- <th>Age</th> -->
                                    <th>Class</th>
-                                   <!-- <th>Dominant Side</th> -->
                                    <th>Name of Parent</th>
                                    <th>Parent's Mobile No</th>
                                    <th>Alternate No</th>
-                                   <!-- <th>Email ID</th> -->
                                    <th>Residence Area/Colony</th>
                                    <th>Residence City</th>
-                                   <!-- <th>School Name</th> -->
-                                   <!-- <th>School ID</th> -->
-                                   <!-- <th>School Contact Name</th>
-                                   <th>School Contact Number</th>
-                                   <th>School Email ID</th> -->
                                    <th>Assessment Team</th>
                                    <th>Assessment Date</th>
                                    <th>Assessment ID</th>
-                                   <!-- <th>Height (CMs)</th>
-                                   <th>Height Rating</th> -->
                                    <th>Assign Date</th>
                               </tr>
                          </thead>
@@ -324,22 +291,12 @@
                               <tr *ngFor="let candidateActivity of candidateActivities">
                                    <td>{{ candidateActivity.Name }}</td>
                                    <td>{{ candidateActivity.ID }}</td>
-                                   <!-- <td>{{ candidateActivity.Gender }}</td> -->
-                                   <!-- <td>{{ candidateActivity.DOB }}</td> -->
-                                   <!-- <td>{{ candidateActivity.Age }}</td> -->
                                    <td>{{ candidateActivity.Class }}</td>
-                                   <!-- <td>{{ candidateActivity.DominantSide }}</td> -->
                                    <td>{{ candidateActivity.ParentName }}</td>
                                    <td>{{ candidateActivity.ParentMobileNo }}</td>
                                    <td>{{ candidateActivity.AlternateNo }}</td>
-                                   <!-- <td>{{ candidateActivity.EmailID }}</td> -->
                                    <td>{{ candidateActivity.ResidenceArea }}</td>
                                    <td>{{ candidateActivity.ResidenceCity }}</td>
-                                   <!-- <td>{{ candidateActivity.SchoolName }}</td> -->
-                                   <!-- <td>{{ candidateActivity.SchoolID }}</td> -->
-                                   <!-- <td>{{ candidateActivity.SchoolContactName }}</td>
-                                   <td>{{ candidateActivity.SchoolContactNumber }}</td>
-                                   <td>{{ candidateActivity.SchoolContactEmailID }}</td> -->
                                    <td>{{ candidateActivity.AssessmentTeam }}</td>
                                    <td>{{ candidateActivity.AssessmentDate }}</td>
                                    <td>{{ candidateActivity.AssessmentID }}</td>
@@ -347,19 +304,11 @@
                                         <form (submit)="saveCandidateAssinmentData(candidateActivity)">
                                              <input type='date' name="data" id="data" [(ngModel)]="dateFormData"
                                                   required>
-                                             <!-- <h5>{{dateFormData}}</h5> -->
                                              <h5>{{candidateActivity.AssessmentDate}}</h5>
                                              <button mat-flat-button type="submit">Save Date</button>
                                         </form>
 
                                    </td>
-                                   <!-- <td>{{ candidateActivity.HeightCMs }}</td>
-                                   <td>{{ candidateActivity.HeightRating }}</td> -->
-                                   <!-- <td class="table-buttons">
-                                        <button class="edit" (click)="editCandidate(candidate)">Edit</button>
-                                        <button class="delete"
-                                             (click)="deleteCandidate(candidate.candidateID)">Delete</button>
-                                   </td> -->
                               </tr>
                          </tbody>
                     </table>
