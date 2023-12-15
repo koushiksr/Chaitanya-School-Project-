@@ -8,13 +8,9 @@
           <div class="search-bar">
                <input type="text" class="search-input" placeholder="Search...">
           </div>
-
-          <!-- <span>Welcome, School Name</span> --> 
      </div>
 </div>
 <mat-drawer-container class="example-container" autosize>
-
-
      <mat-drawer #drawer class="example-sidenav" mode="side">
           <div class="profile-container">
                <div class="profile-sidenav">
@@ -29,8 +25,6 @@
                     </div>
                     <hr>
                     <div class="side-nav-button">
-                         <!-- <button mat-button (click)="activity(true)" (click)="drawer.toggle()">Dashboard</button> -->
-                         <!-- <button mat-button (click)="activity(false)">Activity</button> -->
                          <button mat-button class="logout-button" (click)="logout()">Logout</button>
                     </div>
                </div>
@@ -384,8 +378,9 @@
                                         </div>
                                    </div> -->
                                    <div>
-                                        <div>
-                                             <button mat-raised-button type="submit" class="btn btn-primary">{{ editMode
+                                        <div style="display: flex; flex-direction: row-reverse;  flex-wrap: wrap;">
+                                             <button style="background-color: #007bff" type="submit"
+                                                  class="btn btn-primary">{{ editMode
                                                   ? 'Edit' :
                                                   'Submit'
                                                   }}</button>

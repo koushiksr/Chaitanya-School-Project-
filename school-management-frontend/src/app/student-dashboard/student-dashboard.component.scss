@@ -3,15 +3,14 @@
 }
 
 .school-form {
-  background-color: rgb(67, 66, 66);
-  //  max-width: 45vw;
+  background-color: rgb(255, 255, 255);
 
   h2 {
     font-size: 29px;
     font-weight: bold;
     text-align: center;
     padding: 19px 0px 0px 0px;
-    color: white;
+    color: rgb(0, 0, 0);
   }
 
   form {
@@ -25,7 +24,6 @@
       font-weight: bold; 
     }
 
-    //  width: 89%;
     .form-section {
       display: flex;
       flex-direction: row;
@@ -37,7 +35,7 @@
 
         label {
           display: block;
-          color: white;
+          color: rgb(0, 0, 0);
           font-weight: bold;
         }
 
@@ -56,19 +54,6 @@
     }
 
     button {
-      // position: absolute;
-      // background-color: #007BFF;
-      // color: #fff;
-      // border: none;
-      // border-radius: 5px;
-      // padding: 10px 71px;
-      // font-size: 16px;
-      // cursor: pointer;
-      // text-align: center;
-      // bottom: -58px;
-      // text-decoration: none;
-      // transition: background-color 0.3s;
-      background-color: #007bff;
       color: #fff;
       border: none;
       border-radius: 7px;
@@ -109,8 +94,6 @@
       margin: 20px;
       max-height: 859px;
       overflow: auto;
-      // overflow-x: auto;
-      // position: relative;
       .canvas-container {
         overflow: auto;
         width: 78%;
@@ -125,12 +108,10 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        // align-items: center;
 
         div {
           h2 {
             font-size: 27px;
-            // margin-bottom: 10px;
             margin: 12px 16px 0px 16px;
           }
         }
@@ -143,27 +124,10 @@
             border-radius: 10px !important;
             margin-left: 220px;
           }
-          //   .display-column {
-          //     display: flex;
-          //     flex-direction: column;
-          //     align-items: center;
-
-          //     .custom-dropdown {
-          //       padding: 8px 29px;
-          //       /* margin: -7px; */
-          //       border: 1px solid #ccc;
-          //       border-radius: 4px;
-          //       font-size: 14px;
-          //       color: #333;
-          //       width: 100%;
-          //       box-sizing: border-box;
-          //       // margin-top: 8px;
-          //     }
-          //
+          
           .button-chart {
             margin: 1px 26px 24px 15px;
             padding: 20px 29px;
-            // background-color: white;
           }
 
           .button-Cancel {
@@ -177,7 +141,6 @@
 
           .dropdown-chart {
             padding: 0px;
-            // margin-left: 220px;
             background-color: white;
           }
 
@@ -213,23 +176,10 @@
           border: 1px solid #ddd;
 
           .icon-button-container {
-            // padding: 7px 20px;
-            // margin: 5px;
             button {
               padding: 20px 8px;
               margin: 5px;
             }
-          }
-
-          button {
-            // padding: 7px 20px;
-            // margin: 5px;
-            // border: none;
-            // color: white;
-            // cursor: pointer;
-            // border-radius: 5px;
-            // font-weight: bold;
-            // transition: background-color 0.3s;
           }
 
           .edit {
@@ -289,9 +239,7 @@
     place-items: center;
 
     hr {
-      /* border: 0; */
       height: -14px;
-      /* border: red; */
       border-radius: 50%;
       border-color: #2fff00;
       width: 94%;
@@ -317,7 +265,6 @@
   .side-nav-button {
     display: flex;
     flex-direction: column;
-    // magin-left: 10px;
     align-items: center;
   }
 

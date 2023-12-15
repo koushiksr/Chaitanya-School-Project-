@@ -4,16 +4,9 @@ import Student from "../models/studentModel";
 import School from "../models/schoolModel";
 const nodemailer = require("nodemailer");
 const Mailgen = require('mailgen');
-// const multer = require('multer');
-// const storage = multer.memoryStorage();
-// const upload = multer({ storage: storage }).single('file');
+const fs = require('fs');
+const path = require('path');
 
-// exports.getSchoolAdmin = async (req: any, res: any) => {
-//      const email = req.params.id;
-//      const admin_login = await Login.findOne({ email });
-//      const admin_details = await Assessor.findOne({ schoolEmail: email });
-//      return res.send({ admin_login, admin_details })
-// }
 exports.create = async (req: any, res: any) => {
      let isMailSend = false;
      const { email, name, } = req.body;
@@ -134,16 +127,7 @@ exports.create = async (req: any, res: any) => {
 }
 exports.sendPdfToStudent = async (req: any, res: any) => {
      try {
-          console.clear()
-          let isMailSend = false;
           const email = req.params.email
-          // console.log(email);
-          //      upload(req, res, async (err: any) => {
-          //           if (err) {
-          //                console.error('Error uploading file:', err);
-          //                // return res.status(500).json({ error: 'Error uploading file' });
-          //           }
-          // })
           let pdfData: any
           if (req.file) {
                pdfData = req.file.buffer;
@@ -176,41 +160,47 @@ exports.sendPdfToStudent = async (req: any, res: any) => {
                     body: {
                          name: req.params.name,
                          intro: "Your Report Is Attached To This Mail!",
-                         // table: {
-                         //      data: [
-                         //           {
-                         //                // attachments: FormData,
-                         //                description: "Use this password for further login",
-                         //           }
-                         //      ]
-                         // },
                          action: {
-                              // instructions: 'To visit our website, click the link below:',
                               button: {
                                    text: 'Visit Our Website',
                                    link: process.env.school_Dashboard,
                               },
-                              // outro: "Looking forward to do more business"
                          }
                     }
                }
 
                // genarating html maill
-               let mail = MailGenerator.generate(response)
-               let message = {
-                    from: process.env.ADMIN_MAIL_TO_SEND_PASSWORD,
-                    to: email,
-                    subject: `${req.params.name} Assessment Report`,
-                    html: mail,
-                    attachments: [attachment],
+               let message
+               try {
+                    let mail = MailGenerator.generate(response)
+                    message = {
+                         from: process.env.ADMIN_MAIL_TO_SEND_PASSWORD,
+                         to: email,
+                         subject: `${req.params.name} Assessment Report`,
+                         html: mail,
+                         attachments: [attachment],
+                    }
+               } catch (error) {
+                    if (error instanceof Error) {
+                         console.error('Error occurred while generating the HTML email:');
+                         console.error(error.message);
+                    } else {
+                         console.error('An unknown error occurred:', error);
+                    }
                }
-
                // sending mail
-               transporter.sendMail(message).then(() => {
+               transporter.sendMail(message).then((error: { message: any; }, info: { response: any; }) => {
+                    if (error) {
+                         console.error('Error occurred while sending the email:');
+                         console.error(error.message);
+                    } else {
+                         console.log('Email sent successfully!');
+                         console.log('Response:', info.response);
+                    }
                     console.log({ msg: "you should receive an email" })
-                    isMailSend = true;
                     res.status(200).send(true)
                }).catch((error: any) => {
+                    console.log(error);
                     res.status(400).send(false)
                })
 
@@ -224,9 +214,6 @@ exports.sendPdfToStudent = async (req: any, res: any) => {
 
 }
 
-
-// }
-
 exports.getAll = async (req: any, res: any) => {
      const school = await Assessor.find();
      if (!school) {
@@ -235,11 +222,27 @@ exports.getAll = async (req: any, res: any) => {
      res.json(school);
 }
 exports.getAllSchools = async (req: any, res: any) => {
-     const school = await School.find();
-     if (!school) {
-          return res.status(401).json({ message: 'there is no data in database' });
+     try {
+          const school = await School.find();
+          if (!school) {
+               return res.status(401).json({ message: 'there is no data in database' });
+          }
+// import{} from "../../public/"
+
+          const pdfFilePath = "../../public/Sample _main_empty_copy.pdf"  //path/to/your / pdf / file.pdf
+          const pdfBuffer = fs.readFileSync(path.join(__dirname, pdfFilePath));
+          const pdfBytes = pdfBuffer.toString('base64');
+
+
+          // Set up the response headers for a PDF file
+          // res.setHeader('Content-Type', 'application/pdf');
+          // res.setHeader('Content-Disposition', 'attachment; filename=Sample _main_empty_copy.pdf');
+
+          res.send({ school, pdfBytes });
+     } catch (error) {
+          console.error('Error fetching schools or sending the PDF:', error);
+          res.status(500).json({ message: 'Internal Server Error' });
      }
-     res.json(school);
 }
 exports.getAllStudents = async (req: any, res: any) => {
      const school = await Student.find();
