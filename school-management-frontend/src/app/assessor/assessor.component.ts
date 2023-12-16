@@ -727,7 +727,7 @@ export class AssessorComponent {
         this.openSnackBar(' deleted successfully', 'Close')
         this.fetchAllActivites();
       }, (error) => {
-        console.log(error.error, 'error in deleteing')
+        console.log(error.error, 'error in deleteing') 
       })
   }
   saveCandidateAssinmentData(candidateActivity: any, date: any) {
