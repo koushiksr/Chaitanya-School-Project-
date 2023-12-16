@@ -40,106 +40,12 @@
                     <div class="school-form">
                          <h2>{{ editMode ? 'Edit Assesment' : 'Book Assessment' }}</h2>
                          <form [formGroup]="myForm" (ngSubmit)="onSubmit();">
-                              <!-- Candidate Information -->
                               <h3>Personal Details</h3>
                               <div>
                                    <div class="form-section">
-                                        <!-- <div class="form-group">
-                                             <label for="Name">Name:</label>
-                                             <select id="Name" formControlName="Name" required>
-                                                  <option value="" disabled selected>Select a Name</option>
-                                                  <option value="John">John</option>
-                                                  <option value="Jane">Jane</option>
-                                                  <option value="Doe">Doe</option>
-                                             </select>
-                                        </div> -->
-
-                                        <!--  <div class="form-group">
-                                             <label for="Gender">Gender:</label>
-                                             <input type="text" id="Gender" formControlName="Gender" required>
-                                        </div>
-                                        <div class="form-group">
-                                             <label for="DOB">DOB:</label>
-                                             <input type="date" id="DOB" formControlName="DOB" required>
-                                        </div>
-                                        <div class="form-group">
-                                             <label for="Age">Age:</label>
-                                             <input type="text" id="Age" formControlName="Age" required>
-                                        </div>
-                                        <div class="form-group">
-                                             <label for="Class">Class:</label>
-                                             <input type="text" id="Class" formControlName="Class" required>
-                                        </div>
-                                        <div class="form-group">
-                                             <label for="DominantSide">DominantSide:</label>
-                                             <input type="text" id="DominantSide" formControlName="DominantSide"
-                                                  required>
-                                        </div>
-                                        <div class="form-group">
-                                             <label for="ParentName">Parent Name:</label>
-                                             <input type="text" id="ParentName" formControlName="ParentName" required>
-                                        </div>
-                                        <div class="form-group">
-                                             <label for="ParentMobileNo">Parent Mobile No:</label>
-                                             <input type="text" id="ParentMobileNo" formControlName="ParentMobileNo"
-                                                  required>
-                                        </div>
-                                        <div class="form-group">
-                                             <label for="AlternateNo">Alternate No:</label>
-                                             <input type="text" id="AlternateNo" formControlName="AlternateNo" required>
-                                        </div>
-                                        <div class="form-group">
-                                             <label for="Email">Email ID:</label>
-                                             <input type="email" id="Email" formControlName="Email" required>
-                                        </div>
-                                        <div class="form-group">
-                                             <label for="ResidenceArea">Residence Area:</label>
-                                             <input type="text" id="ResidenceArea" formControlName="ResidenceArea"
-                                                  required>
-                                        </div>
-                                        <div class="form-group">
-                                             <label for="ResidenceCity">Residence City:</label>
-                                             <input type="text" id="ResidenceCity" formControlName="ResidenceCity"
-                                                  required>
-                                        </div> -->
-                                        <!-- </div> -->
-                                        <!-- School Information -->
-                                        <!-- <h3>School Details</h3> -->
-                                        <!-- <div class="form-section"> -->
-                                        <!-- <div class="form-group">
-                                             <label for="SchoolName">School Name:</label>
-                                             <select id="SchoolName" formControlName="SchoolName" required>
-                                                  <option value="" disabled selected>Select a School Name</option>
-                                                  <option value="SchoolA">School A</option>
-                                                  <option value="SchoolB">School B</option>
-                                                  <option value="SchoolC">School C</option>
-                                             </select>
-                                        </div> -->
-
-                                        <!--   <div class="form-group">
-                                             <label for="SchoolContactName">School Contact Name:</label>
-                                             <input type="text" id="SchoolContactName"
-                                                  formControlName="SchoolContactName" required>
-                                        </div>
-                                        <div class="form-group">
-                                             <label for="SchoolContactNumber">School Contact Number:</label>
-                                             <input type="text" id="SchoolContactNumber"
-                                                  formControlName="SchoolContactNumber" required>
-                                        </div>
-                                        <div class="form-group">
-                                             <label for="SchoolContactEmailID">School Contact Email ID:</label>
-                                             <input type="email" id="SchoolContactEmailID"
-                                                  formControlName="SchoolContactEmailID" required>
-                                        </div> -->
-                                        <!-- </div> -->
-                                        <!-- Assessment Information -->
-                                        <!-- <h3>Assignment Details</h3> -->
-                                        <!-- <div class="form-section"> -->
-                                        <!-- <div class="form-group"> -->
 
                                         <div class="form-group">
                                              <label for="ID">candidate ID:</label>
-                                             <!-- <input type="text" id="ID" formControlName="ID" required> -->
                                              <select formControlName="ID" id="ID" class="dropdown" #studentDropdown>
                                                   <option value="" disabled selected>Student</option>
                                                   <option *ngFor="let allStudent of allStudents"
@@ -150,7 +56,6 @@
 
                                         <div class="form-group">
                                              <label for="SchoolID">School ID:</label>
-                                             <!-- <input type="text" id="SchoolID" formControlName="SchoolID" required> -->
                                              <select formControlName="SchoolID" id="SchoolID" class="dropdown"
                                                   #schoolDropdown>
                                                   <option value="" disabled selected>School</option>
@@ -159,7 +64,6 @@
                                                        {{allSchool.schoolID}}</option>
                                              </select>
                                         </div>
-
 
                                         <div class="form-group">
                                              <label for="AssessmentTeam">Assessment Team:</label>
@@ -180,40 +84,19 @@
 
                                    <h3>Physical Details</h3>
                                    <div class="form-section last-form-section">
-                                        <div class="form-group">
-                                             <label></label>
-                                             <!-- <input type="number" id="HeightCMs" formControlName="HeightCMs" required> -->
+                                        <div class="form-group"></div>
+                                        <div class="form-group"><label class="top-labels">Score</label></div>
+                                        <div class="form-group"><label class="top-labels">interpretation(in %)</label>
                                         </div>
-                                        <div class="form-group">
-                                             <label class="top-labels">Score</label>
-                                             <!-- <input type="number" id="HeightCMs" formControlName="HeightCMs" required> -->
-                                        </div>
-                                        <div class="form-group">
-                                             <label class="top-labels">interpretation(in %)</label>
-                                             <!-- <input type="number" id="HeightCMs" formControlName="HeightCMs" required> -->
-                                        </div>
-                                        <div class="form-group">
-                                             <label class="top-labels">Comment</label>
-                                             <!-- <input type="number" id="HeightCMs" formControlName="HeightCMs" required> -->
-                                        </div>
+                                        <div class="form-group"><label class="top-labels">Comment</label></div>
 
-
-
-
-                                        <div class="form-group">
-                                             <label>Height in CMs</label>
-                                        </div>
+                                        <div class="form-group"><label>Height in CMs</label></div>
                                         <div class="form-group">
                                              <input type="text" id="HeightCMs" formControlName="HeightCMs" required>
                                         </div>
                                         <div class="form-group">
                                              <input type="number" id="HeightRating" formControlName="HeightRating"
                                                   required>
-                                             <!-- <select id="HeightRating" formControlName="HeightRating" required>
-                                                  <option value="Above Average">Above Average</option>
-                                                  <option value="Average">Average</option>
-                                                  <option value="Below Average">Below Average</option>
-                                             </select> -->
                                         </div>
                                         <div class="form-group">
                                              <input type="text" id="HeightComment" formControlName="HeightComment"
@@ -228,13 +111,8 @@
                                              <input type="text" id="WeightKG" formControlName="WeightKG" required>
                                         </div>
                                         <div class="form-group">
-                                             <input type="nuber" id="WeightRating" formControlName="WeightRating"
+                                             <input type="number" id="WeightRating" formControlName="WeightRating"
                                                   required>
-                                             <!-- <select id="WeightRating" formControlName="WeightRating" required>
-                                                  <option value="Above Average">Above Average</option>
-                                                  <option value="Average">Average</option>
-                                                  <option value="Below Average">Below Average</option>
-                                             </select> -->
                                         </div>
                                         <div class="form-group">
                                              <input type="text" id="WeightComment" formControlName="WeightComment"
@@ -259,20 +137,12 @@
                                         </div>
                                         <div class="form-group">
                                              <input type="number" id="BmiRating" formControlName="BmiRating" required>
-
-                                             <!-- <select id="BmiRating" formControlName="BmiRating" required>
-                                                  <option value="Above Average">Above Average</option>
-                                                  <option value="Average">Average</option>
-                                                  <option value="Below Average">Below Average</option>
-                                             </select> -->
                                         </div>
                                         <div class="form-group">
                                              <input type="text" id="BmiComment" formControlName="BMIComment" required>
                                         </div>
 
 
-
-                                        <!-- //////////////////////////////// -->
                                         <div class="form-group">
                                              <label>Body Fat Percentage</label>
                                         </div>
@@ -283,11 +153,6 @@
                                         <div class="form-group">
                                              <input type="number" id="BodyFatRating" formControlName="BodyFatRating"
                                                   required>
-                                             <!-- <select id="BodyFatRating" formControlName="BodyFatRating" required>
-                                                  <option value="Above Average">Above Average</option>
-                                                  <option value="Average">Average</option>
-                                                  <option value="Below Average">Below Average</option>
-                                             </select> -->
                                         </div>
                                         <div class="form-group">
                                              <input type="text" id="BodyFatComment" formControlName="BodyFatComment"
@@ -303,7 +168,7 @@
                                                   formControlName="BMIBodyfatComment" required>
                                              <br><br>
                                         </div>
-                                        <!-- //////////////////////////////// -->
+
                                         <div class="form-group">
                                              <label>Arm Length in CMs</label>
                                         </div>
@@ -314,11 +179,6 @@
                                         <div class="form-group">
                                              <input type="number" id="ArmLengthRating" formControlName="ArmLengthRating"
                                                   required>
-                                             <!-- <select id="ArmLengthRating" formControlName="ArmLengthRating" required>
-                                                  <option value="Above Average">Above Average</option>
-                                                  <option value="Average">Average</option>
-                                                  <option value="Below Average">Below Average</option>
-                                             </select> -->
                                         </div>
                                         <div class="form-group">
                                              <input type="text" id="ArmLengthComment" formControlName="ArmLengthComment"
@@ -337,11 +197,6 @@
                                         <div class="form-group">
                                              <input type="number" id="LegLengthRating" formControlName="LegLengthRating"
                                                   required>
-                                             <!-- <select id="LegLengthRating" formControlName="LegLengthRating" required>
-                                                  <option value="Above Average">Above Average</option>
-                                                  <option value="Average">Average</option>
-                                                  <option value="Below Average">Below Average</option>
-                                             </select> -->
                                         </div>
                                         <div class="form-group">
                                              <input type="text" id="LegLengthComment" formControlName="LegLengthComment"
@@ -360,7 +215,7 @@
                                         <div class="form-group">
                                              <label></label>
                                         </div>
-                                        <!-- //////////////////////////////// -->
+
                                         <div class="form-group">
                                              <label>Sit and Reach in CMs</label>
                                         </div>
@@ -399,19 +254,7 @@
                                              <input type="text" id="SingleLegBalanceComment"
                                                   formControlName="SingleLegBalanceComment" required>
                                         </div>
-                                        <!-- <div class="form-group">
-                                             <label for="SingleLegBalance">Single Leg Balance:</label>
-                                             <input type="text" id="SingleLegBalance"
-                                                  formControlName="SingleLegBalance" required>
-                                        </div>
-                                        <div class="form-group">
-                                             <label for="SingleLegBalanceRating">Single Leg Balance Rating:</label>
-                                             <input type="text" id="SingleLegBalanceRating"
-                                                  formControlName="SingleLegBalanceRating" required>
-                                        </div> -->
 
-
-                                        <!-- //////////////////////////////// -->
                                         <div class="form-group">
                                              <label>Push-Ups</label>
                                         </div>
@@ -430,7 +273,6 @@
                                                   required>
                                         </div>
 
-                                        <!-- //////////////////////////////// -->
                                         <div class="form-group">
                                              <label>Grip Strength in KGs</label>
                                         </div>
@@ -531,9 +373,6 @@
                                                   formControlName="StandingVerticalJumpComment" required>
                                         </div>
 
-
-
-                                        <!-- //////////////////////////////// -->
                                         <div class="form-group">
                                              <label>Five Zero Five (Secs)</label>
                                         </div>
@@ -554,7 +393,6 @@
                                                   formControlName="FiveZeroFiveComment" required>
                                         </div>
 
-                                        <!-- //////////////////////////////// -->
                                         <div class="form-group">
                                              <label>Speed (30 Meters - Secs)</label>
                                         </div>
@@ -576,8 +414,6 @@
                                         </div>
 
 
-
-                                        <!-- //////////////////////////////// -->
                                         <div class="form-group">
                                              <label>Six Hundred Meters (Mins)</label>
                                         </div>
@@ -598,27 +434,6 @@
                                                   formControlName="SixHundredMtrsComment" required>
                                         </div>
 
-                                        <!-- //////////////////////////////// -->
-                                        <!-- <div class="form-group">
-                                             <label>One Mile Test</label>
-                                        </div>
-                                        <div class="form-group">
-                                             <input type="text" id="OneMileTest" formControlName="OneMileTest" required>
-                                        </div>
-                                        <div class="form-group">
-                                             <select id="OneMileTestRating" formControlName="OneMileTestRating"
-                                                  required>
-                                                  <option value="Above Average">Above Average</option>
-                                                  <option value="Average">Average</option>
-                                                  <option value="Below Average">Below Average</option>
-                                             </select>
-                                        </div>
-                                        <div class="form-group">
-                                             <input type="text" id="OneMileTestComment"
-                                                  formControlName="OneMileTestComment" required>
-                                        </div> -->
-
-                                        <!-- /////////////////////////////////////////// -->
                                         <div class="form-group">
                                              <label>Bear Position Hold</label>
                                         </div>
@@ -639,7 +454,6 @@
                                                   formControlName="BearPositionHoldComment" required>
                                         </div>
 
-                                        <!-- /////////////////////////////////////////// -->
                                         <div class="form-group">
                                              <label>Overhead Squats</label>
                                         </div>
@@ -669,7 +483,6 @@
                                              <input type="text" id="LungesTest" formControlName="LungesTest" required>
                                         </div>
                                         <div class="form-group">
-                                             <!-- Dropdown for Lunges Rating -->
                                              <select id="LungesRating" formControlName="LungesRating" required>
                                                   <option value="Above Average">Above Average</option>
                                                   <option value="Average">Average</option>
@@ -677,7 +490,6 @@
                                              </select>
                                         </div>
                                         <div class="form-group">
-                                             <!-- Text input for Lunges Comment -->
                                              <input type="text" id="LungesComment" formControlName="LungesComment"
                                                   required>
                                         </div>
@@ -722,31 +534,6 @@
                               <h2>{{!isChartActive?' Assessment List':'Progress'}}</h2>
                          </div>
                          <div class="chart-filter-bar">
-                              <!-- <div *ngIf="isChartActive" class="display-column">
-                                   <label for="dropdown1">Activity</label>
-                                   <select class="custom-dropdown left-dropdown-filter" id="dropdown1"
-                                        [(ngModel)]="selectedActivity">
-                                        <option disabled selected value="">Select Activity</option>
-                                        <option *ngFor="let activity of allTaskFeilds" [value]="activity">{{activity}}
-                                        </option>
-                                   </select>
-                              </div> -->
-                              <!-- <mat-form-field class="c-dropdown-chart" *ngIf="isChartActive">
-                                   <mat-label class="mat-select">Select Assessment</mat-label>
-                                   <mat-select [(ngModel)]="selectedActivity">
-                                        <mat-option *ngFor="let activity of allTaskFeilds"
-                                             [value]="activity">{{activity}}</mat-option>
-                                   </mat-select> -->
-                              <!-- </mat-form-field> -->
-
-                              <!-- <button class="button-chart" mat-raised-button *ngIf="isChartActive" type="button"
-                                   (click)="onFilterClick()">Submit</button> -->
-                              <!-- <button *ngIf="!isChartActive" class='create-button' type="button"
-                                   (click)="isChartActiveFun()">Chart
-                              </button> -->
-                              <!-- <button class="button-Cancel" *ngIf="isChartActive" type="button"
-                                   (click)="destroyChart()"><mat-icon *ngIf="isChartActive">close</mat-icon>
-                              </button> -->
                               <div class="dropdown-container">
 
                                    <select id="dropdown2" class="dropdown" #studentDropdown>
@@ -770,16 +557,12 @@
                                    </div>
                                    <button mat-raised-button class='create-button' type="button"
                                         (click)="generateCandidatesExcel()"><mat-icon>get_app</mat-icon></button>
-                                   <!-- <button id="submitButton" class="submit-button">filter</button> -->
                                    <button mat-raised-button class="form-button" *ngIf="!isChartActive"
                                         (click)="openDialog()"><mat-icon>add</mat-icon></button>
                               </div>
 
                          </div>
                     </div>
-                    <!-- <div *ngIf="isChartActive" class="canvas-container">
-                         <canvas class="canvas-chart" #myChart width="10px" height="10px"></canvas>
-                    </div> -->
 
                     <table *ngIf="!isChartActive">
                          <thead>
@@ -806,7 +589,6 @@
                                    <th>Assessment Team</th>
                                    <th>Assessment Date</th>
                                    <th>Assessment ID</th>
-
                                    <th>Height (CMs)</th>
                                    <th>Rating</th>
                                    <th>Comment</th>
@@ -872,49 +654,6 @@
                                    <th>Remarks-1</th>
                                    <th>Remarks-2</th>
                                    <th>Remarks-3</th>
-
-                                   <!-- <th>Height (CMs)</th>
-                                   <th>Height Rating</th>
-                                   <th>Weight (KG)</th>
-                                   <th>Weight Rating</th>
-                                   <th>BMI</th>
-                                   <th>BMI Rating</th>
-                                   <th>Body Fat Percentage</th>
-                                   <th>Body Fat Rating</th>
-                                   <th>Arm Length (CMs)</th>
-                                   <th>Arm Length Rating</th>
-                                   <th>Leg Length (CMs)</th>
-                                   <th>Leg Length Rating</th>
-                                   <th>Sit & Reach (CMs)</th>
-                                   <th>Sit & Reach Rating</th>
-                                   <th>Single Leg Balance (Falls/Secs)</th>
-                                   <th>Single Leg Balance Rating</th>
-                                   <th>Push Ups</th>
-                                   <th>Push Ups Rating</th>
-                                   <th>Grip Strength (KGs)</th>
-                                   <th>Grip Strength Rating</th>
-                                   <th>Squat Test (30 Secs)</th>
-                                   <th>Squat Test Rating</th>
-                                   <th>Plank (Secs)</th>
-                                   <th>Plank Rating</th>
-                                   <th>Standing Long Jump (CMs)</th>
-                                   <th>Standing Long Jump Rating</th>
-                                   <th>Standing Vertical Jump (Inches)</th>
-                                   <th>Standing Vertical Jump Rating</th>
-                                   <th>5-0-5 (Secs)</th>
-                                   <th>5-0-5 Rating</th>
-                                   <th>Speed (30 Mtrs) (Secs)</th>
-                                   <th>Speed (30 Mtrs) Rating</th>
-                                   <th>600 Mtrs (Mins)</th>
-                                   <th>600 Mtrs Rating</th>
-                                   <th>1 Mile Test</th>
-                                   <th>1 Mile Test Rating</th>
-                                   <th>Bear Position Hold Rating</th>
-                                   <th>Overhead Squats Rating</th>
-                                   <th>Lunges Rating</th>
-                                   <th>Remarks-1</th>
-                                   <th>Remarks-2</th>
-                                   <th>Remarks-3</th> -->
                               </tr>
                          </thead>
                          <tbody>
@@ -975,12 +714,9 @@
                                                   [(ngModel)]="candidatesActivit.AssessmentDate"
                                                   [class.empty]="!candidatesActivit.AssessmentDate" required>
                                              <label *ngIf="!candidatesActivit.AssessmentDate">Select a date</label>
-                                             <!-- <h5>{{dateFormData}}</h5> -->
                                              <h5>{{candidatesActivit.AssessmentDate}}</h5>
                                              <button mat-flat-button type="submit">Save Date</button>
                                         </form>
-
-                                        <!-- {{ candidatesActivit.AssessmentDate }} -->
                                    </td>
                                    <td>{{ candidatesActivit.AssessmentID }}</td>
                                    <td>{{ candidatesActivit.HeightCMs }}</td>
@@ -1069,12 +805,9 @@
                                    <td>{{ candidatesActivit.RemarksRemark1 }}</td>
                                    <td>{{ candidatesActivit.RemarksRemark2 }}</td>
                                    <td>{{ candidatesActivit.RemarksRemark3 }}</td>
-
-
                               </tr>
                          </tbody>
                     </table>
-
                </div>
           </div>
      </div>

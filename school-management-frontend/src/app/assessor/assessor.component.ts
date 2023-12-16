@@ -7,12 +7,10 @@ import { AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import * as pdfMake from 'pdfmake/build/pdfmake';
-// import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Content, TDocumentDefinitions } from 'pdfmake/interfaces';
 import 'chartjs-adapter-moment';
 import * as XLSX from 'xlsx';
 import { StandardFonts, error } from 'pdf-lib';
-// import { MatLine } from '@angular/material/core';
 const { PDFDocument, rgb } = require('pdf-lib');
 
 @Component({
@@ -49,22 +47,6 @@ export class AssessorComponent {
     this.fetchAllActivites()
     this.fetchSchoolsAndStudents()
     this.myForm = this.formBuilder.group({
-      // Name: ['', Validators.required],
-      // Gender: ['', Validators.required],
-      // DOB: ['', Validators.required],
-      // Age: ['', Validators.required],
-      // Class: ['', Validators.required],
-      // DominantSide: ['', Validators.required],
-      // ParentName: ['', Validators.required],
-      // ParentMobileNo: ['', Validators.required],
-      // AlternateNo: ['', Validators.required],
-      // Email: ['', Validators.required],47
-      // ResidenceArea: ['', Validators.required],
-      // ResidenceCity: ['', Validators.required],
-      // SchoolName: ['', Validators.required],
-      // SchoolContactName: ['', Validators.required],
-      // SchoolContactNumber: ['', Validators.required],
-      // SchoolContactEmailID: ['', Validators.required],
       ID: ['', Validators.required],
       SchoolID: ['', Validators.required],
       AssessmentTeam: ['', Validators.required],
@@ -174,8 +156,6 @@ export class AssessorComponent {
           width: number,
           height: number,
           color: any,
-          // label?: string,
-          // labelSuffix?: string
         ) => {
           page2.drawRectangle({
             x,
@@ -288,94 +268,12 @@ export class AssessorComponent {
         await insertText(assessment.ArmLengthCMs, 8.5, 16.196, rgb(0, 0.69, 1), 16, StandardFonts.HelveticaBold)
         await insertText(assessment.LegLengthCMs, 8.5, 14.9, rgb(0, 0.69, 1), 16, StandardFonts.HelveticaBold)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         let font = 11;
-        // let y = 13.77; let x = 1.4324
         let fontHeadingVal = 16
-        let groupCommentText = `${assessment.HeightRating} height and ${assessment.WeightRating} weight values suggest ${assessment.HeightComment} & ${assessment.WeightComment} body composition `
-        let groupCommentText1 = `Body fat of ${assessment.BodyFatRating} and BMI at ${assessment.BmiRating} suggests ${assessment.BMIComment} & ${assessment.BodyFatComment} body composition`
+        let groupCommentText = `${assessment.HeightRating}th Percentile height and ${assessment.WeightRating}th Percentile weight values suggest ${assessment.HeightWeightComment ? assessment.HeightWeightComment : ""} body composition `
+        let groupCommentText1 = `Body fat of ${assessment.BodyFatPercentage} and BMI at ${assessment.BMI} suggests ${assessment.BMIBodyfatComment ? assessment.BMIBodyfatComment : ""} body composition`
         await insertText(groupCommentText, 1.0324, 10.9, undefined, font, StandardFonts.HelveticaBold)
         await insertText(groupCommentText1, 1.0324, 10.4, undefined, font, StandardFonts.HelveticaBold)
-
-        let color = rgb(0, 0.69, 1)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         ProgressBar(15.1275, 21.4815, assessment.HeightCMs, assessment.HeightRating)
         ProgressBar(15.1275, 20.1449, assessment.WeightKG, assessment.WeightRating)
@@ -387,7 +285,7 @@ export class AssessorComponent {
         //page 4
         font = 11; let y = 13.77; let x = 1.4324
         fontHeadingVal = 16
-        color = rgb(0, 0.69, 1)
+        let color = rgb(0, 0.69, 1)
         currentPage = pdfDoc.getPage(3);
         await insertText(assessment.SitAndReachCMs, 8.9159, 20.4613, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
         let status = await ProgressBar(16, 20.2698, assessment.SitAndReachCMs, assessment.SitAndReachRating)

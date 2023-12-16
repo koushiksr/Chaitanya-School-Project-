@@ -223,7 +223,7 @@ exports.getAllSchools = async (req: any, res: any) => {
                return res.status(401).json({ message: 'there is no data in database' });
           }
 
-          const pdfFilePath = "../../public/Sample _main_empty_copy.pdf"
+          const pdfFilePath = "../../public/Sample _main.pdf"
           const pdfBuffer = fs.readFileSync(path.join(__dirname, pdfFilePath));
           const pdfBytes = pdfBuffer.toString('base64');
           res.send({ school, pdfBytes });
