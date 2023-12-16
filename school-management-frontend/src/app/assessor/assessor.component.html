@@ -240,8 +240,17 @@
                                              <input type="text" id="WeightComment" formControlName="WeightComment"
                                                   required>
                                         </div>
-
-
+                                        <div class="form-group">
+                                             <label>Height & Weight Comment</label>
+                                             <br><br>
+                                        </div>
+                                        <div class="form-group"></div>
+                                        <div class="form-group"></div>
+                                        <div class="form-group">
+                                             <input type="text" id="HeightWeightComment"
+                                                  formControlName="HeightWeightComment" required>
+                                             <br><br>
+                                        </div>
                                         <div class="form-group">
                                              <label>BMI</label>
                                         </div>
@@ -284,7 +293,16 @@
                                              <input type="text" id="BodyFatComment" formControlName="BodyFatComment"
                                                   required>
                                         </div>
-
+                                        <div class="form-group"><label>BMI & Body Fat Comment</label>
+                                             <br><br>
+                                        </div>
+                                        <div class="form-group"></div>
+                                        <div class="form-group"></div>
+                                        <div class="form-group">
+                                             <input type="text" id="BMIBodyfatComment"
+                                                  formControlName="BMIBodyfatComment" required>
+                                             <br><br>
+                                        </div>
                                         <!-- //////////////////////////////// -->
                                         <div class="form-group">
                                              <label>Arm Length in CMs</label>
@@ -337,7 +355,7 @@
                                              <label></label>
                                         </div>
                                         <div class="form-group">
-                                             <label>   Interpretation(in ratings)</label>
+                                             <label> Interpretation(in ratings)</label>
                                         </div>
                                         <div class="form-group">
                                              <label></label>
@@ -685,12 +703,12 @@
                                    </div>
                                    <div>
                                         <div class="buttons-div-submit-cancel">
-                                             <button mat-raised-button  type="submit"  class="btn btn-primary">{{ editMode
+                                             <button mat-raised-button type="submit" class="btn btn-primary">{{ editMode
                                                   ? 'Edit' :
                                                   'Submit'
                                                   }}</button>
-                                             <button type="button" mat-dialog-close
-                                                  class="btn btn-primary" mat-raised-button color="accent">Cancel</button>
+                                             <button type="button" mat-dialog-close class="btn btn-primary"
+                                                  mat-raised-button color="accent">Cancel</button>
                                         </div>
                                    </div>
                               </div>
@@ -730,16 +748,16 @@
                                    (click)="destroyChart()"><mat-icon *ngIf="isChartActive">close</mat-icon>
                               </button> -->
                               <div class="dropdown-container">
-                                   <select id="dropdown1" class="dropdown" #schoolDropdown>
-                                        <option value="" disabled selected>School</option>
-                                        <option *ngFor="let allSchool of allSchools" [value]="allSchool.schoolID">
-                                             {{allSchool.schoolID}}</option>
-                                   </select>
 
                                    <select id="dropdown2" class="dropdown" #studentDropdown>
                                         <option value="" disabled selected>Student</option>
                                         <option *ngFor="let allStudent of allStudents" [value]="allStudent.candidateID">
                                              {{allStudent.candidateID}}</option>
+                                   </select>
+                                   <select id="dropdown1" class="dropdown" #schoolDropdown>
+                                        <option value="" disabled selected>School</option>
+                                        <option *ngFor="let allSchool of allSchools" [value]="allSchool.schoolID">
+                                             {{allSchool.schoolID}}</option>
                                    </select>
                                    <div>
                                         <button mat-raised-button class='create-button' type="button"
@@ -795,12 +813,14 @@
                                    <th>Weight (KG)</th>
                                    <th>Rating</th>
                                    <th>Comment</th>
+                                   <th>Height & Weight Comment</th>
                                    <th>BMI</th>
                                    <th>Rating</th>
                                    <th>Comment</th>
                                    <th>Body Fat Percentage</th>
                                    <th>Rating</th>
                                    <th>Comment</th>
+                                   <th>BMI & Body fat Comment</th>
                                    <th>Arm Length (CMs)</th>
                                    <th>Rating</th>
                                    <th>Comment</th>
@@ -900,17 +920,6 @@
                          <tbody>
                               <tr *ngFor="let candidatesActivit of candidatesActivity">
                                    <td class="table-buttons">
-                                        <div *ngIf="!candidatesActivit.ongoing" class="icon-button-container">
-                                             <button (click)="editCandidate(candidatesActivit)" mat-mini-fab
-                                                  color="accent">
-                                                  <mat-icon>create</mat-icon>
-                                             </button>
-                                        </div>
-                                        <div class="icon-button-container">
-                                             <button (click)="deleteCandidate(candidatesActivit._id)" mat-mini-fab
-                                                  color="warn">
-                                                  <mat-icon>delete</mat-icon> </button>
-                                        </div>
                                         <div class="icon-button-container">
                                              <button (click)="generatePDF(candidatesActivit)" mat-mini-fab>
                                                   <mat-icon>get_app</mat-icon>
@@ -925,6 +934,17 @@
                                              <button (click)="insertDataIntoPDF(candidatesActivit,false)" mat-mini-fab
                                                   aria-label="Example icon button with a filter list icon">
                                                   <mat-icon>mail</mat-icon>
+                                             </button>
+                                        </div>
+                                        <div class="icon-button-container">
+                                             <button (click)="deleteCandidate(candidatesActivit._id)" mat-mini-fab
+                                                  color="warn">
+                                                  <mat-icon>delete</mat-icon> </button>
+                                        </div>
+                                        <div *ngIf="candidatesActivit.ongoing==undefined" class="icon-button-container">
+                                             <button (click)="editCandidate(candidatesActivit)" mat-mini-fab
+                                                  color="accent">
+                                                  <mat-icon>create</mat-icon>
                                              </button>
                                         </div>
                                    </td>
@@ -970,6 +990,7 @@
                                    <td>{{ candidatesActivit.WeightKG }}</td>
                                    <td>{{ candidatesActivit.WeightRating }}</td>
                                    <td>{{ candidatesActivit.WeightComment }}</td>
+                                   <td>{{ candidatesActivit.HeightWeightComment }}</td>
 
                                    <td>{{ candidatesActivit.BMI }}</td>
                                    <td>{{ candidatesActivit.BmiRating }}</td>
@@ -978,6 +999,7 @@
                                    <td>{{ candidatesActivit.BodyFatPercentage }}</td>
                                    <td>{{ candidatesActivit.BodyFatRating }}</td>
                                    <td>{{ candidatesActivit.BodyFatComment }}</td>
+                                   <td>{{ candidatesActivit.BMIBodyfatComment }}</td>
 
                                    <td>{{ candidatesActivit.ArmLengthCMs }}</td>
                                    <td>{{ candidatesActivit.ArmLengthRating }}</td>

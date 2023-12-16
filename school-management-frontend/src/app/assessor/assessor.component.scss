@@ -261,9 +261,17 @@
         }
 
         .table-buttons {
+          // display: flex;
+          // border-bottom: none;
+          // padding-top: 19px;
           display: flex;
-          border-bottom: none;
-          padding-top: 19px;
+          flex-direction: row;
+          background: none;
+          height: 89px;
+          border: none;
+          justify-content: flex-start;
+          align-items: center;
+          align-content: center;
         }
 
         tr:nth-child(even) {

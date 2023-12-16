@@ -76,12 +76,14 @@ export class AssessorComponent {
       WeightKG: ['', [Validators.required]],
       WeightRating: ['', [Validators.required]],
       WeightComment: ['', [Validators.required]],
+      HeightWeightComment: ['', [Validators.required]],
       BMI: ['', [Validators.required]],
       BmiRating: ['', [Validators.required]],
       BMIComment: ['', [Validators.required]],
       BodyFatPercentage: ['', [Validators.required]],
       BodyFatRating: ['', [Validators.required]],
       BodyFatComment: ['', [Validators.required]],
+      BMIBodyfatComment: ['', [Validators.required]],
       ArmLengthCMs: ['', [Validators.required]],
       ArmLengthRating: ['', [Validators.required]],
       ArmLengthComment: ['', [Validators.required]],
@@ -148,7 +150,7 @@ export class AssessorComponent {
       const cm_coord = 28.34645669291339;
       let pdfDoc: any | null = null;
 
-      if (localStorage.getItem("sampleReport")) {
+      if (localStorage.getItem("pdfData")) {
         try {
           const pdfBytes: any = localStorage.getItem('pdfData') || null;
           const uint8Array = new Uint8Array(atob(pdfBytes).split('').map(char => char.charCodeAt(0)));
@@ -286,6 +288,95 @@ export class AssessorComponent {
         await insertText(assessment.ArmLengthCMs, 8.5, 16.196, rgb(0, 0.69, 1), 16, StandardFonts.HelveticaBold)
         await insertText(assessment.LegLengthCMs, 8.5, 14.9, rgb(0, 0.69, 1), 16, StandardFonts.HelveticaBold)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        let font = 11;
+        // let y = 13.77; let x = 1.4324
+        let fontHeadingVal = 16
+        let groupCommentText = `${assessment.HeightRating} height and ${assessment.WeightRating} weight values suggest ${assessment.HeightComment} & ${assessment.WeightComment} body composition `
+        let groupCommentText1 = `Body fat of ${assessment.BodyFatRating} and BMI at ${assessment.BmiRating} suggests ${assessment.BMIComment} & ${assessment.BodyFatComment} body composition`
+        await insertText(groupCommentText, 1.0324, 10.9, undefined, font, StandardFonts.HelveticaBold)
+        await insertText(groupCommentText1, 1.0324, 10.4, undefined, font, StandardFonts.HelveticaBold)
+
+        let color = rgb(0, 0.69, 1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         ProgressBar(15.1275, 21.4815, assessment.HeightCMs, assessment.HeightRating)
         ProgressBar(15.1275, 20.1449, assessment.WeightKG, assessment.WeightRating)
         ProgressBar(15.1275, 18.8198, assessment.BMI, assessment.BmiRating)
@@ -294,9 +385,9 @@ export class AssessorComponent {
         ProgressBar(15.1275, 14.9153, assessment.LegLengthCMs, assessment.LegLengthRating)
 
         //page 4
-        let font = 11; let y = 13.77; let x = 1.4324
-        let fontHeadingVal = 16
-        let color = rgb(0, 0.69, 1)//undefined/
+        font = 11; let y = 13.77; let x = 1.4324
+        fontHeadingVal = 16
+        color = rgb(0, 0.69, 1)
         currentPage = pdfDoc.getPage(3);
         await insertText(assessment.SitAndReachCMs, 8.9159, 20.4613, rgb(0, 0.69, 1), fontHeadingVal, StandardFonts.HelveticaBold)
         let status = await ProgressBar(16, 20.2698, assessment.SitAndReachCMs, assessment.SitAndReachRating)
@@ -567,7 +658,7 @@ export class AssessorComponent {
         .subscribe(async (response: any) => {
           const { school, pdfBytes } = response;
           this.allSchools = school;
-          localStorage.setItem('sampleReport', pdfBytes);
+          localStorage.setItem('pdfData', pdfBytes);
 
         }, (error) => {
           console.log(error.error, 'error in getting schools and pdf')
@@ -661,7 +752,7 @@ export class AssessorComponent {
         this.http.post(`${environment.apiUrl}/student/activity/assessor/create`, { formData: this.myForm.value, schoolID, candidateID })
           .subscribe((response) => {
             if (response) {
-              this.openSnackBar('activity initiated', 'Close')
+              this.openSnackBar('activity Created', 'Close')
               this.fetchAllActivites();
               this.myForm.reset();
             }
