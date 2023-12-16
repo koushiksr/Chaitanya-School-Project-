@@ -747,7 +747,7 @@ export class AssessorComponent {
         this.openSnackBar('Somthing went wrong!', 'Close')
       })
   }
-
+ 
   generatePDF(data: any) {
     type DataType = {
       [key: string]: any;
