@@ -6,13 +6,14 @@ yarn-error.log
 .vscode/
 
 # Ignore frontend build artifacts
-frontend/build/
-frontend/dist/
+school-management-frontend/build/
+school-management-frontend/dist/
 
 # Ignore backend build artifacts
-backend/target/
-backend/build/
+school-management-backend/target/
+school-management-backend/dist/
 
+package-lock.json
 # Ignore environment-specific files
 *.env
 *.env.local

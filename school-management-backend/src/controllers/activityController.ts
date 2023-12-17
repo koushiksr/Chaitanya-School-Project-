@@ -1,7 +1,7 @@
 import Activity from "../models/activityModel";
 import Student from "../models/studentModel";
-const Mailgen = require('mailgen');
-const nodemailer = require("nodemailer");
+import Mailgen from 'mailgen';
+import nodemailer from "nodemailer";
 
 
 

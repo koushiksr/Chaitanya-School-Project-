@@ -1,10 +1,10 @@
 import express from 'express';
 import cors from 'cors';
-import loginRouter from './src/routes/loginRoute';
-import adminRouter from './src/routes/adminRoute';
-import schoolRouter from './src/routes/schoolRoute';
-import studentRouter from './src/routes/studentRoute';
-import assessorRoute from './src/routes/assessorRoute';
+import loginRouter from './routes/loginRoute';
+import adminRouter from './routes/adminRoute';
+import schoolRouter from './routes/schoolRoute';
+import studentRouter from './routes/studentRoute';
+import assessorRoute from './routes/assessorRoute';
 const mongoose = require('mongoose');
 
 const app = express();
