@@ -12,7 +12,8 @@ require('dotenv').config();
 app.use(express.json());
 app.options('/login', cors());
 app.use(cors({
-     origin: 'http://localhost:4200',
+     // origin: 'http://localhost:4200',
+     origin: 'https://657ff819201fdd08db6821d5--precious-chebakia-62c032.netlify.app/',
      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
      credentials: true,
 }));
